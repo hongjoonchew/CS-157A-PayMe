@@ -1,18 +1,22 @@
 package com.cs157a1.payMe.Entity;
 
-public class User {
+
+
+public class Account {
 	private String firstName;
 	private String lastName;
 	private String username;
-	private String payMeBalance;
+	private int payMeBalance;
 	
-	public User(String firstName, String lastName, String username, String payMeBalance) {
+	public Account(String firstName, String lastName, String username, int payMeBalance) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.username = username;
 		this.payMeBalance = payMeBalance;
 	}
+	
+	public Account() {}
 
 	public String getFirstName() {
 		return firstName;
@@ -38,13 +42,16 @@ public class User {
 		this.username = username;
 	}
 
-	public String getPayMeBalance() {
+	public int getPayMeBalance() {
 		return payMeBalance;
 	}
 
-	public void setPayMeBalance(String payMeBalance) {
+	public void setPayMeBalance(int payMeBalance) {
 		this.payMeBalance = payMeBalance;
 	}
 
+	public String[] getFullInfo() {
+		return new String[] {this.getFirstName(), this.getLastName(), this.getUsername(),String.valueOf(this.getPayMeBalance())};
+	}
 	
 }
