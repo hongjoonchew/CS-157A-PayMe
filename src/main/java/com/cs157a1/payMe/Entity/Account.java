@@ -7,13 +7,16 @@ public class Account {
 	private String lastName;
 	private String username;
 	private int payMeBalance;
+	@SuppressWarnings("unused")
+	private String password;
 	
-	public Account(String firstName, String lastName, String username, int payMeBalance) {
+	public Account(String firstName, String lastName, String username, int payMeBalance, String password) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.username = username;
 		this.payMeBalance = payMeBalance;
+		this.password = password;
 	}
 	
 	public Account() {}

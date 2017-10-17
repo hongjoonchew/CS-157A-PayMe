@@ -7,13 +7,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cs157a1.payMe.Services.AccountServices;
 
-@RestController
-@RequestMapping()
+//@RestController
+//@RequestMapping("/accounts")
 public class AccountController {
 	@Autowired
 	private AccountServices accountServices;
 	
-	@RequestMapping(method = RequestMethod.GET)
+	//@RequestMapping(method = RequestMethod.GET)
 	public String[] returnAllInfo() {
 		return accountServices.getAccountInfo();
 	}
