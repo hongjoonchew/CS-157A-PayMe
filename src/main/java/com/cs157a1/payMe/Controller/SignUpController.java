@@ -1,21 +1,37 @@
 package com.cs157a1.payMe.Controller;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cs157a1.payMe.Entity.Account;
 import com.cs157a1.payMe.Services.AccountServices;
 
-@RestController
-@RequestMapping("/signup")
+@Controller
 public class SignUpController {
 	private AccountServices accountServices;
 	
+	@ModelAttribute("accounts")
+	public Account getAccount(){
+		Account account = new Account();
+		return account;
+	}
 	
+	@RequestMapping(value="/signup",method = RequestMethod.GET)
+	public String showForm(Model model, @ModelAttribute("accounts") Account account){
+		model.addAttribute(account);
+		return "signup";
+	}
 	
-	@RequestMapping(method = RequestMethod.PUT)
-	public void addAccountToDB() {
-		
+	@RequestMapping(value ="/signup", method = RequestMethod.POST)
+	public String addAccountToDB(BindingResult result, @ModelAttribute("accounts") Account account, Model model) {
+		accountServices.addAccounttoDB(account);
+		return "/";
 	}
 	
 }

@@ -1,13 +1,22 @@
 package com.cs157a1.payMe.Entity;
 
+import javax.validation.constraints.NotNull;
+
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 
 public class Account {
+	
+	@NotNull
 	private String firstName;
+	@NotNull
 	private String lastName;
+	@NotNull
 	private String username;
 	private double payMeBalance;
+	@NotNull
 	private String password;
+	@NotNull
 	private String email;
 	
 	public Account(String firstName, String lastName, String username, int payMeBalance, String password, String email) {
@@ -19,8 +28,7 @@ public class Account {
 		this.email = email;
 	}
 	
-	public Account() {}
-
+	public Account() {}	
 	public String getFirstName() {
 		return firstName;
 	}
@@ -53,9 +61,6 @@ public class Account {
 		this.payMeBalance = d;
 	}
 
-	public String[] getFullInfo() {
-		return new String[] {this.getFirstName(), this.getLastName(), this.getUsername(),String.valueOf(this.getPayMeBalance())};
-	}
 
 	public String getPassword() {
 		return password;

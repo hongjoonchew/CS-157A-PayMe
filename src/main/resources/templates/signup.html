@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <title>CS157A Login</title>
+    </head>
+    <body>
+        <div th:if="${param.error}">
+            Username exists.
+        </div>
+        <h1> Register Here for PayMe</h1>
+        <form action = "#" th:action="@{/signup}" th:object ="${accounts}" method="post">
+            <div><label> User Name : <input type="text"  th:field="*{username}"/> </label></div>
+            <div><label> Password: <input type="password" th:field="*{password}"/> </label></div>
+            <div><label> First name: <input type = "text" th:field="*{firstName}"/></label></div>
+            <div><label> Last name:<input type = "text" th:field="*{lastName}"/></label></div>
+            <div><label> Email:<input type = "text" th:field="*{email}"/></label></div>
+            <div><input type="submit" value="Register"/></div>
+        </form>
+    </body>
+</html>

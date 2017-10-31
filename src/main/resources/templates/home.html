@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
     <head>
+        <link rel="stylesheet" type="text/css" href="../../css/index.css" th:href="@{/css/index.css}"/>
+        <link type="text/css" href="../../css/bootstrap.min.css" rel="stylesheet"  th:href ="@{/css/bootstrap.min.css}" />
         <title>CS157A PayMe</title>
     </head>
     <body>
+        <div class="container">
         <h1>Welcome to PayMe!</h1>
 
         <p>Click <a th:href="@{/hello}">here</a> to start.</p>
+        </div>
     </body>
 </html>

@@ -15,13 +15,12 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
 	        registry.addViewController("/hello").setViewName("hello");
 	        registry.addViewController("/login").setViewName("login");
 	        registry.addViewController("/account").setViewName("account");
-	        registry.addViewController("signup").setViewName("signup");
+	        registry.addViewController("/signup").setViewName("signup");
 	    }
 	
 	@Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-            registry.addResourceHandler("/resources/**")
-                    .addResourceLocations("/resources/");
+            registry.addResourceHandler("/css/**").addResourceLocations("/css/");
     }
 	
 }
