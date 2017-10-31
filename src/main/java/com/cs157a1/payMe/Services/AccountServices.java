@@ -1,24 +1,40 @@
 package com.cs157a1.payMe.Services;
 
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.cs157a1.payMe.Entity.Account;
-import com.cs157a1.payMe.Model.AccountsModel;
+import com.cs157a1.payMe.Model.AccountsImpl;
 
 @Service
 public class AccountServices {
 	@Autowired
-	private AccountsModel userAccount;
+	@Qualifier("mysql")
+	private AccountsImpl userAccount;
 	
-	public String[] getAccountInfo() {
-		Account[] accounts = userAccount.returnAllInfo();
-		String[] accountInfo = new String[accounts.length];
-		for(int i =0; i < accounts.length; i++) {
-			accountInfo[i]=accounts[i].getFirstName();
-		}
-		return accountInfo;
+	public Collection<Account> returnAllInfo(){
+		return userAccount.returnAllInfo();
 	}
+	
+	public Account returnAccountByUsername(String username) {
+		return userAccount.returnAccountByUsername(username);
+	}
+	
+	public void updateAccount(Account account) {
+		userAccount.updateAccount(account);
+	}
+	
+	public void addAccounttoDB(Account account) {
+		userAccount.addAccountToDB(account);
+	}
+	
+	public void deleteAccount(String username) {
+		userAccount.deleteAccount(username);
+	}
+
 	
 }
