@@ -53,16 +53,19 @@ public class MySqlDao implements AccountsImpl {
 
 	@Override
 	public void addAccountToDB(Account account) {
-		final String sql = "INSERT INTO Accounts (username, password, first_name, last_name, email) VALUES (?,?,?,?,?)";
+		final String sql = "INSERT INTO Accounts (username, password, first_name, last_name, email, enabled) VALUES (?,?,?,?,?,?)";
 		final String userSQL = "INSERT INTO users (username, balance) VALUES (?,?)";
+		final String accessSQL = "INSERT INTO AccessControl(username, authorities) VALUES (?,?)";
 		String username = account.getUsername();
 		String first_name = account.getFirstName();
 		String last_name = account.getLastName();
 		String password = account.getPassword();
 		String email = account.getEmail();
+		int enabled = 1;
 		int balance = 0;
-		jdbcTemplate.update(sql,new Object[] {username, password, first_name, last_name, email});
+		jdbcTemplate.update(sql,new Object[] {username, password, first_name, last_name, email, enabled});
 		jdbcTemplate.update(userSQL, new Object[] {username,balance});
+		jdbcTemplate.update(accessSQL, new Object[] {username,1});
 
 	}
 

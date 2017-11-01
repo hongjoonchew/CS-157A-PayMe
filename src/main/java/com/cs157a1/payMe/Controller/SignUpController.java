@@ -1,5 +1,8 @@
 package com.cs157a1.payMe.Controller;
 
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +17,8 @@ import com.cs157a1.payMe.Services.AccountServices;
 
 @Controller
 public class SignUpController {
+	
+	@Autowired
 	private AccountServices accountServices;
 	
 	@ModelAttribute("accounts")
@@ -29,9 +34,14 @@ public class SignUpController {
 	}
 	
 	@RequestMapping(value ="/signup", method = RequestMethod.POST)
-	public String addAccountToDB(BindingResult result, @ModelAttribute("accounts") Account account, Model model) {
+	public String addAccountToDB(@Valid @ModelAttribute("accounts")  Account account, BindingResult result) {
+		if(result.hasErrors()) {
+			return "signup";
+		}
+		else {
 		accountServices.addAccounttoDB(account);
-		return "/";
+		return "redirect:/home?complete";
+		}
 	}
 	
 }

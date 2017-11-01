@@ -2,9 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
     <head>
+        <link  rel="stylesheet"  th:href ="@{/css/bootstrap.min.css}" type="text/css"/>
+        <link  th:href="@{/css/index.css}" rel="stylesheet" type="text/css"/>
         <title>CS157A Login</title>
     </head>
     <body>
+        <div class="container col-md-6 col-md-offset-3">
         <div th:if="${param.error}">
             Invalid username and password.
         </div>
@@ -17,5 +20,6 @@
             <div><input type="submit" value="Sign In"/></div>
         </form>
         <a th:href="@{/signup}">Sign up here</a>
+        </div>
     </body>
 </html>

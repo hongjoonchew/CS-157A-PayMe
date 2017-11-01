@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" 
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
     <head>
-        <link rel="stylesheet" type="text/css" href="../../css/index.css" th:href="@{/css/index.css}"/>
-        <link type="text/css" href="../../css/bootstrap.min.css" rel="stylesheet"  th:href ="@{/css/bootstrap.min.css}" />
+        <link  rel="stylesheet"  th:href ="@{/css/bootstrap.min.css}" type="text/css"/>
+        <link  th:href="@{/css/index.css}" rel="stylesheet" type="text/css"/>
         <title>CS157A PayMe</title>
     </head>
     <body>
-        <div class="container">
+        <div class="container col-md-6 col-md-offset-3">
         <h1>Welcome to PayMe!</h1>
-
+        <div th:if="${param.complete}">
+        Registration Complete!    
+        </div>
         <p>Click <a th:href="@{/hello}">here</a> to start.</p>
         </div>
     </body>

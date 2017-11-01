@@ -2,21 +2,26 @@ package com.cs157a1.payMe.Entity;
 
 import javax.validation.constraints.NotNull;
 
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.hibernate.validator.constraints.NotBlank;
 
 
 public class Account {
 	
 	@NotNull
+	@NotBlank
 	private String firstName;
 	@NotNull
+	@NotBlank
 	private String lastName;
 	@NotNull
+	@NotBlank
 	private String username;
 	private double payMeBalance;
 	@NotNull
+	@NotBlank
 	private String password;
 	@NotNull
+	@NotBlank
 	private String email;
 	
 	public Account(String firstName, String lastName, String username, int payMeBalance, String password, String email) {
