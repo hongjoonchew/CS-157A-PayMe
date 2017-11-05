@@ -1,7 +1,15 @@
 .container {
+    background-color:white;
     width:100%;
-    padding-right:15px;
-    padding-left:15px;
-    margin-right:auto;
-    margin-left:auto;
+    align-content: center;
+    text-align: center;
+    transform: translate(-50%, -50%);
+    justify-content: center;
+    position: absolute;   
+    top: 50%;
+    left: 50%;
+}
+
+body {
+    background-color:deepskyblue;
 }

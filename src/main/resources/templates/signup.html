@@ -2,8 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
     <head>
-        <link  rel="stylesheet"  th:href ="@{/css/bootstrap.min.css}" type="text/css"/>
-        <link  th:href="@{/css/index.css}" rel="stylesheet" type="text/css"/>
+        <link  rel="stylesheet"  href="../static/css/bootstrap.min.css" th:href ="@{/css/bootstrap.min.css}" type="text/css"/>
+        <link  th:href="@{/css/index.css}" href="/static/css/index.css" rel="stylesheet" type="text/css"/>
         <title>CS157A Login</title>
     </head>
     <body>
@@ -15,7 +15,7 @@
         <form action = "#" th:action="@{/signup}" th:object ="${accounts}" method="post">
             <div><label> User Name : <input type="text"  th:field="*{username}"/> </label></div>
             <div><label th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Name Error</label></div>
-            <div><label> Password: <input type="password" th:field="*{password}"/> </label></div>
+            <div ><label> Password: <input type="password" th:field="*{password}"/> </label></div>
             <div><label th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</label></div>
             <div><label> First name: <input type = "text" th:field="*{firstName}"/></label></div>
             <div><label th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">First name Error</label></div>
