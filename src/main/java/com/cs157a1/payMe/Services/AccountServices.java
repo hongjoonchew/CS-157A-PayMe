@@ -36,5 +36,7 @@ public class AccountServices {
 		userAccount.deleteAccount(username);
 	}
 
-	
+	public Collection<Account> getFriendsByAccount(String username){
+		return null;
+	}
 }

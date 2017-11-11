@@ -19,5 +19,6 @@ public interface AccountsImpl {
 
 	void updateAccount(Account account);
 
+	Collection<Account> returnFriendsByUsername(String username);
 
 }

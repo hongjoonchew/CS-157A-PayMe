@@ -11,7 +11,9 @@
         <div th:if="${param.complete}">
         Registration Complete!    
         </div>
-        <p>Click <a th:href="@{/hello}">here</a> to start.</p>
+        <p>Click <a th:href="@{/dashboard}">here</a> to start.</p>
+        <div th:replace="fragments/footer :: footer">Footer goes here</div>
         </div>
+        
     </body>
 </html>

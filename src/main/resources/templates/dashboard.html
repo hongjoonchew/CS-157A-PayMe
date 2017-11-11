@@ -4,15 +4,28 @@
     <head>
         <link  rel="stylesheet"  href="../static/css/bootstrap.min.css" th:href ="@{/css/bootstrap.min.css}" type="text/css"/>
         <link  th:href="@{/css/index.css}" href="/static/css/index.css" rel="stylesheet" type="text/css"/>
-        <title>CS157A Login</title>
+        <title>Dashboard</title>
     </head>
     <body>
         <div class="container col-md-6 col-md-offset-3">
-        <div th:if="${param.error}">
-            Username exists.
-        </div>
-        <h1> Register Here for PayMe</h1>
-        
+            <div class = "dashboard">
+            
+            <nav class="sidebar">
+                <ul th:text="${account.firstName}">Username here</ul>
+                <ul th:text="${account.payMeBalance}">Balance here</ul>
+                <ul><a th:href="@{/dashboard/request}">Send Request</a></ul>
+                <ul><a th:href="@{/dashboard/request}">View Request</a></ul>
+                <ul><a th:href="@{/dashboard/transfer}">Transfer</a></ul>
+                <ul><a th:href="@{/card}">Add Card</a></ul>
+                <ul><a th:href="@{/dashboard/history}">History</a></ul>
+                <ul><a th:href="@{/friends}">Friends List</a></ul>
+            </nav>
+            <!--Transactions template in construction-->
+            <div th:replace="fragments/transactions :: transactions" class="transactions">
+                Transaction should go here
+            </div>
+            </div>
+        <div th:replace="fragments/footer :: footer" class="footer">Footer goes here</div>
         </div>
     </body>
 </html>

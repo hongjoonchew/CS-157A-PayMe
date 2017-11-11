@@ -48,4 +48,10 @@ public class AccountsModel implements AccountsImpl {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public Collection<Account> returnFriendsByUsername(String username) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

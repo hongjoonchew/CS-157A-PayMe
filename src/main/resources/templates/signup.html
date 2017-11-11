@@ -21,10 +21,11 @@
             <div><label th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">First name Error</label></div>
             <div><label> Last name:<input type = "text" th:field="*{lastName}"/></label></div>
             <div><label th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Last name Error</label></div>
-            <div><label> Email:<input type = "text" th:field="*{email}"/></label></div>
+            <div><label> Email:<input type = "email" th:field="*{email}"/></label></div>
             <div><label th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</label></div>
             <div><input type="submit" value="Register"/></div>
         </form>
+            <div th:replace="fragments/footer :: footer">Footer goes here</div>
         </div>
     </body>
 </html>

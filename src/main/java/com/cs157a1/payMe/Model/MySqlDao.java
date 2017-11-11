@@ -75,8 +75,16 @@ public class MySqlDao implements AccountsImpl {
 		jdbcTemplate.update(sql,username);
 	}
 
+	
 	@Override
 	public String returnPassword(String username) {
+		final String sql = "SELECT username, password FROM Accounts WHERE username = ?";
+		Account account = jdbcTemplate.queryForObject(sql, new AccountsRowMapper(), username);
+		return account.getPassword();
+	}
+
+	@Override
+	public Collection<Account> returnFriendsByUsername(String username) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -24,6 +24,7 @@ public class Account {
 	@NotBlank
 	private String email;
 	
+	
 	public Account(String firstName, String lastName, String username, int payMeBalance, String password, String email) {
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -82,5 +83,7 @@ public class Account {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	
 	
 }
