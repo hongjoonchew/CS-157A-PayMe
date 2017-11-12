@@ -10,15 +10,8 @@
         <div class="container col-md-6 col-md-offset-3">
             <div class = "dashboard">
             
-            <nav class="sidebar">
-                <ul th:text="${account.firstName}">Username here</ul>
-                <ul th:text="${account.payMeBalance}">Balance here</ul>
-                <ul><a th:href="@{/dashboard/request}">Send Request</a></ul>
-                <ul><a th:href="@{/dashboard/request}">View Request</a></ul>
-                <ul><a th:href="@{/dashboard/transfer}">Transfer</a></ul>
-                <ul><a th:href="@{/card}">Add Card</a></ul>
-                <ul><a th:href="@{/dashboard/history}">History</a></ul>
-                <ul><a th:href="@{/friends}">Friends List</a></ul>
+            <nav th:include="fragments/sidebar :: sidebar" th:with= "account = ${account}" class="sidebar">
+            Sidebar   
             </nav>
             <!--Transactions template in construction-->
             <div th:replace="fragments/transactions :: transactions" class="transactions">

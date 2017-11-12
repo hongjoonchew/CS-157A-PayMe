@@ -33,4 +33,22 @@ public class DashboardController {
 		return "dashboard";
 	}
 	
+	
+	@RequestMapping(value ="/friends", method = RequestMethod.GET)
+	public String showFriends(@ModelAttribute("accounts")Account account) {
+		return null;
+	}
+	
+	
+	@RequestMapping(value = "/friends", method = RequestMethod.POST)
+	public String addFriend(@ModelAttribute("accounts")Account account) {
+		return "friends?search";
+		
+	}
+	
+	@RequestMapping(value="/friends?search", method = RequestMethod.GET)
+	public String searchFriend(@ModelAttribute("accounts")Account account) {
+		return "friends?search";
+	}
+	
 }
