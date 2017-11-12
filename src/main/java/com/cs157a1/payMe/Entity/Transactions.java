@@ -7,17 +7,41 @@ import org.hibernate.validator.constraints.NotBlank;
 
 public class Transactions {
 	
+	@NotNull
+	@NotBlank
 	private int transID;
+	@NotNull
+	@NotBlank
 	private TransType type;
 	@NotNull
 	@Digits(integer=8,fraction=2)
 	@NotBlank
 	private double amount;
 	
+	private User sender;
+	private User receiver;
+	
+
 	public Transactions(int transID, TransType type, double amount) {
 		this.transID = transID;
 		this.type = type;
 		this.amount = amount;
+	}
+	
+	public User getSender() {
+		return sender;
+	}
+
+	public void setSender(User sender) {
+		this.sender = sender;
+	}
+
+	public User getReceiver() {
+		return receiver;
+	}
+
+	public void setReceiver(User receiver) {
+		this.receiver = receiver;
 	}
 
 	public int getTransID() {

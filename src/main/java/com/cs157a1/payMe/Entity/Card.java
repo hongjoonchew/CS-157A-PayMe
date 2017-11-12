@@ -1,9 +1,26 @@
 package com.cs157a1.payMe.Entity;
 
-public abstract class Card {
+public class Card {
 	private String cardNumber;
 	private String cardName;
 	private int cvvNumber;
+	
+	private User user;
+	
+
+	public Card(String cardNumber, String cardName, int cvvNumber) {
+		super();
+		this.cardNumber = cardNumber;
+		this.cardName = cardName;
+		this.cvvNumber = cvvNumber;
+	}
+	
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
 	
 	public String getCardNumber() {
 		return cardNumber;
