@@ -9,12 +9,12 @@
        <div th:fragment= "sidebar" class="sidebar" >
             <p th:text="'Hello, ' + ${account.firstName}">Username here</p>
                 <p th:text="'$'+${account.payMeBalance}">Balance here</p>
-                <ul><a th:href="@{/dashboard/request}">Send Request</a></ul>
-                <ul><a th:href="@{/dashboard/request}">View Request</a></ul>
-                <ul><a th:href="@{/dashboard/transfer}">Transfer</a></ul>
-                <ul><a th:href="@{/card}">Add Card</a></ul>
-                <ul><a th:href="@{/dashboard/history}">History</a></ul>
-                <ul><a th:href="@{/friends}">Friends List</a></ul>
+                <ul><a th:href="@{/dashboard/request(accountName=${account.username})}">Send Request</a></ul>
+                <ul><a th:href="@{/dashboard/request(accountName=${account.username})}">View Request</a></ul>
+                <ul><a th:href="@{/dashboard/transfer(accountName=${account.username})}">Transfer</a></ul>
+                <ul><a th:href="@{/card(accountName=${account.username})}">Add Card</a></ul>
+                <ul><a th:href="@{/dashboard/history(accountName=${account.username})}">History</a></ul>
+                <ul><a th:href="@{/friends(accountName=${account.username})}">Friends List</a></ul>
         </div>
     </body>
 </html>
