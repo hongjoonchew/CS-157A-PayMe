@@ -10,7 +10,6 @@ public interface AccountsImpl {
 	
 	Account returnAccountByUsername(String username);
 	
-	
 	void addAccountToDB(Account account);
 	
 	void deleteAccount(String username);
