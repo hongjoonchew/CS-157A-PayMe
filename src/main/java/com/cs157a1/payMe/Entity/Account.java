@@ -4,9 +4,8 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-
 public class Account {
-	
+
 	@NotNull
 	@NotBlank
 	private String firstName;
@@ -23,9 +22,12 @@ public class Account {
 	@NotNull
 	@NotBlank
 	private String email;
-	
-	
-	public Account(String firstName, String lastName, String username, int payMeBalance, String password, String email) {
+
+	public Account() {
+	}
+
+	public Account(String firstName, String lastName, String username, int payMeBalance, String password,
+			String email) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.username = username;
@@ -33,8 +35,7 @@ public class Account {
 		this.setPassword(password);
 		this.email = email;
 	}
-	
-	public Account() {}	
+
 	public String getFirstName() {
 		return firstName;
 	}
@@ -67,7 +68,6 @@ public class Account {
 		this.payMeBalance = d;
 	}
 
-
 	public String getPassword() {
 		return password;
 	}
@@ -83,7 +83,5 @@ public class Account {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	
-	
+
 }
