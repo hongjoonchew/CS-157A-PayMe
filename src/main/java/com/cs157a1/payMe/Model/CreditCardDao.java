@@ -3,14 +3,14 @@ package com.cs157a1.payMe.Model;
 import java.util.Collection;
 
 import com.cs157a1.payMe.Entity.User;
-import com.cs157a1.payMe.Entity.creditCard;
+import com.cs157a1.payMe.Entity.CreditCard;
 
 public interface CreditCardDao {
-	Collection<creditCard> returnAllInfo();
+	Collection<CreditCard> returnAllInfo();
 	
-	creditCard returncreditCardBycardNumber(int cardNumber);
+	CreditCard returncreditCardBycardNumber(int cardNumber);
 	
-	void addcreditCardToDB(creditCard creditCard);
+	void addcreditCardToDB(CreditCard creditCard);
 	
 	void deletecreditCard(int cardNumber);
 	
@@ -22,7 +22,7 @@ public interface CreditCardDao {
 	
 	float returnCreditLimit(int cardNumber);
 
-	void updatecreditCard(creditCard creditCard);
+	void updatecreditCard(CreditCard creditCard);
 
 	User returnUserOfCreditCard(int cardNumber);
 }

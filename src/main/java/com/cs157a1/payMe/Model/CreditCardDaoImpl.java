@@ -10,26 +10,26 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.cs157a1.payMe.Entity.User;
-import com.cs157a1.payMe.Entity.creditCard;
+import com.cs157a1.payMe.Entity.CreditCard;
 
 
 @Repository("CreditCardDao")
 public class CreditCardDaoImpl implements CreditCardDao {
 
 	@Override
-	public Collection<creditCard> returnAllInfo() {
+	public Collection<CreditCard> returnAllInfo() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public creditCard returncreditCardBycardNumber(int cardNumber) {
+	public CreditCard returncreditCardBycardNumber(int cardNumber) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void addcreditCardToDB(creditCard creditCard) {
+	public void addcreditCardToDB(CreditCard creditCard) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -65,7 +65,7 @@ public class CreditCardDaoImpl implements CreditCardDao {
 	}
 
 	@Override
-	public void updatecreditCard(creditCard creditCard) {
+	public void updatecreditCard(CreditCard creditCard) {
 		// TODO Auto-generated method stub
 		
 	}
