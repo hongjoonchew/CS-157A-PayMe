@@ -9,11 +9,11 @@
        <div th:fragment= "sidebar" class="sidebar" >
             <p th:text="'Hello, ' + ${session.accounts.firstName}" th:unless="${session == null}">Username here</p>
                 <p th:text="'$'+${session.accounts.payMeBalance}" th:unless="${session == null}">Balance here</p>
-                <ul><a th:href="@{/dashboard/request}">Send Request</a></ul>
-                <ul><a th:href="@{/dashboard/request}">View Request</a></ul>
-                <ul><a th:href="@{/dashboard/transfer}">Transfer</a></ul>
+                <ul><a th:href="@{/request}">Send Request</a></ul>
+                <ul><a th:href="@{/request}">View Request</a></ul>
+                <ul><a th:href="@{/transfer}">Transfer</a></ul>
                 <ul><a th:href="@{/card}">Add Card</a></ul>
-                <ul><a th:href="@{/dashboard/history}">History</a></ul>
+                <ul><a th:href="@{/history}">History</a></ul>
                 <ul><a th:href="@{/friends}">Friends List</a></ul>
         </div>
     </body>

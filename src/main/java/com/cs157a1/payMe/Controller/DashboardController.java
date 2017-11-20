@@ -35,7 +35,7 @@ public class DashboardController {
 	
 	
 	@RequestMapping(value ="/friends", method = RequestMethod.GET)
-	public String showFriends(ModelMap model) {
+	public String showFriends() {
 		return "friends";
 	}
 	

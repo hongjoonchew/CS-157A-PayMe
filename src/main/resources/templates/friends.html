@@ -14,8 +14,14 @@
             Sidebar   
             </nav>
             <!--Transactions template in construction-->
-            <div class="friends">
-                Transaction should go here
+            <div class="right-container">
+                <div class = "add-friend-button"><h6>Friend List</h6><a th:href="@{/friends/add}"> Add Friend</a></div>
+                <hr/>
+                <div class= "friends-list">
+                <tr th:each="friend : ${friends}" th:unless ="${friends == null}"> Friends List
+                    <td><a th:href="@{/account/{friend.username}}" th:text="${friends.firstName}">Friends Name</a></td>
+                </tr>
+                </div>
             </div>
             </div>
         <div th:replace="fragments/footer :: footer" class="footer">Footer goes here</div>
