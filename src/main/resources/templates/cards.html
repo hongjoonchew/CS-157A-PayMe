@@ -4,7 +4,7 @@
     <head>
         <link  rel="stylesheet"  href="../static/css/bootstrap.min.css" th:href ="@{/css/bootstrap.min.css}" type="text/css"/>
         <link  th:href="@{/css/index.css}" href="/static/css/index.css" rel="stylesheet" type="text/css"/>
-        <title>Friends List</title>
+        <title>Dashboard</title>
     </head>
     <body>
         <div class="container col-md-6 col-md-offset-3">
@@ -15,13 +15,13 @@
             </nav>
             <!--Transactions template in construction-->
             <div class="right-container">
-                <div class = "right-container-button"><h6>Friend List</h6><a th:href="@{/friends/add}"> Add Friend</a></div>
+                <div class = "right-container-button"><h6>Cards</h6><a th:href="@{/cards/add}"> Add Card</a></div>
                 <hr/>
                 <div class= "right-container-list">
-                <div th:if="${friends == null}">
-                    Add some friends by clicking the link above!</div>
-                <tr th:each="friend : ${friends}" th:unless ="${friends == null}"> Friends List
-                    <td><a th:href="@{/account/{friend.username}}" th:text="${friends.firstName}">Friends Name</a></td>
+                <div th:if="${cards == null}">
+                    Add some cards by clicking the link above!</div>
+                <tr th:each="card : ${cards}" th:unless ="${card == null}"> Friends List
+                    <td><a th:text="${card.name}">Card Name</a></td>
                 </tr>
                 </div>
             </div>

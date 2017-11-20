@@ -17,6 +17,9 @@ import com.cs157a1.payMe.Entity.User;
 
 @Repository("UserDao")
 public class UserDaoImpl implements UserDao {
+	
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
 
 	@Override
 	public Collection<User> returnAllInfo() {

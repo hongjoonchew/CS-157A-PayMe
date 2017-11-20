@@ -35,14 +35,15 @@ public class DashboardController {
 	
 	
 	@RequestMapping(value ="/friends", method = RequestMethod.GET)
-	public String showFriends() {
+	public String showFriends(@ModelAttribute("accounts")Account account, ModelMap model) {
+		accountService.getFriendsByAccount(account.getUsername());
 		return "friends";
 	}
 	
 	
-	@RequestMapping(value = "/friends", method = RequestMethod.POST)
+	@RequestMapping(value = "/friends/add", method = RequestMethod.POST)
 	public String addFriend(@ModelAttribute("accounts")Account account) {
-		return "friends?search";
+		return "friends";
 		
 	}
 	

@@ -72,7 +72,7 @@ ul:last-child {
     padding-bottom:5px;
 }
 
-/*FRIENDS TEMPLATE*/
+/*RIGHT CONTAINER TEMPLATE*/
 .right-container {
     float:right;
     width: 500px;
@@ -81,12 +81,16 @@ ul:last-child {
     display:inline-block;
 }
 
-.add-friend-button{
+.right-container-button{
     margin-bottom:-15px;
     
 }
 
-.add-friend-button a{
+.right-container-list{
+    
+}
+
+.right-container-button a{
     padding-top:5px;
     text-align:right;
     float:right;
@@ -94,7 +98,7 @@ ul:last-child {
     font-size: 0.7em;
 }
 
-.add-friend-button h6{
+.right-container-button h6{
     display:inline-block;
     margin: auto;
     padding-left: 50px
