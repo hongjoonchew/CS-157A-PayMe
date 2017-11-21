@@ -14,8 +14,9 @@
             Sidebar   
             </nav>
             <!--Transactions template in construction-->
-            <div th:replace="fragments/transactions :: transactions" class="transactions">
-                Transaction should go here
+            <div class="right-container">
+            <h6 th:text="${targetAccount.firstName}">First Name</h6>
+            <h6 th:text="${targetAccount.username}">Username</h6>
             </div>
             </div>
         <div th:replace="fragments/footer :: footer" class="footer">Footer goes here</div>
