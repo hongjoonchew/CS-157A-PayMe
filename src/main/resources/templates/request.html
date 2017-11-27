@@ -14,14 +14,8 @@
             Sidebar   
             </nav>
             <!--Transactions template in construction-->
-            <div class="right-container">
-            <h5 th:text="${targetAccount.firstName}+ ' ' + ${targetAccount.firstName}">First Name</h5>
-                <h6 th:text="'Username: ' + ${targetAccount.username}">Username</h6>
-                <a th:href="@{/friends/add(username=${targetAccount.username})}" th:text="'Add Friend'">Add Friend</a>
-                <hr/>
-                <ul><a th:href="@{/transfer(target=${targetAccount.username})}" th:text="'Pay ' + ${targetAccount.firstName}">Pay</a></ul>
-                <ul><a th:href="@{/request(target=${targetAccount.username})}" th:text="'Request money from ' + ${targetAccount.firstName}">Request</a></ul>
-                
+            <div th:replace="fragments/transactions :: transactions" class="transactions">
+                Transaction should go here
             </div>
             </div>
         <div th:replace="fragments/footer :: footer" class="footer">Footer goes here</div>

@@ -50,12 +50,12 @@ body {
     display:block;,
 }
 
-ul:hover {
+.sidebar ul:hover {
     background-color:gray;
     color:white;
 }
 
-ul:last-child {
+.sidebar ul:last-child {
     border-bottom: 0px; 
 }
 
@@ -102,4 +102,17 @@ ul:last-child {
     display:inline-block;
     margin: auto;
     padding-left: 50px
+}
+
+.right-container ul{
+    padding:0;
+    margin:0;
+    list-style: none;
+    display:
+}
+        
+/*FORMS RIGHT CONTAINER TEMPLATE*/
+.right-container form{
+    display:inline-block;
+    text-align:center;
 }
