@@ -19,6 +19,7 @@
                 <p>Simply add as many usernames, just divide it with a ",".</p>
                 <form action = "#" th:action="@{/transfer}" th:object="${transferAccount}" method="post">
                     <div><label>Username(s): <input type="text" name="usernames" th:field = "*{transactionList}"/></label></div>
+                    <div><label th:if="${#fields.hasErrors('transactionList')}" th:errors="*{transactionList}"></label></div>
                     <div><label>Amount: $<input type="number" min="0.01" step="0.01" max="2500"  name="amount" th:field="*{amount}"/></label></div>
                     <div><input type="submit" value="Transfer"/></div>
                 </form>                              
