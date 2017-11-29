@@ -11,6 +11,8 @@ public class User extends Account {
 	private double balance;
 
 	private List<User> friends = new ArrayList<User>();
+	
+	
 	private List<Comment> comments = new ArrayList<Comment>();
 	private List<Transactions> transactions = new ArrayList<Transactions>();
 	private Card card;

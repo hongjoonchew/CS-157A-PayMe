@@ -1,28 +1,20 @@
 package com.cs157a1.payMe.Model;
 
 import java.util.Collection;
+import java.util.*;
 
 import com.cs157a1.payMe.Entity.User;
-import com.cs157a1.payMe.Entity.CreditCard;
+import com.cs157a1.payMe.Entity.creditCard;
 
 public interface CreditCardDao {
-	Collection<CreditCard> returnAllInfo();
+	List<creditCard> returnAllInfo();
 	
-	CreditCard returncreditCardBycardNumber(int cardNumber);
+	creditCard returncreditCardBycardNumber(int cardNumber);
 	
-	void addcreditCardToDB(CreditCard creditCard);
+	void addcreditCardToDB(creditCard creditCard);
 	
 	void deletecreditCard(int cardNumber);
-	
-	String returnCardNumber(int cardNumber);
-	
-	String returnCardName(int cardNumber);
-	
-	int returnCardCvvNumber(int cardNumber);
-	
-	float returnCreditLimit(int cardNumber);
+		
+	void updatecreditCard(creditCard creditCard);
 
-	void updatecreditCard(CreditCard creditCard);
-
-	User returnUserOfCreditCard(int cardNumber);
 }

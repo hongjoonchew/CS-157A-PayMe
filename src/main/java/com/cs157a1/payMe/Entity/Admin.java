@@ -7,22 +7,22 @@ public class Admin extends Account {
 
 	@NotNull
 	@NotBlank
-	private String authorities;
+	private int authorities;
 
 	public Admin() {
 	}
 
 	public Admin(String firstName, String lastName, String username, int payMeBalance, String password, String email,
-			String authorities) {
+			int authorities) {
 		super(firstName, lastName, username, payMeBalance, password, email);
 		this.authorities = authorities;
 	}
 
-	public String getAuthorities() {
+	public int getAuthorities() {
 		return authorities;
 	}
 
-	public void setAuthorities(String authorities) {
+	public void setAuthorities(int authorities) {
 		this.authorities = authorities;
 	}
 }

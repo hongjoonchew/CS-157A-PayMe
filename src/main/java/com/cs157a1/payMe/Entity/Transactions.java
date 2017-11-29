@@ -21,9 +21,9 @@ public class Transactions {
 	@NotBlank
 	private double amount;
 
-	private User sender;
-	private User receiver;
 	private List<Comment> comments = new ArrayList<Comment>();
+	private List<User> users = new ArrayList<User>();
+
 
 	public Transactions() {
 	}
@@ -40,24 +40,14 @@ public class Transactions {
 		this.type = type;
 		this.amount = amount;
 		this.comments = comments;
-		this.sender = sender;
-		this.receiver = receiver;
 	}
 
-	public User getSender() {
-		return sender;
+	public List<User> getUsers() {
+		return users;
 	}
 
-	public void setSender(User sender) {
-		this.sender = sender;
-	}
-
-	public User getReceiver() {
-		return receiver;
-	}
-
-	public void setReceiver(User receiver) {
-		this.receiver = receiver;
+	public void setUsers(List<User> users) {
+		this.users = users;
 	}
 
 	public int getTransID() {
