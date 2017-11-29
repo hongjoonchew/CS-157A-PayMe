@@ -1,7 +1,7 @@
 package com.cs157a1.payMe.Entity;
 
 public class Card {
-	private String cardNumber;
+	private int cardNumber;
 	private String cardName;
 	private int cvvNumber;
 
@@ -10,14 +10,14 @@ public class Card {
 	public Card() {
 	}
 
-	public Card(String cardNumber, String cardName, int cvvNumber) {
+	public Card(int cardNumber, String cardName, int cvvNumber) {
 		super();
 		this.cardNumber = cardNumber;
 		this.cardName = cardName;
 		this.cvvNumber = cvvNumber;
 	}
 
-	public Card(String cardNumber, String cardName, int cvvNumber, User user) {
+	public Card(int cardNumber, String cardName, int cvvNumber, User user) {
 		super();
 		this.cardNumber = cardNumber;
 		this.cardName = cardName;
@@ -33,11 +33,11 @@ public class Card {
 		this.user = user;
 	}
 
-	public String getCardNumber() {
+	public int getCardNumber() {
 		return cardNumber;
 	}
 
-	public void setCardNumber(String cardNumber) {
+	public void setCardNumber(int cardNumber) {
 		this.cardNumber = cardNumber;
 	}
 

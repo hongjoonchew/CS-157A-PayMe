@@ -2,78 +2,110 @@ package com.cs157a1.payMe.Model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import com.cs157a1.payMe.Entity.User;
+
 import com.cs157a1.payMe.Entity.creditCard;
 
 
 @Repository("CreditCardDao")
 public class CreditCardDaoImpl implements CreditCardDao {
+	
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
 
 	@Override
-	public Collection<creditCard> returnAllInfo() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<creditCard> returnAllInfo() {
+		final String sql = "select creditCard.number, creditCard.creditLimit, Cards.name, Cards.CVV from creditCard"
+		           + "JOIN Cards on creditCard.number=Cards.number";
+		return jdbcTemplate.query(sql, new CreditCardResultSetExtractor());
 	}
 
 	@Override
 	public creditCard returncreditCardBycardNumber(int cardNumber) {
-		// TODO Auto-generated method stub
-		return null;
+		final String sql = "select creditCard.number, creditCard.creditLimit, Cards.name, Cards.CVV from creditCard"
+		           + "JOIN Cards on creditCard.number=Cards.number"
+		           + "where creditCard.number = ?";
+
+       return jdbcTemplate.queryForObject(sql, new CreditCardsRowMapper(), cardNumber);	
 	}
 
 	@Override
 	public void addcreditCardToDB(creditCard creditCard) {
-		// TODO Auto-generated method stub
+		final String sql_creditCard = "INSERT INTO creditCard (number, creditLimit) VALUE (?,?)";
+		final String sql_card = "INSERT INTO Cards (number,name,CVV) VALUE (?,?)";
 		
+		int number = creditCard.getCardNumber();
+		String name = creditCard.getCardName();
+		int cvv = creditCard.getCvvNumber();
+		float creditLimit = creditCard.getCreditLimit();
+
+		
+		jdbcTemplate.update(sql_creditCard, new Object[] {number,creditLimit});
+		jdbcTemplate.update(sql_card, new Object[] {number,name,cvv});		
 	}
 
 	@Override
 	public void deletecreditCard(int cardNumber) {
-		// TODO Auto-generated method stub
+		final String sql_creditCard = "DELETE FROM creditCard WHERE number = ?";
+		final String sql_Card = "DELETE FROM Cards WHERE number = ?";
 		
-	}
-
-	@Override
-	public String returnCardNumber(int cardNumber) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String returnCardName(int cardNumber) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int returnCardCvvNumber(int cardNumber) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public float returnCreditLimit(int cardNumber) {
-		// TODO Auto-generated method stub
-		return 0;
+		jdbcTemplate.update(sql_creditCard,cardNumber);
+		jdbcTemplate.update(sql_Card,cardNumber);
 	}
 
 	@Override
 	public void updatecreditCard(creditCard creditCard) {
-		// TODO Auto-generated method stub
+		final String sql_creditCard = "UPDATE creditCard SET creditLimit = ? WHERE number = ?";
+		final String sql_Card = "UPDATE Card SET name = ? and CVV = ? WHERE number = ?";
+
 		
+		int number = creditCard.getCardNumber();
+		String name = creditCard.getCardName();
+		int cvv = creditCard.getCvvNumber();
+		float creditLimit = creditCard.getCreditLimit();
+
+		
+		jdbcTemplate.update(sql_creditCard, new Object[] {creditLimit, number});
+		jdbcTemplate.update(sql_Card, new Object[] {name, cvv, number});	
+	}
+	
+	public class CreditCardResultSetExtractor implements ResultSetExtractor<List<creditCard>> {
+
+		   @Override
+		   public List<creditCard> extractData(ResultSet rs) throws SQLException {
+		      List<creditCard> creditCardlist = new ArrayList<creditCard>();      
+		      while(rs.next()){
+			        creditCard creditCard = new creditCard();
+					creditCard.setCardNumber(rs.getInt("number"));
+					creditCard.setCardName(rs.getString("name"));
+					creditCard.setCvvNumber(rs.getInt("CVV"));
+					creditCard.setCreditLimit(rs.getFloat("creditLimit"));
+			        creditCardlist.add(creditCard);
+		      }
+		      return creditCardlist;
+		  }
+		}
+	
+	private static class CreditCardsRowMapper implements RowMapper<creditCard>{
+		  
+		@Override
+		public creditCard mapRow(ResultSet rs, int rowNum) throws SQLException {
+			creditCard creditCard = new creditCard();
+			creditCard.setCardNumber(rs.getInt("number"));
+			creditCard.setCardName(rs.getString("name"));
+			creditCard.setCvvNumber(rs.getInt("CVV"));
+			creditCard.setCreditLimit(rs.getFloat("creditLimit"));
+			return creditCard;
+		}
 	}
 
-	@Override
-	public User returnUserOfCreditCard(int cardNumber) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

@@ -10,7 +10,7 @@ import com.cs157a1.payMe.Entity.Transactions;
 import com.cs157a1.payMe.Entity.User;
 
 public interface UserDao {
-	Collection<User> returnAllInfo();
+	List<User> returnAllInfo();
 
 	User returnUserByUsername(String username);
 
@@ -24,12 +24,12 @@ public interface UserDao {
 
 	void updateUser(User User);
 
-	Collection<User> returnFriendsByUsername(String username);
+	List<User> returnFriendsByUsername(String username);
 
-	Collection<Comment> returnComments(String username);
+	List<User> returnComments(String username);
 
-	Collection<Transactions> returnTransactions(String username);
+	List<User> returnTransactions(String username);
 
-	Card returnCardBelongToUser(String username);
+	User returnCardBelongToUser(String username);
 
 }
