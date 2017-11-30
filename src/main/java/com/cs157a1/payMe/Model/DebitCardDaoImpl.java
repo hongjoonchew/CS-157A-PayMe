@@ -13,7 +13,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.cs157a1.payMe.Entity.DebitCard;
-import com.cs157a1.payMe.Entity.creditCard;
+import com.cs157a1.payMe.Entity.CreditCard;
 
 
 

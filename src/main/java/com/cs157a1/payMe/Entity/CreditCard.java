@@ -3,7 +3,7 @@ package com.cs157a1.payMe.Entity;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotBlank;
 
-public class creditCard extends Card {
+public class CreditCard extends Card {
 
 	@NotNull
 	@NotBlank
@@ -11,16 +11,16 @@ public class creditCard extends Card {
 	
 	CardType type;
 
-	public creditCard() {
+	public CreditCard() {
 	}
 
-	public creditCard(int cardNumber, String cardName, int cvvNumber, float creditLimit) {
+	public CreditCard(int cardNumber, String cardName, int cvvNumber, float creditLimit) {
 		super(cardNumber, cardName, cvvNumber);
 		this.creditLimit = creditLimit;
 		type = CardType.Credit;
 	}
 
-	public creditCard(int cardNumber, String cardName, int cvvNumber, float creditLimit, User user) {
+	public CreditCard(int cardNumber, String cardName, int cvvNumber, float creditLimit, User user) {
 		super(cardNumber, cardName, cvvNumber, user);
 		this.creditLimit = creditLimit;
 		type = CardType.Credit;
