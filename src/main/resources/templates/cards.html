@@ -15,14 +15,15 @@
             </nav>
             <!--Transactions template in construction-->
             <div class="right-container">
-                <div class = "right-container-button"><h6>Cards</h6><a th:href="@{/cards/add}"> Add Card</a></div>
+                <div class = "right-container-button"><h6>Cards</h6><a th:href="@{/cards/addCard}"> Add Card</a></div>
                 <hr/>
                 <div class= "right-container-list">
                 <div th:if="${cards == null}">
                     Add some cards by clicking the link above!</div>
-                <tr th:each="card : ${cards}" th:unless ="${card == null}"> Friends List
-                    <td><a th:text="${card.name}">Card Name</a></td>
-                </tr>
+                <div th:each="card : ${cards}" th:unless ="${card == null}"> 
+                    <div class = "right-container-entry"><a th:href="@{/cards}" th:text="${card.cardName}">Card Name</a></div>
+                    <hr/>
+                </div>
                 </div>
             </div>
             </div>

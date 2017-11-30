@@ -49,7 +49,6 @@ public class DashboardController {
 		if(username != null) {
 		friend = accountService.returnAccountByUsername(username);
 		}
-		System.out.println(friend.getUsername());
 		model.addAttribute("friendAccount", friend);
 		return "add";
 	}
