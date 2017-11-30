@@ -12,7 +12,7 @@ import com.cs157a1.payMe.Model.DebitCardDao;
 public class DebitCardsServices {
 	
 	@Autowired
-	@Qualifier("mysql")
+	@Qualifier("DebitCardDao")
 	private DebitCardDao debitCardDao;
 	
 	List<DebitCard> returnAllInfo(){

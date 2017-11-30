@@ -12,7 +12,7 @@ import com.cs157a1.payMe.Model.UserDao;
 public class UsersServices {
 	
 	@Autowired
-	@Qualifier("mysql")
+	@Qualifier("UserDao")
 	private UserDao userDao;
 	
 	List<User> returnAllInfo(){

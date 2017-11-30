@@ -12,7 +12,7 @@ import com.cs157a1.payMe.Model.CommentsDao;
 public class CommentsServices {
 	
 	@Autowired
-	@Qualifier("mysql")
+	@Qualifier("CommentsDao")
 	private CommentsDao commentDao;
 	
 	List<Comment> returnAllInfo(){

@@ -4,17 +4,17 @@ import java.util.Collection;
 import java.util.*;
 
 import com.cs157a1.payMe.Entity.User;
-import com.cs157a1.payMe.Entity.creditCard;
+import com.cs157a1.payMe.Entity.CreditCard;
 
 public interface CreditCardDao {
-	List<creditCard> returnAllInfo();
+	List<CreditCard> returnAllInfo();
 	
-	creditCard returncreditCardBycardNumber(int cardNumber);
+	CreditCard returncreditCardBycardNumber(int cardNumber);
 	
-	void addcreditCardToDB(creditCard creditCard);
+	void addcreditCardToDB(CreditCard creditCard);
 	
 	void deletecreditCard(int cardNumber);
 		
-	void updatecreditCard(creditCard creditCard);
+	void updatecreditCard(CreditCard creditCard);
 
 }

@@ -12,7 +12,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 
-import com.cs157a1.payMe.Entity.creditCard;
+import com.cs157a1.payMe.Entity.CreditCard;
 
 
 @Repository("CreditCardDao")
@@ -22,14 +22,14 @@ public class CreditCardDaoImpl implements CreditCardDao {
 	private JdbcTemplate jdbcTemplate;
 
 	@Override
-	public List<creditCard> returnAllInfo() {
+	public List<CreditCard> returnAllInfo() {
 		final String sql = "select creditCard.number, creditCard.creditLimit, Cards.name, Cards.CVV from creditCard"
 		           + "JOIN Cards on creditCard.number=Cards.number";
 		return jdbcTemplate.query(sql, new CreditCardResultSetExtractor());
 	}
 
 	@Override
-	public creditCard returncreditCardBycardNumber(int cardNumber) {
+	public CreditCard returncreditCardBycardNumber(int cardNumber) {
 		final String sql = "select creditCard.number, creditCard.creditLimit, Cards.name, Cards.CVV from creditCard"
 		           + "JOIN Cards on creditCard.number=Cards.number"
 		           + "where creditCard.number = ?";
@@ -38,7 +38,7 @@ public class CreditCardDaoImpl implements CreditCardDao {
 	}
 
 	@Override
-	public void addcreditCardToDB(creditCard creditCard) {
+	public void addcreditCardToDB(CreditCard creditCard) {
 		final String sql_creditCard = "INSERT INTO creditCard (number, creditLimit) VALUE (?,?)";
 		final String sql_card = "INSERT INTO Cards (number,name,CVV) VALUE (?,?)";
 		
@@ -62,7 +62,7 @@ public class CreditCardDaoImpl implements CreditCardDao {
 	}
 
 	@Override
-	public void updatecreditCard(creditCard creditCard) {
+	public void updatecreditCard(CreditCard creditCard) {
 		final String sql_creditCard = "UPDATE creditCard SET creditLimit = ? WHERE number = ?";
 		final String sql_Card = "UPDATE Card SET name = ? and CVV = ? WHERE number = ?";
 
@@ -77,13 +77,13 @@ public class CreditCardDaoImpl implements CreditCardDao {
 		jdbcTemplate.update(sql_Card, new Object[] {name, cvv, number});	
 	}
 	
-	public class CreditCardResultSetExtractor implements ResultSetExtractor<List<creditCard>> {
+	public class CreditCardResultSetExtractor implements ResultSetExtractor<List<CreditCard>> {
 
 		   @Override
-		   public List<creditCard> extractData(ResultSet rs) throws SQLException {
-		      List<creditCard> creditCardlist = new ArrayList<creditCard>();      
+		   public List<CreditCard> extractData(ResultSet rs) throws SQLException {
+		      List<CreditCard> creditCardlist = new ArrayList<CreditCard>();      
 		      while(rs.next()){
-			        creditCard creditCard = new creditCard();
+			        CreditCard creditCard = new CreditCard();
 					creditCard.setCardNumber(rs.getInt("number"));
 					creditCard.setCardName(rs.getString("name"));
 					creditCard.setCvvNumber(rs.getInt("CVV"));
@@ -94,11 +94,11 @@ public class CreditCardDaoImpl implements CreditCardDao {
 		  }
 		}
 	
-	private static class CreditCardsRowMapper implements RowMapper<creditCard>{
+	private static class CreditCardsRowMapper implements RowMapper<CreditCard>{
 		  
 		@Override
-		public creditCard mapRow(ResultSet rs, int rowNum) throws SQLException {
-			creditCard creditCard = new creditCard();
+		public CreditCard mapRow(ResultSet rs, int rowNum) throws SQLException {
+			CreditCard creditCard = new CreditCard();
 			creditCard.setCardNumber(rs.getInt("number"));
 			creditCard.setCardName(rs.getString("name"));
 			creditCard.setCvvNumber(rs.getInt("CVV"));

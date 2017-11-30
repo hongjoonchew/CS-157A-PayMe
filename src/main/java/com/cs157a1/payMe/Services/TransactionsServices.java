@@ -12,7 +12,7 @@ import com.cs157a1.payMe.Model.TransactionsDao;
 public class TransactionsServices {
 	
 	@Autowired
-	@Qualifier("mysql")
+	@Qualifier("TransactionsDao")
 	private TransactionsDao transactionsDao;
 	
 	

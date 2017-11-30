@@ -5,25 +5,25 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import java.util.*;
 
-import com.cs157a1.payMe.Entity.creditCard;
+import com.cs157a1.payMe.Entity.CreditCard;
 import com.cs157a1.payMe.Model.CreditCardDao;
 
 @Service
 public class CreditCardsServices {
 	
 	@Autowired
-	@Qualifier("mysql")
+	@Qualifier("CreditCardDao")
 	private CreditCardDao creditCardDao;
 	
-	List<creditCard> returnAllInfo(){
+	List<CreditCard> returnAllInfo(){
 		return creditCardDao.returnAllInfo();
 	}
 	
-	creditCard returncreditCardBycardNumber(int cardNumber) {
+	CreditCard returncreditCardBycardNumber(int cardNumber) {
 		return creditCardDao.returncreditCardBycardNumber(cardNumber);
 	}
 	
-	void addcreditCardToDB(creditCard creditCard) {
+	void addcreditCardToDB(CreditCard creditCard) {
 		 creditCardDao.addcreditCardToDB(creditCard);
 	}
 	
@@ -31,7 +31,7 @@ public class CreditCardsServices {
 		 creditCardDao.deletecreditCard(cardNumber);
 	}
 		
-	void updatecreditCard(creditCard creditCard) {
+	void updatecreditCard(CreditCard creditCard) {
 		 creditCardDao.updatecreditCard(creditCard);
 	}
 

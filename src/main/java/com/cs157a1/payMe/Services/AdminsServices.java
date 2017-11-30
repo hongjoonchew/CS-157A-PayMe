@@ -12,7 +12,7 @@ import com.cs157a1.payMe.Model.AdminDao;
 public class AdminsServices {
 	
 	@Autowired
-	@Qualifier("mysql")
+	@Qualifier("AdminDao")
 	private AdminDao adminDao;
 	
     Collection<Admin> returnAllInfo(){
