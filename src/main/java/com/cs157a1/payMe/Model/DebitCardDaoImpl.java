@@ -82,16 +82,16 @@ public class DebitCardDaoImpl implements DebitCardDao {
 
 		   @Override
 		   public List<DebitCard> extractData(ResultSet rs) throws SQLException {
-		      List<DebitCard> deibtCardlist = new ArrayList<DebitCard>();      
+		      List<DebitCard> debitCardList = new ArrayList<DebitCard>();      
 		      while(rs.next()){
 		    	  DebitCard debitCard = new DebitCard();
 			  debitCard.setCardNumber(rs.getInt("number"));
 			  debitCard.setCardName(rs.getString("name"));
 			  debitCard.setCvvNumber(rs.getInt("CVV"));
 			  debitCard.setBalance(rs.getFloat("balance"));
-		    	  deibtCardlist.add(debitCard);
+		    	  debitCardList.add(debitCard);
 		      }
-		      return deibtCardlist;
+		      return debitCardList;
 		  }
 		}
 	
