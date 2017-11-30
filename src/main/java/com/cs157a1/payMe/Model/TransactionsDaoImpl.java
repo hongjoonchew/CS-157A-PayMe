@@ -2,80 +2,96 @@ package com.cs157a1.payMe.Model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Collection;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.cs157a1.payMe.Entity.Comment;
-import com.cs157a1.payMe.Entity.TransType;
 import com.cs157a1.payMe.Entity.Transactions;
-import com.cs157a1.payMe.Entity.User;
+
 
 
 @Repository("TransactionsDao")
 public class TransactionsDaoImpl implements TransactionsDao {
 
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
+	
 	@Override
-	public Collection<Transactions> returnAllInfo() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Transactions> returnAllInfo() {
+		return jdbcTemplate.query("select Transactions.transId, Transactions.amount"
+				                      + " Comments.commentId, Comments.description from Transactions"
+				                      + "JOIN Comments on Transactions.transId=Comments.users_username"
+				                      , new TransactionsResultSetExtractor());
 	}
 
 	@Override
 	public Transactions returnTransactionsBytransID(int transID) {
-		// TODO Auto-generated method stub
-		return null;
+		final String sql = "select * from Transactions where transId = ?";
+		return jdbcTemplate.queryForObject(sql, new TransactionsRowMapper(), transID);
+		
 	}
 
 	@Override
-	public void addTransactionsToDB(Transactions Transactions) {
-		// TODO Auto-generated method stub
+	public void addTransactionsToDB(Transactions transaction) {
+		final String sql = "INSERT INTO Transactions(transId,amount) VALUES (?,?)";
 		
+		double amount = transaction.getAmount();
+		int id = transaction.getTransID();
+		
+		jdbcTemplate.update(sql, new Object[] {id,amount});		
 	}
 
 	@Override
 	public void deleteTransactions(int transID) {
-		// TODO Auto-generated method stub
+		final String sql = "DELETE FROM Transactions WHERE transId = ?";
+		jdbcTemplate.update(sql,transID);
+	}
+	
+	
+	public class TransactionsResultSetExtractor implements ResultSetExtractor<List<Transactions>> {
+
+		   @Override
+		   public List<Transactions> extractData(ResultSet rs) throws SQLException {
+		         Map<Integer, Transactions> transactionmap = new HashMap<Integer, Transactions>();
+		         while (rs.next()) {
+		             int id = rs.getInt("transID");
+		             Transactions transaction = transactionmap.get(id);
+		             if(transaction == null) {
+		            	     transaction = new Transactions();
+		   		    	     transaction.setTransID(rs.getInt("transID"));
+				    	     transaction.setAmount(rs.getDouble("amount"));
+				    	     transactionmap.put(rs.getInt("transID"), transaction);
+		             }
+
+					 Comment comment = new Comment();
+					 comment.setCommentId(rs.getInt("commentId"));
+					 comment.setDescription(rs.getString("description"));
+					 
+					 transaction.getComments().add(comment);
+					  
+		         }
 		
+		    	return new ArrayList<Transactions>(transactionmap.values());
+			   
+		  }
+	}
+	
+	private static class TransactionsRowMapper implements RowMapper<Transactions>{
+		  
+		@Override
+		public Transactions mapRow(ResultSet rs, int rowNum) throws SQLException {
+			Transactions transactions = new Transactions();
+	    	    transactions.setTransID(rs.getInt("transID"));
+	    	    transactions.setAmount(rs.getDouble("amount"));
+	
+			return transactions;
+		}
 	}
 
-	@Override
-	public double returnamount(int transID) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public TransType returnType(int transID) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void updateTransactions(Transactions Transactions) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Collection<Comment> returnCommentsFromTransaction(int transID) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public User returnTransactionSender(int transID) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public User returnTransactionReciever(int transID) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

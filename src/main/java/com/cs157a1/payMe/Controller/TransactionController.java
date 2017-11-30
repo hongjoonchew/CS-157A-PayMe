@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.cs157a1.payMe.Entity.Account;
@@ -73,7 +74,11 @@ public class TransactionController {
 	}
 	
 	@RequestMapping(value="/transfer", method = RequestMethod.GET)
-	public String getTransferForm(@ModelAttribute("transferAccount")TransactionList str,ModelMap map) {
+	public String getTransferForm(@ModelAttribute("transferAccount")TransactionList str, @RequestParam(value="target", required =false)String target,ModelMap map) {
+		if(target != null) {
+			Account tar = accountService.returnAccountByUsername(target);
+			map.addAttribute("target", tar);
+		}
 		map.addAttribute("transferAccount", str);
 		return "transfer";
 	}

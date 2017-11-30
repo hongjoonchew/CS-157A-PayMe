@@ -30,6 +30,9 @@ public class SignUpController {
 		return "signup";
 	}
 	
+	// value == root
+	// Model == page
+	
 	@RequestMapping(value ="/signup", method = RequestMethod.POST)
 	public String addAccountToDB(@Valid @ModelAttribute("accounts")  Account account, BindingResult result) {
 		if(result.hasErrors()) {
@@ -40,5 +43,8 @@ public class SignUpController {
 		return "redirect:/home?complete";
 		}
 	}
+	
+	// submit button
+	// result.error checks if form is empty
 	
 }

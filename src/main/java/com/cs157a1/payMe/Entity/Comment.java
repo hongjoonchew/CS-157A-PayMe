@@ -14,7 +14,12 @@ public class Comment {
 
 	private User user;
 	private Transactions transactions;
-
+	
+	public Comment() {
+		
+	}
+	
+	
 	public Comment(int commentId, String description) {
 		this.commentId = commentId;
 		this.description = description;

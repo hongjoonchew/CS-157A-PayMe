@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <link  rel="stylesheet"  href="../static/css/bootstrap.min.css" th:href ="@{/css/bootstrap.min.css}" type="text/css"/>
+        <link  th:href="@{/css/index.css}" href="/static/css/index.css" rel="stylesheet" type="text/css"/>
+        <title>Add Friend</title>
+    </head>
+    <body>
+        <div class="container col-md-6 col-md-offset-3">
+            <div class ="dashboard">
+        <nav th:include="fragments/sidebar :: sidebar" th:with= "account = ${account}" class="sidebar">
+            Sidebar  </nav>
+        <div class="right-container">
+        <h6> Add Friend Form</h6>
+        <form action = "#" th:action= "@{/cards/addcard}" th:object="${card}" method="post">
+            <div><label>Cardholder Name : <input type="text"  th:field="*{cardName}"/></label></div>
+            <div><label>Card Number : <input type="text"  th:field="*{cardNumber}"/></label></div>
+            <div><label>CVV : <input type="text"  th:field="*{CVV}"/></label></div>
+            <div><label>Expiration Month : <input type="month"  th:field="*{}"/></label></div>
+            <div><label>Expiration Year : <input type="text"  th:field="*{}"/></label></div>
+            <div><input type="submit" value="Add Friend"/></div>
+        </form>
+            </div>
+            </div>
+            <div th:replace="fragments/footer :: footer">Footer goes here</div>
+        </div>
+    </body>
+</html>

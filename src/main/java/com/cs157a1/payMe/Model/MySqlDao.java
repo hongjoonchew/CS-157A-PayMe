@@ -17,7 +17,7 @@ public class MySqlDao implements AccountsImpl {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
-	private static class AccountsRowMapper implements RowMapper<Account>{
+	public static class AccountsRowMapper implements RowMapper<Account>{
 
 		@Override
 		public Account mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -66,7 +66,6 @@ public class MySqlDao implements AccountsImpl {
 		jdbcTemplate.update(sql,new Object[] {username, password, first_name, last_name, email, enabled});
 		jdbcTemplate.update(userSQL, new Object[] {username,balance});
 		jdbcTemplate.update(accessSQL, new Object[] {username,1});
-
 	}
 
 	@Override

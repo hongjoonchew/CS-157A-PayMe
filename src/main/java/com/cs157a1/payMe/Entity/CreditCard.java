@@ -1,3 +1,4 @@
+
 package com.cs157a1.payMe.Entity;
 
 import javax.validation.constraints.NotNull;
@@ -14,13 +15,13 @@ public class CreditCard extends Card {
 	public CreditCard() {
 	}
 
-	public CreditCard(String cardNumber, String cardName, int cvvNumber, float creditLimit) {
+	public CreditCard(int cardNumber, String cardName, int cvvNumber, float creditLimit) {
 		super(cardNumber, cardName, cvvNumber);
 		this.creditLimit = creditLimit;
 		type = CardType.Credit;
 	}
 
-	public CreditCard(String cardNumber, String cardName, int cvvNumber, float creditLimit, User user) {
+	public CreditCard(int cardNumber, String cardName, int cvvNumber, float creditLimit, User user) {
 		super(cardNumber, cardName, cvvNumber, user);
 		this.creditLimit = creditLimit;
 		type = CardType.Credit;
