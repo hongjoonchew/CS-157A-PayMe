@@ -27,6 +27,11 @@ public class Transactions {
 
 	public Transactions() {
 	}
+	
+	public Transactions(TransType type, double amount) {
+		this.type = type;
+		this.amount = amount;
+	}
 
 	public Transactions(int transID, TransType type, double amount) {
 		this.transID = transID;

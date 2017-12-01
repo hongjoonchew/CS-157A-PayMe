@@ -34,15 +34,15 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public List<User> returnAllInfo() {
-		 return jdbcTemplate.query("select User.username, User.balance, Account.first_name, Account.last_name from User JOIN Accounts on User.username=Accounts.username", new UserResultSetExtractor());
+		 return jdbcTemplate.query("select Users.username, Users.balance, Accounts.first_name, Accounts.last_name from Users JOIN Accounts on Users.username=Accounts.username", new UserResultSetExtractor());
 	}
 	
 	
 	@Override
 	public  User returnUserByUsername(String username) {
-		final String sql = "select User.username, User.balance, Account.first_name, Account.last_name from Users"
-				+ "JOIN Accounts on User.username=Accounts.username"
-				+ "where username = ?";
+		final String sql = "select Users.username, Users.balance, Accounts.first_name, Accounts.last_name from Users"
+				+ " JOIN Accounts on Users.username=Accounts.username"
+				+ " where Users.username = ?";
 		User user = jdbcTemplate.queryForObject(sql, new UsersRowMapper(), username);
 		
 		return user;
@@ -102,20 +102,17 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public List<User> returnFriendsByUsername(String username) {
-		return jdbcTemplate.query("select Users.username, Users.balance, Accounts.first_name, Accounts.last_name, "
-				+ " UserF.username as usernameF, UserF.balance as balanceF,AccountsF.firstname as firstnameF, Accounts.last_name as last_nameF"
-				   + "JOIN Accounts on Users.username=Accounts.username"
-		           + "JOIN users_has_users on User.username=users_has_users.username"
-		           + "JOIN Users UserF on users_has_users.username=Users.username"
-		           + "JOIN Accounts AccountsF on Users.username=Accounts.username ", new UserFriendsExtractor());
+		return jdbcTemplate.query("SELECT users_has_users.username, "
+				+ "users_has_users.friendusername, first_name, last_name FROM paymeModel.users_has_users "
+				+ "INNER JOIN paymeModel.accounts ON accounts.username = users_has_users.friendusername WHERE users_has_users.username = ?;", new UserFriendsExtractor(), username);
 	}
 
 	@Override
 	public List<User> returnComments(String username) {
-		return jdbcTemplate.query("select User.username, User.balance, Account.first_name, Account.last_name, "
-				           + "Comments.commentId , Comments.description from User "
-				           + "JOIN Accounts on User.username=Accounts.username "
-				           + "JOIN Comments on User.username= Comments.users_username", new UserCommentsExtractor());
+		return jdbcTemplate.query("select Users.username, Users.balance, Accounts.first_name, Accounts.last_name, "
+				           + "Comments.commentId , Comments.description from Users "
+				           + "JOIN Accounts on Users.username=Accounts.username "
+				           + "JOIN Comments on Users.username= Comments.users_username WHERE Users.username = ?", new UserCommentsExtractor(), username);
 
 	}
 
@@ -145,33 +142,22 @@ public class UserDaoImpl implements UserDao {
 	
 	public class UserFriendsExtractor implements ResultSetExtractor<List<User>>{
 
-	    @Override
-	    public List<User> extractData(ResultSet rs) throws SQLException, DataAccessException {
-	         Map<String, User> usermap = new HashMap<String, User>();
-	         while (rs.next()) {
-	             String username = rs.getString("username");
-	             User user = usermap.get(username);
-	             if(user == null) {
-			         user = new User();
-					 user.setUsername(rs.getString("username"));
-					 user.setBalance(rs.getDouble("balance"));
-					 user.setFirstName(rs.getString("first_name"));
-					 user.setLastName(rs.getString("last_name"));
-					 usermap.put(rs.getString("username"), user);
-	             }
+        @Override
+        public List<User> extractData(ResultSet rs) throws SQLException, DataAccessException {
+              List<User> userlist = new ArrayList<User>();      
+              while(rs.next()){
+                 User user = new User();
+                 user.setUsername(rs.getString("friendusername"));
+                 user.setFirstName(rs.getString("first_name"));
+                 user.setLastName(rs.getString("last_name"));
+                 
+                 userlist.add(user);
+              }
+              return userlist;
+        }
+    }
 
-				 User friend = new User() ;
-				 friend.setUsername(rs.getString("usernameF"));
-				 friend.setBalance(rs.getDouble("balanceF"));
-				 friend.setFirstName(rs.getString("first_nameF"));
-				 friend.setLastName(rs.getString("last_nameF")); 
-				 user.getFriends().add(friend);
-	        	 
-	         }
-	
-	    	return new ArrayList<User>(usermap.values());
-	    }
-	}
+
 	
 	public class UserTransactionsExtractor implements ResultSetExtractor<List<User>>{
 

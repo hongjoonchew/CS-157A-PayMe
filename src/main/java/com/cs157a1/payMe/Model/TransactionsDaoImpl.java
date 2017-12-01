@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.cs157a1.payMe.Entity.Comment;
+import com.cs157a1.payMe.Entity.TransType;
 import com.cs157a1.payMe.Entity.Transactions;
 
 
@@ -38,12 +39,13 @@ public class TransactionsDaoImpl implements TransactionsDao {
 
 	@Override
 	public void addTransactionsToDB(Transactions transaction) {
-		final String sql = "INSERT INTO Transactions(transId,amount) VALUES (?,?)";
+		final String sql = "INSERT INTO Transactions(transId,type,amount) VALUES (?,?,?)";
 		
 		double amount = transaction.getAmount();
 		int id = transaction.getTransID();
+		TransType type = transaction.getType();
 		
-		jdbcTemplate.update(sql, new Object[] {id,amount});		
+		jdbcTemplate.update(sql, new Object[] {id,type,amount});		
 	}
 
 	@Override

@@ -16,20 +16,20 @@ public class TransactionsServices {
 	private TransactionsDao transactionsDao;
 	
 	
-	List<Transactions> returnAllInfo(){
+	public List<Transactions> returnAllInfo(){
 		return transactionsDao.returnAllInfo();
 		
 	}
 	
-	Transactions returnTransactionsBytransID(int transID) {
+	public Transactions returnTransactionsBytransID(int transID) {
 		return transactionsDao.returnTransactionsBytransID(transID);
 	}
 	
-	void addTransactionsToDB(Transactions Transactions) {
+	public void addTransactionsToDB(Transactions Transactions) {
 		 transactionsDao.addTransactionsToDB(Transactions);
 	}
 	
-	void deleteTransactions(int transID) {
+	public void deleteTransactions(int transID) {
 		 transactionsDao.deleteTransactions(transID);
 	}
 
