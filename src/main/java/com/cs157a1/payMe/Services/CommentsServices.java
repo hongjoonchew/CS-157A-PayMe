@@ -15,23 +15,23 @@ public class CommentsServices {
 	@Qualifier("CommentsDao")
 	private CommentsDao commentDao;
 	
-	List<Comment> returnAllInfo(){
+	public List<Comment> returnAllInfo(){
 		return commentDao.returnAllInfo();
 	}
 	
-	Comment returnCommentBycommentId(int commentId, int transId, String username) {
+	public Comment returnCommentBycommentId(int commentId, int transId, String username) {
 		return commentDao.returnCommentBycommentId(commentId, transId, username);
 	}
 	
-	void addCommentToDB(Comment Comment) {
+	public void addCommentToDB(Comment Comment) {
 		 commentDao.addCommentToDB(Comment);
 	}
 	
-	void deleteComment(int commentId) {
+	public void deleteComment(int commentId) {
 		 commentDao.deleteComment(commentId);
 	}
 	
-	void updateComment(Comment Comment) {
+	public void updateComment(Comment Comment) {
 		 commentDao.updateComment(Comment);
 	}
 

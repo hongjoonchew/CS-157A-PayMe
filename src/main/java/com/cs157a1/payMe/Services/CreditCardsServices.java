@@ -15,23 +15,23 @@ public class CreditCardsServices {
 	@Qualifier("CreditCardDao")
 	private CreditCardDao creditCardDao;
 	
-	List<CreditCard> returnAllInfo(){
+	public List<CreditCard> returnAllInfo(){
 		return creditCardDao.returnAllInfo();
 	}
 	
-	CreditCard returncreditCardBycardNumber(int cardNumber) {
+	public CreditCard returncreditCardBycardNumber(int cardNumber) {
 		return creditCardDao.returncreditCardBycardNumber(cardNumber);
 	}
 	
-	void addcreditCardToDB(CreditCard creditCard) {
+	public void addcreditCardToDB(CreditCard creditCard) {
 		 creditCardDao.addcreditCardToDB(creditCard);
 	}
 	
-	void deletecreditCard(int cardNumber) {
+	public void deletecreditCard(int cardNumber) {
 		 creditCardDao.deletecreditCard(cardNumber);
 	}
 		
-	void updatecreditCard(CreditCard creditCard) {
+	public void updatecreditCard(CreditCard creditCard) {
 		 creditCardDao.updatecreditCard(creditCard);
 	}
 

@@ -15,23 +15,23 @@ public class DebitCardsServices {
 	@Qualifier("DebitCardDao")
 	private DebitCardDao debitCardDao;
 	
-	List<DebitCard> returnAllInfo(){
+	public List<DebitCard> returnAllInfo(){
 		return debitCardDao.returnAllInfo();
 	}
 	
-	DebitCard returnDebitCardBycardNumber(int cardNumber) {
+	public DebitCard returnDebitCardBycardNumber(int cardNumber) {
 		return debitCardDao.returnDebitCardBycardNumber(cardNumber);
 	}
 	
-	void addDebitCardToDB(DebitCard DebitCard) {
+	public void addDebitCardToDB(DebitCard DebitCard) {
 		 debitCardDao.addDebitCardToDB(DebitCard);
 	}
 	
-	void deleteDebitCard(int cardNumber) {
+	public void deleteDebitCard(int cardNumber) {
 		 debitCardDao.deleteDebitCard(cardNumber);
 	}
 	
-	void updateDebitCard(DebitCard DebitCard) {
+	public void updateDebitCard(DebitCard DebitCard) {
 		 debitCardDao.updateDebitCard(DebitCard);
 	}
 

@@ -15,31 +15,31 @@ public class AdminsServices {
 	@Qualifier("AdminDao")
 	private AdminDao adminDao;
 	
-    Collection<Admin> returnAllInfo(){
+    public Collection<Admin> returnAllInfo(){
     	 return adminDao.returnAllInfo();
     }
 	
-	Admin returnAdminByUsername(String username) {
+	public Admin returnAdminByUsername(String username) {
 		return adminDao.returnAdminByUsername(username);
 	}
 	
-	void addAdminToDB(Admin Admin) {
+	public void addAdminToDB(Admin Admin) {
 		adminDao.addAdminToDB(Admin);
 	}
 	
-	void deleteAdmin(String username) {
+	public void deleteAdmin(String username) {
 		adminDao.deleteAdmin(username);
 	}
 	
-	String returnPassword(String username) {
+	public String returnPassword(String username) {
 		return adminDao.returnPassword(username);
 	}
 	
-	int returnauthoritykey(String username) {
+	public int returnauthoritykey(String username) {
 		return adminDao.returnauthoritykey(username);
 	}
 
-	void updateAdmin(Admin Admin) {
+	public void updateAdmin(Admin Admin) {
 		adminDao.updateAdmin(Admin);
 	}
 
