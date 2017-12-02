@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.cs157a1.payMe.Entity.Account;
 import com.cs157a1.payMe.Entity.Card;
 import com.cs157a1.payMe.Services.AccountServices;
+import com.cs157a1.payMe.Services.CreditCardsServices;
+import com.cs157a1.payMe.Services.DebitCardsServices;
 
 @Controller
 @SessionAttributes("accounts")
@@ -23,6 +25,12 @@ public class CardController {
 	
 	@Autowired
 	public AccountServices accountServices;
+	
+	@Autowired
+	public CreditCardsServices creditCardServices;
+	
+	@Autowired
+	public DebitCardsServices debitCardServices;
 	
 	@ModelAttribute("accounts")
 	public Account getAccount(Principal principal){
@@ -33,15 +41,8 @@ public class CardController {
 	@ModelAttribute("cards")
 	public Collection<Card> getCards() {
 		Collection<Card> cardList = new ArrayList<>();
-		//STUBS
-		cardList.add(new Card(430000000, "card", 121));
-		cardList.add(new Card(430000001, "card2", 119));
-		cardList.add(new Card(430000000, "card", 121));
-		cardList.add(new Card(430000001, "card2", 119));
-		cardList.add(new Card(430000000, "card", 121));
-		cardList.add(new Card(430000001, "card2", 119));
-		cardList.add(new Card(430000000, "card", 121));
-		cardList.add(new Card(430000001, "card2", 119));
+		cardList.addAll(creditCardServices.returnAllInfo());
+		cardList.addAll(debitCardServices.returnAllInfo());
 		return cardList;
 	}
 	

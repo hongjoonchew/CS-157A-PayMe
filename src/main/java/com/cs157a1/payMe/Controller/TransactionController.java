@@ -95,23 +95,44 @@ public class TransactionController {
 	}
 
 	@RequestMapping(value="/transfer", method = RequestMethod.POST)
-	public String sendTransferForm(@Valid @ModelAttribute("transferAccount") TransactionList str, @ModelAttribute("accounts") Account acct, BindingResult binding) {
+	public String sendTransferForm(@Valid @ModelAttribute("transferAccount") TransactionList str, @ModelAttribute("accounts") Account acct, BindingResult binding, ModelMap map) {
 		String[] usernames = str.getTransactionList().split(",");
+		String error = "Account(s) with username ";
+		User sendingUser = userService.returnUserByUsername(acct.getUsername());
+		boolean hasErrors = false;
 		if(binding.hasErrors()) {
 			return "transfer";
 		}
 		else {
+			int amount = str.getAmount();
+			if(sendingUser.getBalance() < amount) {
+				map.addAttribute("error","Insufficient amount.");
+				return "transfer?error";
+			}
+			for (String username: usernames) {
+				if(accountService.returnAccountByUsername(username) == null) {
+					error = error + username + ", ";
+					hasErrors = true;
+				}
+			}
+			if (hasErrors) {
+				error = "do not exist.";
+				map.addAttribute("error", error);
+				return "transfer?error";
+			}
 			for (String username: usernames) {
 				if(accountService.returnAccountByUsername(username) != null) {
 				User receivingUser = userService.returnUserByUsername(username);
-				User sendingUser = userService.returnUserByUsername(acct.getUsername());
-				Transactions trans = new Transactions(TransType.TRANSFER, str.getAmount());
+				receivingUser.setBalance(receivingUser.getBalance()+amount);
+				
+				sendingUser.setBalance(sendingUser.getBalance()-amount);
+				Transactions trans = new Transactions(TransType.TRANSFER, amount);
 				transactionService.addTransactionsToDB(trans);
 				userService.updateUser(receivingUser);
 				userService.updateUser(sendingUser);
 				}
 			}
-		return "transfer";
+		return "transfer?complete";
 		}
 	}
 	

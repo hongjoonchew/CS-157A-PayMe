@@ -45,7 +45,7 @@ public class DebitCardDaoImpl implements DebitCardDao {
 		final String sql_debitCard = "INSERT INTO debitCard (number, balance) VALUE (?,?)";
 		final String sql_card = "INSERT INTO Cards (number,name,CVV) VALUE (?,?)";
 		
-		int number = DebitCard.getCardNumber();
+		long number = DebitCard.getCardNumber();
 		double balance = DebitCard.getBalance();
 		String name = DebitCard.getCardName();
 		int cvv = DebitCard.getCvvNumber();
@@ -70,7 +70,7 @@ public class DebitCardDaoImpl implements DebitCardDao {
 		final String sql_Card = "UPDATE Card SET name = ? and CVV = ? WHERE number = ?";
 
 		
-		int number = DebitCard.getCardNumber();
+		long number = DebitCard.getCardNumber();
 		double balance = DebitCard.getBalance();
 		String name = DebitCard.getCardName();
 		int cvv = DebitCard.getCvvNumber();
@@ -86,7 +86,7 @@ public class DebitCardDaoImpl implements DebitCardDao {
 		      List<DebitCard> debitCardList = new ArrayList<DebitCard>();      
 		      while(rs.next()){
 		    	  DebitCard debitCard = new DebitCard();
-			  debitCard.setCardNumber(rs.getInt("number"));
+			  debitCard.setCardNumber(rs.getLong("number"));
 			  debitCard.setCardName(rs.getString("name"));
 			  debitCard.setCvvNumber(rs.getInt("CVV"));
 			  debitCard.setBalance(rs.getFloat("balance"));
@@ -101,7 +101,7 @@ public class DebitCardDaoImpl implements DebitCardDao {
 		@Override
 		public DebitCard mapRow(ResultSet rs, int rowNum) throws SQLException {
 			DebitCard debitCard = new DebitCard();
-			debitCard.setCardNumber(rs.getInt("number"));
+			debitCard.setCardNumber(rs.getLong("number"));
 			debitCard.setCardName(rs.getString("name"));
 			debitCard.setCvvNumber(rs.getInt("CVV"));
 			debitCard.setBalance(rs.getFloat("balance"));

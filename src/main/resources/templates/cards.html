@@ -21,7 +21,7 @@
                 <div th:if="${cards == null}">
                     Add some cards by clicking the link above!</div>
                 <div th:each="card : ${cards}" th:unless ="${card == null}"> 
-                    <div class = "right-container-entry"><a th:href="@{/cards}" th:text="${card.cardName}">Card Name</a></div>
+                    <div class = "right-container-entry"><a th:href="@{/cards}" th:text="${card.cardNumber}">Card Name</a></div>
                     <hr/>
                 </div>
                 </div>

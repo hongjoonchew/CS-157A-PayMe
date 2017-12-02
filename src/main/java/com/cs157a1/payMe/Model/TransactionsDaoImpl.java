@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cs157a1.payMe.Entity.Comment;
 import com.cs157a1.payMe.Entity.TransType;
@@ -38,13 +39,13 @@ public class TransactionsDaoImpl implements TransactionsDao {
 
 	@Override
 	public void addTransactionsToDB(Transactions transaction) {
-		final String sql = "INSERT INTO Transactions(transId,type,amount) VALUES (?,?,?)";
-		
+		final String sql = "BEGIN;"
+				+ "INSERT INTO Transactions(type,amount) VALUES (?,?)"
+				+ "INSERT INTO ";
 		double amount = transaction.getAmount();
-		int id = transaction.getTransID();
 		TransType type = transaction.getType();
-		
-		jdbcTemplate.update(sql, new Object[] {id,type,amount});		
+		String typeStr = (type==TransType.REQUEST) ? "Request" : "Transfer";
+		jdbcTemplate.update(sql, new Object[] {typeStr,amount});		
 	}
 
 	@Override
