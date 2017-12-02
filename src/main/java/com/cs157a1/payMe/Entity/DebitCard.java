@@ -16,13 +16,13 @@ public class DebitCard extends Card {
 	public DebitCard() {
 	}
 
-	public DebitCard(int cardNumber, String cardName, int cvvNumber, float balance) {
+	public DebitCard(long cardNumber, String cardName, int cvvNumber, float balance) {
 		super(cardNumber, cardName, cvvNumber);
 		this.balance = balance;
 		type = CardType.Debit;
 	}
 
-	public DebitCard(int cardNumber, String cardName, int cvvNumber, float balance, User user) {
+	public DebitCard(long cardNumber, String cardName, int cvvNumber, float balance, User user) {
 		super(cardNumber, cardName, cvvNumber, user);
 		this.balance = balance;
 		type = CardType.Debit;

@@ -15,13 +15,13 @@ public class CreditCard extends Card {
 	public CreditCard() {
 	}
 
-	public CreditCard(int cardNumber, String cardName, int cvvNumber, float creditLimit) {
+	public CreditCard(long cardNumber, String cardName, int cvvNumber, float creditLimit) {
 		super(cardNumber, cardName, cvvNumber);
 		this.creditLimit = creditLimit;
 		type = CardType.Credit;
 	}
 
-	public CreditCard(int cardNumber, String cardName, int cvvNumber, float creditLimit, User user) {
+	public CreditCard(long cardNumber, String cardName, int cvvNumber, float creditLimit, User user) {
 		super(cardNumber, cardName, cvvNumber, user);
 		this.creditLimit = creditLimit;
 		type = CardType.Credit;

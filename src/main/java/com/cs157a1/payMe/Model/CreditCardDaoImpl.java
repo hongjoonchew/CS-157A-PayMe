@@ -42,7 +42,7 @@ public class CreditCardDaoImpl implements CreditCardDao {
 		final String sql_creditCard = "INSERT INTO creditCard (number, creditLimit) VALUE (?,?)";
 		final String sql_card = "INSERT INTO Cards (number,name,CVV) VALUE (?,?)";
 		
-		int number = creditCard.getCardNumber();
+		long number = creditCard.getCardNumber();
 		String name = creditCard.getCardName();
 		int cvv = creditCard.getCvvNumber();
 		float creditLimit = creditCard.getCreditLimit();
@@ -67,7 +67,7 @@ public class CreditCardDaoImpl implements CreditCardDao {
 		final String sql_Card = "UPDATE Card SET name = ? and CVV = ? WHERE number = ?";
 
 		
-		int number = creditCard.getCardNumber();
+		long number = creditCard.getCardNumber();
 		String name = creditCard.getCardName();
 		int cvv = creditCard.getCvvNumber();
 		float creditLimit = creditCard.getCreditLimit();
@@ -84,7 +84,7 @@ public class CreditCardDaoImpl implements CreditCardDao {
 		      List<CreditCard> creditCardlist = new ArrayList<CreditCard>();      
 		      while(rs.next()){
 			        CreditCard creditCard = new CreditCard();
-					creditCard.setCardNumber(rs.getInt("number"));
+					creditCard.setCardNumber(rs.getLong("number"));
 					creditCard.setCardName(rs.getString("name"));
 					creditCard.setCvvNumber(rs.getInt("CVV"));
 					creditCard.setCreditLimit(rs.getFloat("creditLimit"));
@@ -99,7 +99,7 @@ public class CreditCardDaoImpl implements CreditCardDao {
 		@Override
 		public CreditCard mapRow(ResultSet rs, int rowNum) throws SQLException {
 			CreditCard creditCard = new CreditCard();
-			creditCard.setCardNumber(rs.getInt("number"));
+			creditCard.setCardNumber(rs.getLong("number"));
 			creditCard.setCardName(rs.getString("name"));
 			creditCard.setCvvNumber(rs.getInt("CVV"));
 			creditCard.setCreditLimit(rs.getFloat("creditLimit"));
