@@ -21,6 +21,14 @@ public class TransactionsServices {
 		
 	}
 	
+	public List<Transactions> returnUsersRequest(String type, String username){
+		return transactionsDao.returnUsersRequest(type,username);
+	}
+	
+	public List<Transactions> returnUsersTransfers(String type, String username){
+		return transactionsDao.returnUsersTransfers(type,username);
+	}
+	
 	public Transactions returnTransactionsBytransID(int transID) {
 		return transactionsDao.returnTransactionsBytransID(transID);
 	}

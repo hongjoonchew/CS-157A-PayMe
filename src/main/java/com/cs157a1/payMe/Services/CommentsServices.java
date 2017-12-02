@@ -19,6 +19,10 @@ public class CommentsServices {
 		return commentDao.returnAllInfo();
 	}
 	
+	public 	List<Comment> returnAllCommentsFromTransactions(String transId){
+		return commentDao.returnAllCommentsFromTransactions(transId);
+	}
+	
 	public Comment returnCommentBycommentId(int commentId, int transId, String username) {
 		return commentDao.returnCommentBycommentId(commentId, transId, username);
 	}

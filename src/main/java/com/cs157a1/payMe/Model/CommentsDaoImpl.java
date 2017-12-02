@@ -26,6 +26,12 @@ public class CommentsDaoImpl implements CommentsDao {
 	public List<Comment> returnAllInfo() {
 		 return jdbcTemplate.query("select * from Comments", new CommentResultSetExtractor());
 	}
+	
+	public List<Comment> returnAllCommentsFromTransactions(String transId){
+		return jdbcTemplate.query("select * from Comments "
+				+ "where Transactions_transid = ? "
+				+ "order by commentID", new CommentResultSetExtractor(),transId);
+	}
 
 	@Override
 	public Comment returnCommentBycommentId(int commentId, int transId, String username) {

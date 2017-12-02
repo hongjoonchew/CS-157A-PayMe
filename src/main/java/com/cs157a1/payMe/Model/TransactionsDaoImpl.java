@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import com.cs157a1.payMe.Entity.Comment;
 import com.cs157a1.payMe.Entity.TransType;
 import com.cs157a1.payMe.Entity.Transactions;
+import com.cs157a1.payMe.Entity.UserHasTransactions;
 
 
 
@@ -35,7 +36,30 @@ public class TransactionsDaoImpl implements TransactionsDao {
 		return jdbcTemplate.queryForObject(sql, new TransactionsRowMapper(), transID);
 		
 	}
-
+	
+	// return all sent requests or sent transfers
+	// depends on type
+	@Override
+	public 	List<Transactions> returnUsersRequest(String type, String username) {
+		final String sql = "SELECT * FROM Transactions"
+                + " JOIN users_has_Transactions on Transactions.transID = users_has_Transactions.transId" 
+			      + " JOIN Users on users_has_Transactions.sender_username = Users.username" 
+                + " where Transactions.type= ? and Users.username= ?";
+		return jdbcTemplate.query(sql, new TransactionsResultSetExtractor(), type,username);
+	}
+	
+	// returns all received request or received transfers
+	// depends on type
+	@Override
+	public List<Transactions> returnUsersTransfers(String type, String username){
+		final String sql = "SELECT * FROM Transactions"
+                  + " JOIN users_has_Transactions on Transactions.transID = users_has_Transactions.transId" 
+			      + " JOIN Users on users_has_Transactions.receiver_username = Users.username" 
+                  + " where Transactions.type= ? and Users.username= ?";
+		return jdbcTemplate.query(sql, new TransactionsResultSetExtractor(), type,username);
+	}
+	
+	
 	@Override
 	public void addTransactionsToDB(Transactions transaction) {
 		final String sql = "INSERT INTO Transactions(transId,type,amount) VALUES (?,?,?)";
@@ -69,11 +93,12 @@ public class TransactionsDaoImpl implements TransactionsDao {
 				    	     transactionmap.put(rs.getInt("transID"), transaction);
 		             }
 
-					 Comment comment = new Comment();
-					 comment.setCommentId(rs.getInt("commentId"));
-					 comment.setDescription(rs.getString("description"));
-					 
-					 transaction.getComments().add(comment);
+					 UserHasTransactions userHasTransactions = new UserHasTransactions();
+					 userHasTransactions.setReceivedUserName(rs.getString("receiver_username"));
+					 userHasTransactions.setSentUserName(rs.getString("sender_username"));
+					 userHasTransactions.setType(rs.getString("type"));
+					 		 
+					 transaction.getUserHasTransactions().add(userHasTransactions);
 					  
 		         }
 		

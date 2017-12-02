@@ -23,7 +23,7 @@ public class Transactions {
 
 	private List<Comment> comments = new ArrayList<Comment>();
 	private List<User> users = new ArrayList<User>();
-
+	private List<UserHasTransactions> userHasTransactions = new ArrayList<UserHasTransactions>();
 
 	public Transactions() {
 	}
@@ -45,6 +45,14 @@ public class Transactions {
 		this.type = type;
 		this.amount = amount;
 		this.comments = comments;
+	}
+	
+	public List<UserHasTransactions> getUserHasTransactions() {
+		return userHasTransactions;
+	}
+
+	public void setUserHasTransactions(List<UserHasTransactions> userHasTransactions) {
+		this.userHasTransactions = userHasTransactions;
 	}
 
 	public List<User> getUsers() {

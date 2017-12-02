@@ -32,7 +32,7 @@ public class CreditCardDaoImpl implements CreditCardDao {
 	public CreditCard returncreditCardBycardNumber(int cardNumber) {
 		String sql = "select creditCard.number, creditCard.creditLimit, Cards.name, Cards.CVV from creditCard"
 		           + " JOIN Cards on creditCard.number=Cards.number"
-		           + "where creditCard.number = ?";
+		           + " where creditCard.number = ?";
 
        return jdbcTemplate.queryForObject(sql, new CreditCardsRowMapper(), cardNumber);	
 	}
