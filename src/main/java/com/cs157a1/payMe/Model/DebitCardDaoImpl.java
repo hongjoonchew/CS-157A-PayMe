@@ -25,23 +25,24 @@ public class DebitCardDaoImpl implements DebitCardDao {
 	
 	@Override
 	public List<DebitCard> returnAllInfo() {
-		final String sql = "select debtCard.number, debtCard.balance, Cards.name, Cards.CVV from debtCard"
-		           + "JOIN Cards on debtCard.number=Cards.number";
+		final String sql = "select debitCard.number, debitCard.balance, Cards.name, Cards.CVV "
+	            + "from debitCard " 
+				+ "JOIN Cards on debitCard.number=Cards.number";
 		return jdbcTemplate.query(sql, new DebitCardResultSetExtractor());
 	}
 
 	@Override
 	public DebitCard returnDebitCardBycardNumber(int cardNumber) {
-		final String sql = "select debtCard.number, debtCard.balance, Cards.name, Cards.CVV from debtCard"
-				           + "JOIN Cards on debtCard.number=Cards.number"
-				           + "where debtCard.number = ?";
+		final String sql = "select debitCard.number, debitCard.balance, Cards.name, Cards.CVV from debitCard"
+		           + " JOIN Cards on debitCard.number=Cards.number"
+		           + " where debitCard.number = ?";
 
-		return jdbcTemplate.queryForObject(sql, new DeibtCardsRowMapper(), cardNumber);	
+		return jdbcTemplate.queryForObject(sql, new DebitCardsRowMapper(), cardNumber);	
 	}
 
 	@Override
 	public void addDebitCardToDB(DebitCard DebitCard) {
-		final String sql_debitCard = "INSERT INTO debtCard (number, balance) VALUE (?,?)";
+		final String sql_debitCard = "INSERT INTO debitCard (number, balance) VALUE (?,?)";
 		final String sql_card = "INSERT INTO Cards (number,name,CVV) VALUE (?,?)";
 		
 		int number = DebitCard.getCardNumber();
@@ -55,7 +56,7 @@ public class DebitCardDaoImpl implements DebitCardDao {
 
 	@Override
 	public void deleteDebitCard(int cardNumber) {
-		final String sql_debitCard = "DELETE FROM debtCARD WHERE number = ?";
+		final String sql_debitCard = "DELETE FROM debitCard WHERE number = ?";
 		final String sql_Card = "DELETE FROM Cards WHERE number = ?";
 		
 		jdbcTemplate.update(sql_debitCard,cardNumber);
@@ -65,7 +66,7 @@ public class DebitCardDaoImpl implements DebitCardDao {
 
 	@Override
 	public void updateDebitCard(DebitCard DebitCard) {
-		final String sql_debtCard = "UPDATE debtCard SET balance = ? WHERE number = ?";
+		final String sql_debitCard = "UPDATE debitCard SET balance = ? WHERE number = ?";
 		final String sql_Card = "UPDATE Card SET name = ? and CVV = ? WHERE number = ?";
 
 		
@@ -74,7 +75,7 @@ public class DebitCardDaoImpl implements DebitCardDao {
 		String name = DebitCard.getCardName();
 		int cvv = DebitCard.getCvvNumber();
 		
-		jdbcTemplate.update(sql_debtCard, new Object[] {balance, number});
+		jdbcTemplate.update(sql_debitCard, new Object[] {balance, number});
 		jdbcTemplate.update(sql_Card, new Object[] {name, cvv, number});
 	}
 	
@@ -95,7 +96,7 @@ public class DebitCardDaoImpl implements DebitCardDao {
 		  }
 		}
 	
-	private static class DeibtCardsRowMapper implements RowMapper<DebitCard>{
+	private static class DebitCardsRowMapper implements RowMapper<DebitCard>{
 		  
 		@Override
 		public DebitCard mapRow(ResultSet rs, int rowNum) throws SQLException {

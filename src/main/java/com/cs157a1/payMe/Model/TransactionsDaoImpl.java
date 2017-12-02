@@ -24,10 +24,9 @@ public class TransactionsDaoImpl implements TransactionsDao {
 	
 	@Override
 	public List<Transactions> returnAllInfo() {
-		return jdbcTemplate.query("select Transactions.transId, Transactions.amount"
-				                      + " Comments.commentId, Comments.description from Transactions"
-				                      + "JOIN Comments on Transactions.transId=Comments.users_username"
-				                      , new TransactionsResultSetExtractor());
+		return jdbcTemplate.query("select Transactions.transId, Transactions.amount, Comments.commentId, Comments.description" + 
+				" from Transactions " + 
+				" JOIN Comments on Transactions.transId=Comments.Transactions_transId", new TransactionsResultSetExtractor());
 	}
 
 	@Override

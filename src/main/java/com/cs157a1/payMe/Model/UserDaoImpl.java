@@ -34,15 +34,16 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public List<User> returnAllInfo() {
-		 return jdbcTemplate.query("select Users.username, Users.balance, Accounts.first_name, Accounts.last_name from Users JOIN Accounts on Users.username=Accounts.username", new UserResultSetExtractor());
+		 return jdbcTemplate.query("SELECT users.username, users.balance, accounts.first_name, accounts.last_name"
+		 		 + "FROM users JOIN accounts on users.username=accounts.username" , new UserResultSetExtractor());
 	}
 	
 	
 	@Override
 	public  User returnUserByUsername(String username) {
-		final String sql = "select Users.username, Users.balance, Accounts.first_name, Accounts.last_name from Users"
-				+ " JOIN Accounts on Users.username=Accounts.username"
-				+ " where Users.username = ?";
+		final String sql = "select Users.username, Users.balance, Accounts.first_name, Accounts.last_name "
+	            + "from Users JOIN Accounts on Users.username=Accounts.username " 
+				+ "where Users.username = ?";
 		User user = jdbcTemplate.queryForObject(sql, new UsersRowMapper(), username);
 		
 		return user;
@@ -102,42 +103,34 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public List<User> returnFriendsByUsername(String username) {
-		return jdbcTemplate.query("SELECT users_has_users.username, "
-				+ "users_has_users.friendusername, first_name, last_name FROM paymeModel.users_has_users "
-				+ "INNER JOIN paymeModel.accounts ON accounts.username = users_has_users.friendusername WHERE users_has_users.username = ?;", new UserFriendsExtractor(), username);
+		return jdbcTemplate.query("SELECT users_has_users.username, users_has_users.friendusername, first_name, last_name "
+				+ "FROM paymeModel.users_has_users INNER JOIN paymeModel.accounts ON accounts.username = users_has_users.friendusername", new UserFriendsExtractor(), username);
 	}
 
 	@Override
 	public List<User> returnComments(String username) {
-		return jdbcTemplate.query("select Users.username, Users.balance, Accounts.first_name, Accounts.last_name, "
-				           + "Comments.commentId , Comments.description from Users "
-				           + "JOIN Accounts on Users.username=Accounts.username "
-				           + "JOIN Comments on Users.username= Comments.users_username WHERE Users.username = ?", new UserCommentsExtractor(), username);
-
+		return jdbcTemplate.query("select Users.username, Users.balance, Accounts.first_name, Accounts.last_name, Comments.commentId , Comments.description " + 
+				"from Users JOIN Accounts on Users.username=Accounts.username JOIN Comments on Users.username= Comments.users_username", new UserCommentsExtractor(), username);
 	}
 
 	@Override
 	public List<User> returnTransactions(String username) {
-		return  jdbcTemplate.query("select User.username, User.balance, Account.first_name, Account.last_name from User "
-				+ "Transactions.transId, Transactions.amount"
-				+ "JOIN Accounts on User.username=Accounts.username "
-				+ "JOIN users_has_Transactions on User.username = users_has_Transactions.sender_username"
-				+ "JOIN Transactions on users_has_Transactions.transId=Transactions.transId "
-				+ "where username = ? ", new UserTransactionsExtractor());
+		return  jdbcTemplate.query("select Users.username, Users.balance, Accounts.first_name, Accounts.last_name, Transactions.transId, Transactions.amount " + 
+				"from Users " + 
+				"JOIN Accounts on Users.username=Accounts.username " + 
+				"JOIN users_has_Transactions on Users.username = users_has_Transactions.sender_username" + 
+				"JOIN Transactions on users_has_Transactions.transId=Transactions.transId " + 
+				"where Users.username = ?", new UserTransactionsExtractor());
 
 	}
 
 
 	@Override
 	public User returnCardBelongToUser(String username) {
-
-		return  jdbcTemplate.queryForObject("select User.username, User.balance, Account.first_name, Account.last_name from User "
-				+ "Transactions.transId, Transactions.amount"
-				+ "JOIN Accounts on User.username=Accounts.username "
-				+ "JOIN Cards on User.username=Cards.username"
-				+ "JOIN debtCard on Cards.number=debtCard.number"
-				+ "where username = ?", new UsersCardRowMapper(), username);
-
+		return  jdbcTemplate.queryForObject("select Users.username, Users.balance, Accounts.first_name, Accounts.last_name "
+				+ "from Users JOIN Accounts on Users.username=Accounts.username JOIN Cards on Users.username=Cards.username "
+				+ "JOIN debitCard on Cards.number=debitCard.number " + 
+				"where Users.username = ?", new UsersCardRowMapper(), username);
 	}
 	
 	public class UserFriendsExtractor implements ResultSetExtractor<List<User>>{

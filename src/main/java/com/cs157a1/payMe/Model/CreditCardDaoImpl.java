@@ -24,14 +24,14 @@ public class CreditCardDaoImpl implements CreditCardDao {
 	@Override
 	public List<CreditCard> returnAllInfo() {
 		final String sql = "select creditCard.number, creditCard.creditLimit, Cards.name, Cards.CVV from creditCard"
-		           + "JOIN Cards on creditCard.number=Cards.number";
+		           + " JOIN Cards on creditCard.number=Cards.number";
 		return jdbcTemplate.query(sql, new CreditCardResultSetExtractor());
 	}
 
 	@Override
 	public CreditCard returncreditCardBycardNumber(int cardNumber) {
-		final String sql = "select creditCard.number, creditCard.creditLimit, Cards.name, Cards.CVV from creditCard"
-		           + "JOIN Cards on creditCard.number=Cards.number"
+		String sql = "select creditCard.number, creditCard.creditLimit, Cards.name, Cards.CVV from creditCard"
+		           + " JOIN Cards on creditCard.number=Cards.number"
 		           + "where creditCard.number = ?";
 
        return jdbcTemplate.queryForObject(sql, new CreditCardsRowMapper(), cardNumber);	
