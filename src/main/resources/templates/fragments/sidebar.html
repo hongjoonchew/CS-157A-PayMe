@@ -8,7 +8,7 @@
     <body>
        <div th:fragment= "sidebar" class="sidebar" >
             <p th:text="'Hello, ' + ${session.accounts.firstName}" th:unless="${session == null}">Username here</p>
-                <p th:text="'$'+${session.accounts.payMeBalance}" th:unless="${session == null}">Balance here</p>
+                <p th:text="'$'+${session.accounts.balance}" th:unless="${session == null}">Balance here</p>
                 <ul><a th:href="@{/dashboard}">Home</a></ul>
                 <ul><a th:href="@{/request}">Send Request</a></ul>
                 <ul><a th:href="@{/request}">View Request</a></ul>

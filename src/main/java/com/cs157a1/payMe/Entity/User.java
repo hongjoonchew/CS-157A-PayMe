@@ -20,15 +20,15 @@ public class User extends Account {
 	public User() {
 	}
 
-	public User(String firstName, String lastName, String username, int payMeBalance, String password, String email,
+	public User(String firstName, String lastName, String username, String password, String email,
 			double balance) {
-		super(firstName, lastName, username, payMeBalance, password, email);
+		super(firstName, lastName, username, password, email);
 		this.balance = balance;
 	}
 
-	public User(String firstName, String lastName, String username, int payMeBalance, String password, String email,
+	public User(String firstName, String lastName, String username, String password, String email,
 			double balance, List<User> friends, List<Comment> comments, List<Transactions> transactions, Card card) {
-		super(firstName, lastName, username, payMeBalance, password, email);
+		super(firstName, lastName, username, password, email);
 		this.balance = balance;
 		this.friends = friends;
 		this.comments = comments;

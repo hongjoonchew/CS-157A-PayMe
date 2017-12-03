@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.cs157a1.payMe.Entity.Account;
+import com.cs157a1.payMe.Entity.User;
 import com.cs157a1.payMe.Services.AccountServices;
+import com.cs157a1.payMe.Services.UsersServices;
 
 @Controller
 @RequestMapping("/accounts")
@@ -23,9 +25,12 @@ public class AccountController {
 	@Autowired
 	private AccountServices accountServices;
 	
+	@Autowired
+	private UsersServices userServices;
+	
 	@ModelAttribute("accounts")
-	public Account getAccount(Principal principal){
-		Account account = accountServices.returnAccountByUsername(principal.getName());
+	public User getAccount(Principal principal){
+		User account = userServices.returnUserByUsername(principal.getName());
 		return account;
 	}
 	

@@ -12,9 +12,9 @@ public class Admin extends Account {
 	public Admin() {
 	}
 
-	public Admin(String firstName, String lastName, String username, int payMeBalance, String password, String email,
+	public Admin(String firstName, String lastName, String username, String password, String email,
 			int authorities) {
-		super(firstName, lastName, username, payMeBalance, password, email);
+		super(firstName, lastName, username, password, email);
 		this.authorities = authorities;
 	}
 

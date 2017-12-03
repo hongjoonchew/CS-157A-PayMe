@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.cs157a1.payMe.Entity.Account;
 import com.cs157a1.payMe.Entity.Card;
+import com.cs157a1.payMe.Entity.User;
 import com.cs157a1.payMe.Services.AccountServices;
 import com.cs157a1.payMe.Services.CreditCardsServices;
 import com.cs157a1.payMe.Services.DebitCardsServices;
+import com.cs157a1.payMe.Services.UsersServices;
 
 @Controller
 @SessionAttributes("accounts")
@@ -36,9 +38,12 @@ public class CardController {
 	@Autowired
 	public DebitCardsServices debitCardServices;
 	
+	@Autowired
+	private UsersServices userServices;
+	
 	@ModelAttribute("accounts")
-	public Account getAccount(Principal principal){
-		Account account = accountServices.returnAccountByUsername(principal.getName());
+	public User getAccount(Principal principal){
+		User account = userServices.returnUserByUsername(principal.getName());
 		return account;
 	}
 	
@@ -64,7 +69,7 @@ public class CardController {
 	@RequestMapping("/cards/{cardNumber}")
 	public String getCardPage(@PathVariable("{cardNumber}")String cardNumber, @ModelAttribute("card") Card card, ModelMap map) {
 		long longCard = Long.parseLong(cardNumber); 
-		if(creditCardServices.returncreditCardBycardNumber(longCard)== null) {
+		if(creditCardServices.returncreditCardBycardNumber(longCard) == null) {
 			card = debitCardServices.returnDebitCardBycardNumber(longCard);
 		}
 		else { 
@@ -85,6 +90,7 @@ public class CardController {
 		if(results.hasErrors()) {
 			return "addCard";
 		}
+		
 		return "addCard";
 	}
 	

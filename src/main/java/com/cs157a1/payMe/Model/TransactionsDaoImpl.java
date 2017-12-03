@@ -62,15 +62,13 @@ public class TransactionsDaoImpl implements TransactionsDao {
 	
 	@Override
 	public void addTransactionsToDB(Transactions transaction, String sender, String receiver) {
-		final String sql = "BEGIN;"
-				+ "INSERT INTO Transactions(type,amount) VALUES (?,?)"
-				+ "INSERT INTO ";
+		final String sql = "INSERT INTO Transactions(type,amount) VALUES (?,?)";
 		double amount = transaction.getAmount();
 		TransType type = transaction.getType();
-		String typeStr = (type==TransType.REQUEST) ? "Request" : "Transfer";
+		String typeStr = (type==TransType.REQUEST) ? "REQUEST" : "TRANSFER";
 		jdbcTemplate.update(sql, new Object[] {typeStr,amount});	
 		
-		final String sqlTransaction = "SELECT * FROM users_has_Transactions " 
+		final String sqlTransaction = "SELECT * FROM Transactions " 
 		+ "order by transid  desc limit 1";
 		Transactions t = jdbcTemplate.queryForObject(sqlTransaction, new TransactionsRowMapper());
 		addToUserHasTransactions(t.getTransID(),sender,receiver);

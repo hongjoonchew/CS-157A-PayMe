@@ -41,7 +41,7 @@ public class UserDaoImpl implements UserDao {
 	
 	@Override
 	public  User returnUserByUsername(String username) {
-		final String sql = "select Users.username, users.email, users.password, Users.balance, Accounts.first_name, Accounts.last_name "
+		final String sql = "select Users.username, Users.balance, Accounts.first_name, Accounts.last_name "
 	            + "from Users JOIN Accounts on Users.username=Accounts.username " 
 				+ "where Users.username = ?";
 		User user = jdbcTemplate.queryForObject(sql, new UsersRowMapper(), username);
@@ -93,16 +93,10 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public void updateUser(User user) {		
 		final String sql = "UPDATE Users SET balance = ? WHERE username = ?";
-		final String sql_account = "UPDATE Accounts SET password = ? and email = ? first_name = ? and last_name = ?  WHERE username = ?";
 		
 		String username = user.getUsername();
 		double balance = user.getBalance();
-		String first_name = user.getFirstName();
-		String last_name = user.getLastName();
-		String email= user.getEmail();
-		String password= user.getPassword();
 		
-		jdbcTemplate.update(sql_account, new Object[] {password,email,first_name,last_name,username});
 		jdbcTemplate.update(sql, new Object[] {balance, username});
 	}
 
@@ -264,8 +258,6 @@ public class UserDaoImpl implements UserDao {
 			User user = new User();
 			user.setUsername(rs.getString("username"));
 			user.setBalance(rs.getDouble("balance"));
-			user.setPassword(rs.getString("password"));
-			user.setEmail(rs.getString("email"));
 			user.setFirstName(rs.getString("first_name"));
 			user.setLastName(rs.getString("last_name"));
 			return user;

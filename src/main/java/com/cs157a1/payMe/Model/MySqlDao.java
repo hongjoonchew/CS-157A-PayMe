@@ -47,8 +47,7 @@ public class MySqlDao implements AccountsImpl {
 	public void updateAccount(Account account) {
 		final String sql = "UPDATE Users SET balance = ? WHERE username = ?";
 		String username = account.getUsername();
-		double balance = account.getPayMeBalance();
-		jdbcTemplate.update(sql, new Object[] {balance, username});
+		jdbcTemplate.update(sql, new Object[] {username});
 	}
 
 	@Override
@@ -62,7 +61,7 @@ public class MySqlDao implements AccountsImpl {
 		String password = account.getPassword();
 		String email = account.getEmail();
 		int enabled = 1;
-		int balance = 0;
+		int balance = 100;
 		jdbcTemplate.update(sql,new Object[] {username, password, first_name, last_name, email, enabled});
 		jdbcTemplate.update(userSQL, new Object[] {username,balance});
 		jdbcTemplate.update(accessSQL, new Object[] {username,1});

@@ -16,6 +16,8 @@
             <!--Transactions template in construction-->
             <div class="right-container">
                 <h6>Transfer Form</h6>
+                <p th:if="${param.complete}">Transfer complete</p>
+                <p th:unless="${error} == null" th:text="${error}">Error </p>
                 <p>Simply add as many usernames, just divide it with a ",".</p>
                 <form action = "#" th:action="@{/transfer}" th:object="${transferAccount}" method="post">
                     <div><label>Username(s): <input type="text" id="transactionList" name="transactionList" th:value="${target?.username}"/></label></div>

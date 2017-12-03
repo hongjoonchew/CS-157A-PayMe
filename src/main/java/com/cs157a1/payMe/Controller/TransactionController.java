@@ -37,11 +37,11 @@ public class TransactionController {
 	public TransactionsServices transactionService;
 	
 	@Autowired
-	public UsersServices userService;
+	private UsersServices userServices;
 	
 	@ModelAttribute("accounts")
-	public Account getAccount(Principal principal){
-		Account account = accountService.returnAccountByUsername(principal.getName());
+	public User getAccount(Principal principal){
+		User account = userServices.returnUserByUsername(principal.getName());
 		return account;
 	}
 	
@@ -98,7 +98,7 @@ public class TransactionController {
 	public String sendTransferForm(@Valid @ModelAttribute("transferAccount") TransactionList str, @ModelAttribute("accounts") Account acct, BindingResult binding, ModelMap map) {
 		String[] usernames = str.getTransactionList().split(",");
 		String error = "Account(s) with username ";
-		User sendingUser = userService.returnUserByUsername(acct.getUsername());
+		User sendingUser = userServices.returnUserByUsername(acct.getUsername());
 		boolean hasErrors = false;
 		if(binding.hasErrors()) {
 			return "transfer";
@@ -107,7 +107,7 @@ public class TransactionController {
 			int amount = str.getAmount();
 			if(sendingUser.getBalance() < amount) {
 				map.addAttribute("error","Insufficient amount.");
-				return "transfer?error";
+				return "transfer";
 			}
 			for (String username: usernames) {
 				if(accountService.returnAccountByUsername(username) == null) {
@@ -118,21 +118,20 @@ public class TransactionController {
 			if (hasErrors) {
 				error = "do not exist.";
 				map.addAttribute("error", error);
-				return "transfer?error";
+				return "transfer";
 			}
 			for (String username: usernames) {
 				if(accountService.returnAccountByUsername(username) != null) {
-				User receivingUser = userService.returnUserByUsername(username);
+				User receivingUser = userServices.returnUserByUsername(username);
 				receivingUser.setBalance(receivingUser.getBalance()+amount);
-				
 				sendingUser.setBalance(sendingUser.getBalance()-amount);
 				Transactions trans = new Transactions(TransType.TRANSFER, amount);
 				transactionService.addTransactionsToDB(trans,sendingUser.getUsername(),receivingUser.getUsername());
-				userService.updateUser(receivingUser);
-				userService.updateUser(sendingUser);
+				userServices.updateUser(receivingUser);
+				userServices.updateUser(sendingUser);
 				}
 			}
-		return "transfer?complete";
+		return "redirect:/transfer?complete";
 		}
 	}
 	

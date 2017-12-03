@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.cs157a1.payMe.Entity.Account;
+import com.cs157a1.payMe.Entity.User;
 import com.cs157a1.payMe.Services.AccountServices;
+import com.cs157a1.payMe.Services.UsersServices;
 
 @Controller
 @SessionAttributes("accounts")
@@ -22,10 +24,13 @@ public class DashboardController {
 	@Autowired
 	private AccountServices accountService;
 	
+	@Autowired
+	private UsersServices userServices;
+	
 	
 	@ModelAttribute("accounts")
-	public Account getAccount(Principal principal){
-		Account account = accountService.returnAccountByUsername(principal.getName());
+	public User getAccount(Principal principal){
+		User account = userServices.returnUserByUsername(principal.getName());
 		return account;
 	}
 	

@@ -1,6 +1,7 @@
 package com.cs157a1.payMe.Entity;
 
 public class Card {
+	
 	private long cardNumber;
 	private String cardName;
 	private int cvvNumber;

@@ -15,7 +15,6 @@ public class Account {
 	@NotNull
 	@NotBlank
 	private String username;
-	private double payMeBalance;
 	@NotNull
 	@NotBlank
 	private String password;
@@ -26,12 +25,11 @@ public class Account {
 	public Account() {
 	}
 
-	public Account(String firstName, String lastName, String username, int payMeBalance, String password,
+	public Account(String firstName, String lastName, String username, String password,
 			String email) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.username = username;
-		this.payMeBalance = payMeBalance;
 		this.setPassword(password);
 		this.email = email;
 	}
@@ -60,13 +58,6 @@ public class Account {
 		this.username = username;
 	}
 
-	public double getPayMeBalance() {
-		return payMeBalance;
-	}
-
-	public void setPayMeBalance(double d) {
-		this.payMeBalance = d;
-	}
 
 	public String getPassword() {
 		return password;
