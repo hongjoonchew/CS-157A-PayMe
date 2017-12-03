@@ -26,22 +26,29 @@ public class AdminDaoImpl implements AdminDao  {
 		@Override
 		public Admin mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Admin admin = new Admin();
+			admin.setAuthorities(rs.getInt("authorities"));	
 			admin.setUsername(rs.getString("username"));
-			admin.setAuthorities(rs.getInt("authorities"));
+			admin.setPassword(rs.getString("password"));
+			admin.setEmail(rs.getString("email"));
+			admin.setFirstName(rs.getString("first_name"));
+			admin.setLastName(rs.getString("last_name"));
 			return admin;
 		}
 	}
 	
 	@Override
 	public Collection<Admin> returnAllInfo() {
-		final String sql = "SELECT username, authorities FROM AccessControl";
+		final String sql = "SELECT * FROM AccessControl JOIN Accounts on AccessControl.username = Accounts.username";
 		Collection<Admin> admins = jdbcTemplate.query(sql, new AdminsRowMapper());
 		return admins;
 	}
 
 	@Override
 	public Admin returnAdminByUsername(String username) {
-		final String sql = "SELECT username, authorities FROM Users where username = ?";
+		final String sql = "SELECT *" 
+	              + " FROM AccessControl" 
+				  + " JOIN Accounts on AccessControl.username = Accounts.username" 
+	              + " where AccessControl.username = ?";
 		Admin admin = jdbcTemplate.queryForObject(sql, new AdminsRowMapper(), username);
 		return admin;
 	}
@@ -88,12 +95,18 @@ public class AdminDaoImpl implements AdminDao  {
 
 	@Override
 	public void updateAdmin(Admin admin) {
-		// todo
-		// update account
 		final String sql = "UPDATE AccessControl SET authorities = ? WHERE username = ?";
+		final String sql_account = "UPDATE Accounts SET password = ? and email = ? first_name = ? and last_name = ?  WHERE username = ?";
+
 		String username = admin.getUsername();
 		int accesscontrol = admin.getAuthorities();
-		jdbcTemplate.update(sql, new Object[] {accesscontrol, username});	
+		String first_name = admin.getFirstName();
+		String last_name = admin.getLastName();
+		String email= admin.getEmail();
+		String password= admin.getPassword();
+		
+		jdbcTemplate.update(sql_account, new Object[] {password,email,first_name,last_name,username});
+		jdbcTemplate.update(sql, new Object[] {accesscontrol, username});		
 	}
 
 }

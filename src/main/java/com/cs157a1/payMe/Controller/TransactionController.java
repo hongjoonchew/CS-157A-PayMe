@@ -127,7 +127,7 @@ public class TransactionController {
 				
 				sendingUser.setBalance(sendingUser.getBalance()-amount);
 				Transactions trans = new Transactions(TransType.TRANSFER, amount);
-				transactionService.addTransactionsToDB(trans);
+				transactionService.addTransactionsToDB(trans,sendingUser.getUsername(),receivingUser.getUsername());
 				userService.updateUser(receivingUser);
 				userService.updateUser(sendingUser);
 				}

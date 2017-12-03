@@ -33,8 +33,8 @@ public class TransactionsServices {
 		return transactionsDao.returnTransactionsBytransID(transID);
 	}
 	
-	public void addTransactionsToDB(Transactions Transactions) {
-		 transactionsDao.addTransactionsToDB(Transactions);
+	public void addTransactionsToDB(Transactions transaction, String sender, String receiver) {
+		 transactionsDao.addTransactionsToDB(transaction,sender,receiver);
 	}
 	
 	public void deleteTransactions(int transID) {

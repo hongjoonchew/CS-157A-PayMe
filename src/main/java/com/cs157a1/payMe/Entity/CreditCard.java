@@ -10,21 +10,27 @@ public class CreditCard extends Card {
 	@NotBlank
 	private float creditLimit;
 	
-	CardType type;
-
+	@NotNull
+	@NotBlank
+	private String issuer;
+	
 	public CreditCard() {
 	}
 
 	public CreditCard(long cardNumber, String cardName, int cvvNumber, float creditLimit) {
 		super(cardNumber, cardName, cvvNumber);
-		this.creditLimit = creditLimit;
-		type = CardType.Credit;
 	}
 
 	public CreditCard(long cardNumber, String cardName, int cvvNumber, float creditLimit, User user) {
 		super(cardNumber, cardName, cvvNumber, user);
-		this.creditLimit = creditLimit;
-		type = CardType.Credit;
+	}
+	
+	public String getIssuer() {
+		return issuer;
+	}
+
+	public void setIssuer(String issuer) {
+		this.issuer = issuer;
 	}
 
 	public float getCreditLimit() {

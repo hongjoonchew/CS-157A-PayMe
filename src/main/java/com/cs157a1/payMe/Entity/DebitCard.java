@@ -5,13 +5,13 @@ import org.hibernate.validator.constraints.NotBlank;
 
 public class DebitCard extends Card {
 
-	
-
 	@NotNull
 	@NotBlank
 	private float balance;
 	
-	CardType type;
+	@NotNull
+	@NotBlank
+	private String type;
 
 	public DebitCard() {
 	}
@@ -19,13 +19,19 @@ public class DebitCard extends Card {
 	public DebitCard(long cardNumber, String cardName, int cvvNumber, float balance) {
 		super(cardNumber, cardName, cvvNumber);
 		this.balance = balance;
-		type = CardType.Debit;
 	}
 
 	public DebitCard(long cardNumber, String cardName, int cvvNumber, float balance, User user) {
 		super(cardNumber, cardName, cvvNumber, user);
 		this.balance = balance;
-		type = CardType.Debit;
+	}
+	
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public float getBalance() {

@@ -20,6 +20,17 @@ public class Transactions {
 	@Digits(integer = 8, fraction = 2)
 	@NotBlank
 	private double amount;
+	@NotNull
+	@NotBlank
+	private String tranactionsType;
+
+	public String getTranactionsType() {
+		return tranactionsType;
+	}
+
+	public void setTranactionsType(String tranactionsType) {
+		this.tranactionsType = tranactionsType;
+	}
 
 	private List<Comment> comments = new ArrayList<Comment>();
 	private List<User> users = new ArrayList<User>();

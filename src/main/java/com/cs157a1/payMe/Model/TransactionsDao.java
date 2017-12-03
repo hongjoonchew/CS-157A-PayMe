@@ -16,7 +16,7 @@ public interface TransactionsDao {
 	
 	Transactions returnTransactionsBytransID(int transID);
 	
-	void addTransactionsToDB(Transactions Transactions);
+	void addTransactionsToDB(Transactions transaction, String sender, String receiver);
 	
 	void deleteTransactions(int transID);
 	

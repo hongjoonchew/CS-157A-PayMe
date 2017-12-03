@@ -34,14 +34,14 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public List<User> returnAllInfo() {
-		 return jdbcTemplate.query("SELECT users.username, users.balance, accounts.first_name, accounts.last_name"
+		 return jdbcTemplate.query("SELECT users.username, users.password, users.email, users.balance, accounts.first_name, accounts.last_name"
 		 		 + "FROM users JOIN accounts on users.username=accounts.username" , new UserResultSetExtractor());
 	}
 	
 	
 	@Override
 	public  User returnUserByUsername(String username) {
-		final String sql = "select Users.username, Users.balance, Accounts.first_name, Accounts.last_name "
+		final String sql = "select Users.username, users.email, users.password, Users.balance, Accounts.first_name, Accounts.last_name "
 	            + "from Users JOIN Accounts on Users.username=Accounts.username " 
 				+ "where Users.username = ?";
 		User user = jdbcTemplate.queryForObject(sql, new UsersRowMapper(), username);
@@ -72,9 +72,8 @@ public class UserDaoImpl implements UserDao {
 		final String sql = "DELETE FROM Users WHERE username = ?";
 		final String sql_account = "DELETE FROM Accounts WHERE username = ?";
 		
+		jdbcTemplate.update(sql_account,username);			
 		jdbcTemplate.update(sql,username);
-		jdbcTemplate.update(sql_account,username);	
-
 	}
 
 	@Override
@@ -92,12 +91,18 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public void updateUser(User user) {
-		// todo
-		// update account
+	public void updateUser(User user) {		
 		final String sql = "UPDATE Users SET balance = ? WHERE username = ?";
+		final String sql_account = "UPDATE Accounts SET password = ? and email = ? first_name = ? and last_name = ?  WHERE username = ?";
+		
 		String username = user.getUsername();
 		double balance = user.getBalance();
+		String first_name = user.getFirstName();
+		String last_name = user.getLastName();
+		String email= user.getEmail();
+		String password= user.getPassword();
+		
+		jdbcTemplate.update(sql_account, new Object[] {password,email,first_name,last_name,username});
 		jdbcTemplate.update(sql, new Object[] {balance, username});
 	}
 
@@ -109,13 +114,13 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public List<User> returnComments(String username) {
-		return jdbcTemplate.query("select Users.username, Users.balance, Accounts.first_name, Accounts.last_name, Comments.commentId , Comments.description " + 
+		return jdbcTemplate.query("select Users.username, users.email, Users.balance, Accounts.first_name, Accounts.last_name, Comments.commentId , Comments.description " + 
 				"from Users JOIN Accounts on Users.username=Accounts.username JOIN Comments on Users.username= Comments.users_username", new UserCommentsExtractor(), username);
 	}
 
 	@Override
 	public List<User> returnTransactions(String username) {
-		return  jdbcTemplate.query("select Users.username, Users.balance, Accounts.first_name, Accounts.last_name, Transactions.transId, Transactions.amount " + 
+		return  jdbcTemplate.query("select Users.username, users.email, Users.balance, Accounts.first_name, Accounts.last_name, Transactions.transId, Transactions.amount " + 
 				"from Users " + 
 				"JOIN Accounts on Users.username=Accounts.username " + 
 				"JOIN users_has_Transactions on Users.username = users_has_Transactions.sender_username" + 
@@ -164,6 +169,8 @@ public class UserDaoImpl implements UserDao {
 			         user = new User();
 					 user.setUsername(rs.getString("username"));
 					 user.setBalance(rs.getDouble("balance"));
+					 user.setEmail(rs.getString("email"));
+					 user.setPassword(rs.getString("password"));
 					 user.setFirstName(rs.getString("first_name"));
 					 user.setLastName(rs.getString("last_name"));
 					 usermap.put(rs.getString("username"), user);
@@ -194,6 +201,8 @@ public class UserDaoImpl implements UserDao {
 			         user = new User();
 					 user.setUsername(rs.getString("username"));
 					 user.setBalance(rs.getDouble("balance"));
+					 user.setEmail(rs.getString("email"));
+					 user.setPassword(rs.getString("password"));
 					 user.setFirstName(rs.getString("first_name"));
 					 user.setLastName(rs.getString("last_name"));
 					 usermap.put(rs.getString("username"), user);
@@ -219,8 +228,10 @@ public class UserDaoImpl implements UserDao {
 			User user = new User();
 			user.setUsername(rs.getString("username"));
 			user.setBalance(rs.getDouble("balance"));
-			 user.setFirstName(rs.getString("first_name"));
-			 user.setLastName(rs.getString("last_name"));
+			user.setPassword(rs.getString("password"));
+			user.setEmail(rs.getString("email"));
+			user.setFirstName(rs.getString("first_name"));
+			user.setLastName(rs.getString("last_name"));
 			return user;
 		}
 	}
@@ -234,6 +245,8 @@ public class UserDaoImpl implements UserDao {
 		         User user = new User();
 				 user.setUsername(rs.getString("username"));
 				 user.setBalance(rs.getDouble("balance"));
+				 user.setPassword(rs.getString("password"));
+				 user.setEmail(rs.getString("email"));
 				 user.setFirstName(rs.getString("first_name"));
 				 user.setLastName(rs.getString("last_name"));
 				 
@@ -250,8 +263,10 @@ public class UserDaoImpl implements UserDao {
 			User user = new User();
 			user.setUsername(rs.getString("username"));
 			user.setBalance(rs.getDouble("balance"));
-			 user.setFirstName(rs.getString("first_name"));
-			 user.setLastName(rs.getString("last_name"));
+			user.setPassword(rs.getString("password"));
+			user.setEmail(rs.getString("email"));
+			user.setFirstName(rs.getString("first_name"));
+			user.setLastName(rs.getString("last_name"));
 			return user;
 		}
 	}

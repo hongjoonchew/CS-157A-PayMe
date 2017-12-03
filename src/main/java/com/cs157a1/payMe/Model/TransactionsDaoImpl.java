@@ -26,9 +26,8 @@ public class TransactionsDaoImpl implements TransactionsDao {
 	
 	@Override
 	public List<Transactions> returnAllInfo() {
-		return jdbcTemplate.query("select Transactions.transId, Transactions.amount, Comments.commentId, Comments.description" + 
-				" from Transactions " + 
-				" JOIN Comments on Transactions.transId=Comments.Transactions_transId", new TransactionsResultSetExtractor());
+		return jdbcTemplate.query("select *" + 
+				" from Transactions", new TransactionsResultSetExtractor());
 	}
 
 	@Override
@@ -62,14 +61,25 @@ public class TransactionsDaoImpl implements TransactionsDao {
 	
 	
 	@Override
-	public void addTransactionsToDB(Transactions transaction) {
+	public void addTransactionsToDB(Transactions transaction, String sender, String receiver) {
 		final String sql = "BEGIN;"
 				+ "INSERT INTO Transactions(type,amount) VALUES (?,?)"
 				+ "INSERT INTO ";
 		double amount = transaction.getAmount();
 		TransType type = transaction.getType();
 		String typeStr = (type==TransType.REQUEST) ? "Request" : "Transfer";
-		jdbcTemplate.update(sql, new Object[] {typeStr,amount});		
+		jdbcTemplate.update(sql, new Object[] {typeStr,amount});	
+		
+		final String sqlTransaction = "SELECT * FROM users_has_Transactions " 
+		+ "order by transid  desc limit 1";
+		Transactions t = jdbcTemplate.queryForObject(sqlTransaction, new TransactionsRowMapper());
+		addToUserHasTransactions(t.getTransID(),sender,receiver);
+	}
+	
+	public void addToUserHasTransactions(int id,String sender, String receiver) {
+		final String sqlUserHasTransactions = "INSERT INTO users_has_Transactions(receiver_username,transId,sender_username) VALUES (?,?,?)";
+		
+		jdbcTemplate.update(sqlUserHasTransactions, new Object[] {receiver,id,sender});	
 	}
 
 	@Override
@@ -114,8 +124,8 @@ public class TransactionsDaoImpl implements TransactionsDao {
 		public Transactions mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Transactions transactions = new Transactions();
 	    	    transactions.setTransID(rs.getInt("transID"));
+	    	    transactions.setType(TransType.valueOf(rs.getString("type")));
 	    	    transactions.setAmount(rs.getDouble("amount"));
-	
 			return transactions;
 		}
 	}

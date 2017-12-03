@@ -23,14 +23,14 @@ public class CreditCardDaoImpl implements CreditCardDao {
 
 	@Override
 	public List<CreditCard> returnAllInfo() {
-		final String sql = "select creditCard.number, creditCard.creditLimit, Cards.name, Cards.CVV from creditCard"
+		final String sql = "select creditCard.number, creditCard.creditLimit, creditCard.issuer, Cards.name, Cards.CVV, Cards.expiration_year, Cards.expiration_month from creditCard"
 		           + " JOIN Cards on creditCard.number=Cards.number";
 		return jdbcTemplate.query(sql, new CreditCardResultSetExtractor());
 	}
 
 	@Override
 	public CreditCard returncreditCardBycardNumber(int cardNumber) {
-		String sql = "select creditCard.number, creditCard.creditLimit, Cards.name, Cards.CVV from creditCard"
+		String sql = "select creditCard.number, creditCard.creditLimit, creditCard.issuer, Cards.name, Cards.CVV, Cards.expiration_year, Cards.expiration_month from creditCard"
 		           + " JOIN Cards on creditCard.number=Cards.number"
 		           + " where creditCard.number = ?";
 
@@ -39,17 +39,20 @@ public class CreditCardDaoImpl implements CreditCardDao {
 
 	@Override
 	public void addcreditCardToDB(CreditCard creditCard) {
-		final String sql_creditCard = "INSERT INTO creditCard (number, creditLimit) VALUE (?,?)";
-		final String sql_card = "INSERT INTO Cards (number,name,CVV) VALUE (?,?)";
+		final String sql_creditCard = "INSERT INTO creditCard (number, creditLimit, issuer) VALUE (?,?,?)";
+		final String sql_card = "INSERT INTO Cards (number,name,CVV,expiration_year,expiration_month) VALUE (?,?,?,?,?)";
 		
 		long number = creditCard.getCardNumber();
 		String name = creditCard.getCardName();
 		int cvv = creditCard.getCvvNumber();
 		float creditLimit = creditCard.getCreditLimit();
+		int exp_year= creditCard.getExpiration_year();
+		int exp_month =creditCard.getExpiration_month();
+		String issuer = creditCard.getIssuer();
 
 		
-		jdbcTemplate.update(sql_creditCard, new Object[] {number,creditLimit});
-		jdbcTemplate.update(sql_card, new Object[] {number,name,cvv});		
+		jdbcTemplate.update(sql_creditCard, new Object[] {number,creditLimit,issuer});
+		jdbcTemplate.update(sql_card, new Object[] {number,name,cvv,exp_year,exp_month});		
 	}
 
 	@Override
@@ -63,7 +66,7 @@ public class CreditCardDaoImpl implements CreditCardDao {
 
 	@Override
 	public void updatecreditCard(CreditCard creditCard) {
-		final String sql_creditCard = "UPDATE creditCard SET creditLimit = ? WHERE number = ?";
+		final String sql_creditCard = "UPDATE creditCard SET creditLimit = ? and issuer = ? WHERE number = ?";
 		final String sql_Card = "UPDATE Card SET name = ? and CVV = ? WHERE number = ?";
 
 		
@@ -71,10 +74,14 @@ public class CreditCardDaoImpl implements CreditCardDao {
 		String name = creditCard.getCardName();
 		int cvv = creditCard.getCvvNumber();
 		float creditLimit = creditCard.getCreditLimit();
+		int exp_year= creditCard.getExpiration_year();
+		int exp_month =creditCard.getExpiration_month();
+		String issuer = creditCard.getIssuer();
+
 
 		
-		jdbcTemplate.update(sql_creditCard, new Object[] {creditLimit, number});
-		jdbcTemplate.update(sql_Card, new Object[] {name, cvv, number});	
+		jdbcTemplate.update(sql_creditCard, new Object[] {creditLimit, issuer, number});
+		jdbcTemplate.update(sql_Card, new Object[] {name, cvv, number,exp_year,exp_month});	
 	}
 	
 	public class CreditCardResultSetExtractor implements ResultSetExtractor<List<CreditCard>> {
@@ -87,7 +94,10 @@ public class CreditCardDaoImpl implements CreditCardDao {
 					creditCard.setCardNumber(rs.getLong("number"));
 					creditCard.setCardName(rs.getString("name"));
 					creditCard.setCvvNumber(rs.getInt("CVV"));
+					creditCard.setExpiration_year(rs.getInt("expiration_year"));
+					creditCard.setExpiration_month(rs.getInt("expiration_month"));
 					creditCard.setCreditLimit(rs.getFloat("creditLimit"));
+					creditCard.setIssuer(rs.getString("issuer"));
 			        creditCardlist.add(creditCard);
 		      }
 		      return creditCardlist;
@@ -101,8 +111,11 @@ public class CreditCardDaoImpl implements CreditCardDao {
 			CreditCard creditCard = new CreditCard();
 			creditCard.setCardNumber(rs.getLong("number"));
 			creditCard.setCardName(rs.getString("name"));
+			creditCard.setExpiration_year(rs.getInt("expiration_year"));
+			creditCard.setExpiration_month(rs.getInt("expiration_month"));
 			creditCard.setCvvNumber(rs.getInt("CVV"));
 			creditCard.setCreditLimit(rs.getFloat("creditLimit"));
+			creditCard.setIssuer(rs.getString("issuer"));
 			return creditCard;
 		}
 	}
