@@ -65,7 +65,7 @@ public class HistoryController {
 		comments  = commentService.returnAllCommentsFromTransactions(id);
 		map.addAllAttributes(comments);
 		map.addAttribute("trans", trans);
-		return "{id}";
+		return "transaction";
 	}
 	
 	@RequestMapping(value = "/request/view", method = RequestMethod.GET)

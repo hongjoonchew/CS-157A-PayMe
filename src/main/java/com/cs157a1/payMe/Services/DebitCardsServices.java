@@ -19,8 +19,8 @@ public class DebitCardsServices {
 		return debitCardDao.returnAllInfo();
 	}
 	
-	public DebitCard returnDebitCardBycardNumber(int cardNumber) {
-		return debitCardDao.returnDebitCardBycardNumber(cardNumber);
+	public DebitCard returnDebitCardBycardNumber(long l) {
+		return debitCardDao.returnDebitCardBycardNumber(l);
 	}
 	
 	public void addDebitCardToDB(DebitCard DebitCard) {

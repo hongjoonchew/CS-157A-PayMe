@@ -19,8 +19,8 @@ public class CreditCardsServices {
 		return creditCardDao.returnAllInfo();
 	}
 	
-	public CreditCard returncreditCardBycardNumber(int cardNumber) {
-		return creditCardDao.returncreditCardBycardNumber(cardNumber);
+	public CreditCard returncreditCardBycardNumber(long l) {
+		return creditCardDao.returncreditCardBycardNumber(l);
 	}
 	
 	public void addcreditCardToDB(CreditCard creditCard) {
