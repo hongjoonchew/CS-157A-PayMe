@@ -9,7 +9,7 @@ import com.cs157a1.payMe.Entity.User;
 public interface DebitCardDao {
 	List<DebitCard> returnAllInfo();
 	
-	DebitCard returnDebitCardBycardNumber(int cardNumber);
+	DebitCard returnDebitCardBycardNumber(long l);
 	
 	void addDebitCardToDB(DebitCard DebitCard);
 	

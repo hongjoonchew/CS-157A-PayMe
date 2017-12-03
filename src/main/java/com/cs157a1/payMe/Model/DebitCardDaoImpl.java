@@ -32,7 +32,7 @@ public class DebitCardDaoImpl implements DebitCardDao {
 	}
 
 	@Override
-	public DebitCard returnDebitCardBycardNumber(int cardNumber) {
+	public DebitCard returnDebitCardBycardNumber(long cardNumber) {
 		final String sql = "select debitCard.number, debitCard.balance, debitCard.type, Cards.name, Cards.CVV, Cards.expiration_year, Cards.expiration_month from debitCard"
 		           + " JOIN Cards on debitCard.number=Cards.number"
 		           + " where debitCard.number = ?";

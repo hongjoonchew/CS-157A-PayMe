@@ -9,7 +9,7 @@ import com.cs157a1.payMe.Entity.CreditCard;
 public interface CreditCardDao {
 	List<CreditCard> returnAllInfo();
 	
-	CreditCard returncreditCardBycardNumber(int cardNumber);
+	CreditCard returncreditCardBycardNumber(long l);
 	
 	void addcreditCardToDB(CreditCard creditCard);
 	

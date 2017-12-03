@@ -4,10 +4,14 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,8 +45,6 @@ public class CardController {
 	@ModelAttribute("cards")
 	public Collection<Card> getCards() {
 		Collection<Card> cardList = new ArrayList<>();
-		cardList.addAll(creditCardServices.returnAllInfo());
-		cardList.addAll(debitCardServices.returnAllInfo());
 		return cardList;
 	}
 	
@@ -60,20 +62,29 @@ public class CardController {
 	}
 	
 	@RequestMapping("/cards/{cardNumber}")
-	public String getCardPage(@RequestParam("card")String cardNumber, @ModelAttribute("card") Card card, ModelMap map) {
+	public String getCardPage(@PathVariable("{cardNumber}")String cardNumber, @ModelAttribute("card") Card card, ModelMap map) {
+		long longCard = Long.parseLong(cardNumber); 
+		if(creditCardServices.returncreditCardBycardNumber(longCard)== null) {
+			card = debitCardServices.returnDebitCardBycardNumber(longCard);
+		}
+		else { 
+			card = creditCardServices.returncreditCardBycardNumber(longCard);
+		}
 		map.addAttribute("card", card);
 		return "{cardNumber}";
 	}
 	
 	@RequestMapping(value="/cards/addCard", method = RequestMethod.GET)
 	public String getCardForm(@ModelAttribute("card")Card card, ModelMap map) {
-		
 		map.addAttribute("card", card);
 		return "addCard";
 	}
 	
 	@RequestMapping(value="/cards/addCard", method = RequestMethod.POST)
-	public String sendCardForm() {
+	public String sendCardForm(@Valid @ModelAttribute("card")Card card, BindingResult results) {
+		if(results.hasErrors()) {
+			return "addCard";
+		}
 		return "addCard";
 	}
 	

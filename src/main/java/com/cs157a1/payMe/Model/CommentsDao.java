@@ -10,7 +10,7 @@ import com.cs157a1.payMe.Entity.User;
 public interface CommentsDao {
 	List<Comment> returnAllInfo();
 	
-	List<Comment> returnAllCommentsFromTransactions(String transId);
+	List<Comment> returnAllCommentsFromTransactions(int transId);
 	
 	Comment returnCommentBycommentId(int commentId, int transId, String username);
 	

@@ -19,7 +19,7 @@ public class CommentsServices {
 		return commentDao.returnAllInfo();
 	}
 	
-	public 	List<Comment> returnAllCommentsFromTransactions(String transId){
+	public 	List<Comment> returnAllCommentsFromTransactions(int transId){
 		return commentDao.returnAllCommentsFromTransactions(transId);
 	}
 	

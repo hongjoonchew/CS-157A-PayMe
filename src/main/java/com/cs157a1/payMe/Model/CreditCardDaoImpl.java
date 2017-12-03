@@ -29,7 +29,7 @@ public class CreditCardDaoImpl implements CreditCardDao {
 	}
 
 	@Override
-	public CreditCard returncreditCardBycardNumber(int cardNumber) {
+	public CreditCard returncreditCardBycardNumber(long cardNumber) {
 		String sql = "select creditCard.number, creditCard.creditLimit, creditCard.issuer, Cards.name, Cards.CVV, Cards.expiration_year, Cards.expiration_month from creditCard"
 		           + " JOIN Cards on creditCard.number=Cards.number"
 		           + " where creditCard.number = ?";
