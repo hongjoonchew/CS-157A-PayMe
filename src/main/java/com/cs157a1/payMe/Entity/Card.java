@@ -6,6 +6,8 @@ public class Card {
 	private int cvvNumber;
 	private int expiration_year;
 	private int expiration_month;
+	private String cardType;
+
 
 	private User user;
 
@@ -25,6 +27,14 @@ public class Card {
 		this.cardName = cardName;
 		this.cvvNumber = cvvNumber;
 		this.user = user;
+	}
+	
+	public String getCardType() {
+		return cardType;
+	}
+
+	public void setCardType(String cardType) {
+		this.cardType = cardType;
 	}
 	
 	public int getExpiration_year() {

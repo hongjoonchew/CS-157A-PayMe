@@ -30,6 +30,6 @@ public interface UserDao {
 
 	List<User> returnTransactions(String username);
 
-	User returnCardBelongToUser(String username);
+	List<Card> returnCardBelongToUser(String username);
 
 }

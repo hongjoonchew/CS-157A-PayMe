@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import java.util.*;
 
+import com.cs157a1.payMe.Entity.Card;
 import com.cs157a1.payMe.Entity.User;
 import com.cs157a1.payMe.Model.UserDao;
 
@@ -55,7 +56,7 @@ public class UsersServices {
 		return userDao.returnTransactions(username);
 	}
 
-	public User returnCardBelongToUser(String username) {
+	public List<Card> returnCardBelongToUser(String username) {
 		return userDao.returnCardBelongToUser(username);
 	}
 }

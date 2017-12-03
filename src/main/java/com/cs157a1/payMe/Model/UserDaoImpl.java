@@ -131,11 +131,8 @@ public class UserDaoImpl implements UserDao {
 
 
 	@Override
-	public User returnCardBelongToUser(String username) {
-		return  jdbcTemplate.queryForObject("select Users.username, Users.balance, Accounts.first_name, Accounts.last_name "
-				+ "from Users JOIN Accounts on Users.username=Accounts.username JOIN Cards on Users.username=Cards.username "
-				+ "JOIN debitCard on Cards.number=debitCard.number " + 
-				"where Users.username = ?", new UsersCardRowMapper(), username);
+	public List<Card> returnCardBelongToUser(String username) {
+		return  jdbcTemplate.query("SELECT * FROM Cards WHERE username = ?", new CardResultSetExtractor(), username);
 	}
 	
 	public class UserFriendsExtractor implements ResultSetExtractor<List<User>>{
@@ -221,20 +218,24 @@ public class UserDaoImpl implements UserDao {
 	    }
 	}
 	
-	private static class UsersCardRowMapper implements RowMapper<User>{
-		  
-		@Override
-		public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-			User user = new User();
-			user.setUsername(rs.getString("username"));
-			user.setBalance(rs.getDouble("balance"));
-			user.setPassword(rs.getString("password"));
-			user.setEmail(rs.getString("email"));
-			user.setFirstName(rs.getString("first_name"));
-			user.setLastName(rs.getString("last_name"));
-			return user;
+	public class CardResultSetExtractor implements ResultSetExtractor<List<Card>> {
+
+		   @Override
+		   public List<Card> extractData(ResultSet rs) throws SQLException {
+		      List<Card> cardlist = new ArrayList<Card>();      
+		      while(rs.next()){
+		    	     Card card = new Card();
+		    	     card.setCardNumber(rs.getLong("number"));
+		    	     card.setCardName(rs.getString("name"));
+		    	     card.setExpiration_year(rs.getInt("expiration_year"));
+		    	     card.setExpiration_month(rs.getInt("expiration_month"));
+		    	     card.setCvvNumber(rs.getInt("CVV"));
+		    	     card.setCardType(rs.getString("card_type"));
+		    	     cardlist.add(card);
+		      }
+		      return cardlist;
+		  }
 		}
-	}
 	
 	public class UserResultSetExtractor implements ResultSetExtractor<List<User>> {
 
