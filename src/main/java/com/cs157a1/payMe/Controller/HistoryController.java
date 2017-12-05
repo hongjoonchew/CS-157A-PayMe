@@ -57,20 +57,20 @@ public class HistoryController {
 	public class AcceptSubmission {
 		private String receivedUserName;
 		private String sentUserName;
-		private int amount;
+		private double amount;
 		private int transId;
 		
 		public AcceptSubmission() {};
-		public AcceptSubmission(String receivedUserName, int amount, String sentUserName, int transId) {
+		public AcceptSubmission(String receivedUserName, double amount, String sentUserName, int transId) {
 			this.setReceivedUserName(receivedUserName);
 			this.setAmount(amount);
 			this.setSentUserName(sentUserName);
 			this.setTransId(transId);
 		}
-		public int getAmount() {
+		public double getAmount() {
 			return amount;
 		}
-		public void setAmount(int amount) {
+		public void setAmount(double amount) {
 			this.amount = amount;
 		}
 		public String getReceivedUserName() {
@@ -108,14 +108,13 @@ public class HistoryController {
 	
 	@RequestMapping(value="/transfer/accept", method=RequestMethod.POST)
 	public String sendMoney(@ModelAttribute("acceptSubmission") AcceptSubmission submission) {
-		int amount = submission.getAmount();
+		double amount = submission.getAmount();
 		User sender  = userServices.returnUserByUsername(submission.getSentUserName());
 		User receiver = userServices.returnUserByUsername(submission.getReceivedUserName());
 		sender.setBalance(sender.getBalance()+amount);
 		receiver.setBalance(receiver.getBalance()-amount);
 		tranService.addTransactionsToDB(new Transactions(TransType.TRANSFER, amount), receiver.getUsername(), sender.getUsername());
 		tranService.deleteUserHasTransactions(submission.getTransId(), receiver.getUsername());
-		
 		return "redirect:/transfer?complete";
 	}
 	

@@ -29,7 +29,7 @@
                         <td><form th:action="@{/transfer/accept}" method = "post" th:object ="${acceptSubmission}"> 
                             <input type="hidden" id="receivedUserName" name="receivedUserName" th:value="${userTran.receivedUserName}" />
                             <input type="hidden" id="sentUserName" name="sentUserName" th:value="${userTran.sentUserName}" />
-                            <input type="hidden" id="transId" name="transId" th:value="${tran.transId}" />
+                            <input type="hidden" id="transId" name="transId" th:value="${tran.transID}" />
                             <input type="hidden" id="amount" name="amount" th:value="${tran.amount}"/>
                             <input type="submit" value = "Submit"/></form></td>
                     </tr>
