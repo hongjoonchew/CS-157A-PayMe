@@ -86,6 +86,11 @@ public class TransactionsDaoImpl implements TransactionsDao {
 		jdbcTemplate.update(sql,transID);
 	}
 	
+	@Override
+	public void deleteUserHasTransactions(int transID, String receiver) {
+		final String sql = "DELETE FROM users_has_transactions WHERE transID = ? AND receiver_username = ?";
+		jdbcTemplate.update(sql,transID, receiver);
+	}
 	
 	public class TransactionsResultSetExtractor implements ResultSetExtractor<List<Transactions>> {
 

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.cs157a1.payMe.Entity.Account;
 import com.cs157a1.payMe.Entity.Comment;
+import com.cs157a1.payMe.Entity.TransType;
 import com.cs157a1.payMe.Entity.Transactions;
 import com.cs157a1.payMe.Entity.User;
 import com.cs157a1.payMe.Services.AccountServices;
@@ -53,11 +54,69 @@ public class HistoryController {
 		return commentList;
 	}
 	
+	public class AcceptSubmission {
+		private String receivedUserName;
+		private String sentUserName;
+		private int amount;
+		private int transId;
+		
+		public AcceptSubmission() {};
+		public AcceptSubmission(String receivedUserName, int amount, String sentUserName, int transId) {
+			this.setReceivedUserName(receivedUserName);
+			this.setAmount(amount);
+			this.setSentUserName(sentUserName);
+			this.setTransId(transId);
+		}
+		public int getAmount() {
+			return amount;
+		}
+		public void setAmount(int amount) {
+			this.amount = amount;
+		}
+		public String getReceivedUserName() {
+			return receivedUserName;
+		}
+		public void setReceivedUserName(String receivedUserName) {
+			this.receivedUserName = receivedUserName;
+		}
+		public String getSentUserName() {
+			return sentUserName;
+		}
+		public void setSentUserName(String sentUserName) {
+			this.sentUserName = sentUserName;
+		}
+		public int getTransId() {
+			return transId;
+		}
+		public void setTransId(int transId) {
+			this.transId = transId;
+		}
+		
+	}
+	
+	@ModelAttribute("acceptSubmission")
+	public AcceptSubmission getSubmission() {
+		return new AcceptSubmission();
+	}
+	
 	@RequestMapping(value = "/history", method = RequestMethod.GET)
 	public String getHistory(ModelMap map, @ModelAttribute("accounts") Account account, @ModelAttribute("history") List<Transactions> trans) {
 		trans.addAll(tranService.returnUsersRequest("TRANSFER", account.getUsername()));
 		map.addAttribute("trans",trans);
 		return "history";
+	}
+	
+	@RequestMapping(value="/transfer/accept", method=RequestMethod.POST)
+	public String sendMoney(@ModelAttribute("acceptSubmission") AcceptSubmission submission) {
+		int amount = submission.getAmount();
+		User sender  = userServices.returnUserByUsername(submission.getSentUserName());
+		User receiver = userServices.returnUserByUsername(submission.getReceivedUserName());
+		sender.setBalance(sender.getBalance()+amount);
+		receiver.setBalance(receiver.getBalance()-amount);
+		tranService.addTransactionsToDB(new Transactions(TransType.TRANSFER, amount), receiver.getUsername(), sender.getUsername());
+		tranService.deleteUserHasTransactions(submission.getTransId(), receiver.getUsername());
+		
+		return "redirect:/transfer?complete";
 	}
 	
 
@@ -71,8 +130,9 @@ public class HistoryController {
 	}
 	
 	@RequestMapping(value = "/request/view", method = RequestMethod.GET)
-	public String getRequests( @ModelAttribute("accounts") Account account, @ModelAttribute("history") List<Transactions> trans, ModelMap map) {
+	public String getRequests(@ModelAttribute("accounts") Account account, @ModelAttribute("acceptSubmission") AcceptSubmission submission, @ModelAttribute("history") List<Transactions> trans, ModelMap map) {
 		trans.addAll(tranService.returnUsersTransfers("REQUEST", account.getUsername()));
+		map.addAttribute("acceptSubmission", submission);
 		map.addAttribute("trans",trans);
 		return "view";
 	}
