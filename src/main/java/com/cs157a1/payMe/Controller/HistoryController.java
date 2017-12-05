@@ -122,6 +122,8 @@ public class HistoryController {
 		receiver.setBalance(receiver.getBalance()-amount);
 		tranService.addTransactionsToDB(new Transactions(TransType.TRANSFER, amount), receiver.getUsername(), sender.getUsername());
 		tranService.deleteUserHasTransactions(submission.getTransId(), receiver.getUsername());
+		userServices.updateUser(sender);
+		userServices.updateUser(receiver);
 		return "redirect:/transfer?complete";
 	}
 	
