@@ -101,9 +101,17 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public List<User> returnFriendsByUsername(String username) {
+	public List<User> returnFriendsByUsernameColumnOne(String username) {
 		return jdbcTemplate.query("SELECT users_has_users.username, users_has_users.friendusername, first_name, last_name "
-				+ "FROM paymeModel.users_has_users INNER JOIN paymeModel.accounts ON accounts.username = users_has_users.friendusername", new UserFriendsExtractor(), username);
+				+ "FROM paymeModel.users_has_users INNER JOIN paymeModel.accounts ON accounts.username = users_has_users.friendusername "
+				+ "AND users_has_users.username = ?", new UserFriendsExtractor(), username);
+	}
+	
+	@Override
+	public List<User> returnFriendsByUsernameColumnTwo(String username) {
+		return jdbcTemplate.query("SELECT users_has_users.username, users_has_users.friendusername, first_name, last_name "
+				+ "FROM paymeModel.users_has_users INNER JOIN paymeModel.accounts ON accounts.username = users_has_users.username "
+				+ "AND users_has_users.friendusername = ?", new UserFriendsExtractor(), username);
 	}
 
 	@Override

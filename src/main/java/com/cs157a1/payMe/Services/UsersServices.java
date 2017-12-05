@@ -44,8 +44,11 @@ public class UsersServices {
 		 userDao.updateUser(User);
 	}
 
-	public List<User> returnFriendsByUsername(String username){
-		return userDao.returnFriendsByUsername(username);
+	public List<User> returnFriendsByUsernameColumnOne(String username){
+		List<User> friendsListOne = userDao.returnFriendsByUsernameColumnOne(username);
+		List<User> friendsListTwo = userDao.returnFriendsByUsernameColumnTwo(username);
+		friendsListOne.addAll(friendsListTwo);
+		return friendsListOne;
 	}
 
 	public List<User> returnComments(String username){

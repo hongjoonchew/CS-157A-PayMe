@@ -24,7 +24,9 @@ public interface UserDao {
 
 	void updateUser(User User);
 
-	List<User> returnFriendsByUsername(String username);
+	List<User> returnFriendsByUsernameColumnOne(String username);
+	
+	List<User> returnFriendsByUsernameColumnTwo(String username);
 
 	List<User> returnComments(String username);
 
