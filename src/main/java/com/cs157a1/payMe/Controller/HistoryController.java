@@ -54,6 +54,12 @@ public class HistoryController {
 		return commentList;
 	}
 	
+	@ModelAttribute("comment")
+	public Comment getComment() {
+		Comment comment = new Comment();
+		return comment;
+	}
+	
 	public class AcceptSubmission {
 		private String receivedUserName;
 		private String sentUserName;
@@ -123,11 +129,13 @@ public class HistoryController {
 	@RequestMapping(value = "/transactions/{id}", method = RequestMethod.GET)
 	public String getTransWithId(ModelMap map, @PathVariable(value ="id", required = true) int id, Transactions trans, @ModelAttribute("comments") List<Comment> comments) {
 		trans = tranService.returnTransactionsBytransID(id);
+		System.out.println(trans);
 		comments  = commentService.returnAllCommentsFromTransactions(id);
 		map.addAllAttributes(comments);
 		map.addAttribute("trans", trans);
 		return "transaction";
 	}
+	
 	
 	@RequestMapping(value = "/request/view", method = RequestMethod.GET)
 	public String getRequests(@ModelAttribute("accounts") Account account, @ModelAttribute("acceptSubmission") AcceptSubmission submission, @ModelAttribute("history") List<Transactions> trans, ModelMap map) {
@@ -139,7 +147,9 @@ public class HistoryController {
 	
 	//THIS NEEDS TO BE FIXED.
 	@RequestMapping(value = "/transactions/{id}/addComment", method = RequestMethod.GET)
-	public String getCommentForm() {
+	public String getCommentForm(@PathVariable(value="id", required = true)int id, ModelMap model, @ModelAttribute("comment") Comment comment) {
+		model.addAttribute("id",id);
+		model.addAttribute("comment", comment);
 		return "addComment";
 	}
 	

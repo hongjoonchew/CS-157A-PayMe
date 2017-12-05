@@ -24,6 +24,7 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
 	        registry.addViewController("/view").setViewName("view");
 	        registry.addViewController("/transaction").setViewName("transaction");
 	        registry.addViewController("/request/view").setViewName("requestForm");
+	        registry.addViewController("/transaction/{id}/addComment").setViewName("addComment");
 	    }
 	
 	
