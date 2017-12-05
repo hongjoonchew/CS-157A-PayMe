@@ -15,7 +15,7 @@
             </nav>
             <!--Transactions template in construction-->
             <div class="right-container">
-            <h5 th:text="${targetAccount.firstName}+ ' ' + ${targetAccount.firstName}">First Name</h5>
+            <h5 th:text="${targetAccount.firstName}+ ' ' + ${targetAccount.lastName}">First Name</h5>
                 <h6 th:text="'Username: ' + ${targetAccount.username}">Username</h6>
                 <a th:href="@{/friends/add(username=${targetAccount.username})}" th:text="'Add Friend'">Add Friend</a>
                 <hr/>

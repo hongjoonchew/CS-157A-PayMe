@@ -134,6 +134,12 @@ public class TransactionController {
 		}
 	}
 	
+	@RequestMapping(value="/transfer/accept", method=RequestMethod.POST)
+	public String sendMoney() {
+		
+		return "redirect:/transfer";
+	}
+	
 	
 	@RequestMapping(value="/request", method = RequestMethod.GET)
 	public String getRequestForm(@RequestParam(value="target", required =false) String target,@ModelAttribute("transferAccount")TransactionList request,@ModelAttribute("accounts")Account account, ModelMap model) {

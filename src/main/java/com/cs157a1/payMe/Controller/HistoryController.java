@@ -72,7 +72,7 @@ public class HistoryController {
 	
 	@RequestMapping(value = "/request/view", method = RequestMethod.GET)
 	public String getRequests( @ModelAttribute("accounts") Account account, @ModelAttribute("history") List<Transactions> trans, ModelMap map) {
-		trans.addAll(tranService.returnUsersRequest("REQUEST", account.getUsername()));
+		trans.addAll(tranService.returnUsersTransfers("REQUEST", account.getUsername()));
 		map.addAttribute("trans",trans);
 		return "view";
 	}

@@ -34,6 +34,11 @@ public class DashboardController {
 		return account;
 	}
 	
+	@ModelAttribute("friend")
+	public User getFriend() {
+		return new User();
+	}
+	
 	
 	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
 	public String helloUser() {
@@ -43,30 +48,29 @@ public class DashboardController {
 	
 	@RequestMapping(value ="/friends", method = RequestMethod.GET)
 	public String showFriends(@ModelAttribute("accounts")Account account, ModelMap model) {
-		model.addAllAttributes(userServices.returnFriendsByUsername(account.getUsername()));
+		model.addAttribute("friends", userServices.returnFriendsByUsername(account.getUsername()));
 		return "friends";
 	}
 	
 	@RequestMapping(value="/friends/add", method=RequestMethod.GET)
-	public String addFriendForm(@RequestParam(value="username", required =false) String username, ModelMap model) {
-		Account friend = new Account();
+	public String addFriendForm(@RequestParam(value="username", required =false) String username, @ModelAttribute("friend") User friend, ModelMap model) {
 		if(username != null) {
-		friend = accountService.returnAccountByUsername(username);
+		friend.setUsername(username);
 		}
 		model.addAttribute("friendAccount", friend);
 		return "add";
 	}
 	
 	@RequestMapping(value = "/friends/add", method = RequestMethod.POST)
-	public String addFriend(@ModelAttribute("accounts")Account account, ModelMap model) {
-		return "add";
+	public String addFriend(@ModelAttribute("accounts")Account account, @ModelAttribute("friend") User friend, ModelMap model) {
+		if(userServices.returnFriendsByUsername(friend.getUsername()) == null) {
+			return "redirect:/friends/add?error";
+		}
+		userServices.addFriend(account.getUsername(), friend.getUsername());
+		return "redirect:/friends/add?complete";
 		
 	}
 	
-	@RequestMapping(value="/friends?search", method = RequestMethod.GET)
-	public String searchFriend(@ModelAttribute("accounts")Account account) {
-		return "friends?search";
-	}
 	
 	
 	

@@ -21,7 +21,7 @@
                 <div th:if="${friends == null}">
                     Add some friends by clicking the link above!</div>
                 <div th:each="friend : ${friends}" th:unless ="${friends == null}"> 
-                    <div><a th:href="@{/account/{friend.username}}" th:text="${friends.firstName}">Friends Name</a></div>
+                    <div><a th:href="@{'/accounts/' + ${friend.username}}" th:text="${friend.firstName}">Friends Name</a></div>
                     <hr/>
                 </div>
                 </div>

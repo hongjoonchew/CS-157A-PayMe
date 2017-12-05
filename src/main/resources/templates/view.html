@@ -23,9 +23,13 @@
                 <table class = "table" th:each="tran : ${trans}" th:unless = "${tran == null}">
                     <tr th:each="userTran: ${tran.userHasTransactions}" th:unless ="${userTran == null}">
                         <td th:text="${userTran.sentUserName}">Sender</td>
-                        <td>Requested From</td>
+                        <td>Asked</td>
                         <td th:text="${userTran.receivedUserName}">Receiver</td>
                         <td th:text="${tran.amount}">Amount</td>
+                        <td><form th:action="@{/transfer/accept}" method = "post" th:object ="${userTran}"> 
+                            <input type="hidden" id="sentUserName" name="sentUserName" th:value="${userTran.sentUserName}" />
+                            <input type="hidden" id="receivedUserName" name="receivedUserName" th:value="${userTran.receivedUserName}" />
+                            <input type="submit" value = "Submit"/></form></td>
                     </tr>
                 </table>
                 </div>

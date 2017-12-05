@@ -13,6 +13,8 @@
             Sidebar  </nav>
         <div class="right-container">
         <h6> Add Friend Form</h6>
+        <p th:if="${param.error}">Friend not found</p>
+        <p th:if="${param.complete}">Friend added</p>
         <form action = "#" th:action= "@{/friends/add}" th:object="${friendAccount}" method="post">
             <div><label>Adding : <input type="text"  id="username" name="username" th:value="${friendAccount?.username}"/></label></div>
             <div><input type="submit" value="Add Friend"/></div>

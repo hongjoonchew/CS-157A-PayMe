@@ -68,9 +68,9 @@ public class UserDaoImpl implements UserDao {
 	}
 	
 	@Override
-	public void addFriend(String usename,String friendusername) {
+	public void addFriend(String username,String friendusername) {
 		final String sql = "INSERT INTO users_has_users (username, friendusername) VALUES (?,?)";
-		jdbcTemplate.update(sql, new Object[] {usename,friendusername});
+		jdbcTemplate.update(sql, new Object[] {username,friendusername});
 	}
 
 
@@ -117,8 +117,8 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public List<User> returnFriendsByUsernameColumnTwo(String username) {
 		return jdbcTemplate.query("SELECT users_has_users.username, users_has_users.friendusername, first_name, last_name "
-				+ "FROM paymeModel.users_has_users INNER JOIN paymeModel.accounts ON accounts.username = users_has_users.username "
-				+ "AND users_has_users.friendusername = ?", new UserFriendsExtractor(), username);
+				+ "FROM users_has_users INNER JOIN accounts ON accounts.username = users_has_users.username "
+				+ "AND users_has_users.friendusername = ?", new UserFriendsExtractor2(), username);
 	}
 
 	@Override
@@ -161,7 +161,22 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
+	public class UserFriendsExtractor2 implements ResultSetExtractor<List<User>>{
 
+        @Override
+        public List<User> extractData(ResultSet rs) throws SQLException, DataAccessException {
+              List<User> userlist = new ArrayList<User>();      
+              while(rs.next()){
+                 User user = new User();
+                 user.setUsername(rs.getString("username"));
+                 user.setFirstName(rs.getString("first_name"));
+                 user.setLastName(rs.getString("last_name"));
+                 
+                 userlist.add(user);
+              }
+              return userlist;
+        }
+    }
 	
 	public class UserTransactionsExtractor implements ResultSetExtractor<List<User>>{
 
@@ -265,6 +280,7 @@ public class UserDaoImpl implements UserDao {
 		      return userlist;
 		  }
 		}
+	
 	
 	private static class UsersRowMapper implements RowMapper<User>{
 		  
