@@ -15,6 +15,11 @@ public class DebitCard extends Card {
 
 	public DebitCard() {
 	}
+	
+	public DebitCard(Card card,float balance) {
+		super(card);
+		this.balance=balance;
+	}
 
 	public DebitCard(long cardNumber, String cardName, int cvvNumber, float balance) {
 		super(cardNumber, cardName, cvvNumber);

@@ -43,19 +43,21 @@ public class DebitCardDaoImpl implements DebitCardDao {
 	@Override
 	public void addDebitCardToDB(DebitCard DebitCard, String username) {
 		final String sql_debitCard = "INSERT INTO debitCard (number, balance,type) VALUE (?,?,?)";
-		final String sql_card = "INSERT INTO Cards (number,name,CVV,expiration_year,expiration_month,card_type,username) VALUE (?,?,?,?,?,?,?)";
+		final String sql_card = "INSERT INTO Cards (number,name,CVV,expiration_year,expiration_month,card_type,username,card_type) VALUE (?,?,?,?,?,?,?,?)";
 		
 		long number = DebitCard.getCardNumber();
 		double balance = DebitCard.getBalance();
 		String name = DebitCard.getCardName();
 		int cvv = DebitCard.getCvvNumber();
-		int exp_year= DebitCard.getExpiration_year();
-		int exp_month =DebitCard.getExpiration_month();
-		String type = DebitCard.getType();
+		int exp_year= 4;
+		int exp_month = 5;		
+		//int exp_year= DebitCard.getExpiration_year();
+		//int exp_month =DebitCard.getExpiration_month();
+		String type = DebitCard.getCardType();
 		String cardType = "Debit";
 		
 		jdbcTemplate.update(sql_debitCard, new Object[] {number,balance,type});
-		jdbcTemplate.update(sql_card, new Object[] {number,name,cvv,exp_year,exp_month,cardType,username});	
+		jdbcTemplate.update(sql_card, new Object[] {number,name,cvv,exp_year,exp_month,cardType,username,type});	
 	}
 
 	@Override
@@ -71,7 +73,7 @@ public class DebitCardDaoImpl implements DebitCardDao {
 	@Override
 	public void updateDebitCard(DebitCard DebitCard) {
 		final String sql_debitCard = "UPDATE debitCard SET balance = ? and type = ? WHERE number = ?";
-		final String sql_Card = "UPDATE Card SET name = ? and CVV = ? and expiration_year = ? and expiration_month = ? WHERE number = ?";
+		final String sql_Card = "UPDATE Card SET name = ? and CVV = ? and expiration_year = ? and expiration_month = ? and card_type = ? WHERE number = ?";
 
 		
 		long number = DebitCard.getCardNumber();
@@ -80,10 +82,10 @@ public class DebitCardDaoImpl implements DebitCardDao {
 		int cvv = DebitCard.getCvvNumber();
 		int exp_year= DebitCard.getExpiration_year();
 		int exp_month =DebitCard.getExpiration_month();
-		String type = DebitCard.getType();
+		String type = DebitCard.getCardType();
 		
 		jdbcTemplate.update(sql_debitCard, new Object[] {balance,type, number});
-		jdbcTemplate.update(sql_Card, new Object[] {name, cvv, number,exp_year,exp_month});
+		jdbcTemplate.update(sql_Card, new Object[] {name, cvv, number,exp_year,exp_month,type});
 	}
 	
 	public class DebitCardResultSetExtractor implements ResultSetExtractor<List<DebitCard>> {
@@ -99,7 +101,7 @@ public class DebitCardDaoImpl implements DebitCardDao {
 			  debitCard.setExpiration_month(rs.getInt("expiration_month"));
 			  debitCard.setCvvNumber(rs.getInt("CVV"));
 			  debitCard.setBalance(rs.getFloat("balance"));
-			  debitCard.setType(rs.getString("type"));
+			  debitCard.setCardType(rs.getString("card_type"));
 		    	  debitCardList.add(debitCard);
 		      }
 		      return debitCardList;
@@ -117,7 +119,7 @@ public class DebitCardDaoImpl implements DebitCardDao {
 			debitCard.setCardName(rs.getString("name"));
 			debitCard.setCvvNumber(rs.getInt("CVV"));
 			debitCard.setBalance(rs.getFloat("balance"));
-			debitCard.setType(rs.getString("type"));
+			debitCard.setCardType(rs.getString("card_type"));
 			return debitCard;
 		}
 	}

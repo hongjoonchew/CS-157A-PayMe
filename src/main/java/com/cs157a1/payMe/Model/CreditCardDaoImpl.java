@@ -40,20 +40,24 @@ public class CreditCardDaoImpl implements CreditCardDao {
 	@Override
 	public void addcreditCardToDB(CreditCard creditCard, String username) {
 		final String sql_creditCard = "INSERT INTO creditCard (number, creditLimit, issuer) VALUE (?,?,?)";
-		final String sql_card = "INSERT INTO Cards (number,name,CVV,expiration_year,expiration_month,card_type,username) VALUE (?,?,?,?,?,?,?)";
+		final String sql_card = "INSERT INTO Cards (number,name,CVV,expiration_year,expiration_month,card_type,username,card_type) VALUE (?,?,?,?,?,?,?,?)";
 		
 		long number = creditCard.getCardNumber();
 		String name = creditCard.getCardName();
 		int cvv = creditCard.getCvvNumber();
 		float creditLimit = creditCard.getCreditLimit();
-		int exp_year= creditCard.getExpiration_year();
-		int exp_month =creditCard.getExpiration_month();
+		int exp_year= 8;
+		int exp_month =7;
+		//int exp_year= creditCard.getExpiration_year();
+		//int exp_month =creditCard.getExpiration_month();
 		String issuer = creditCard.getIssuer();
 		String cardType = "credit";
+		String type = creditCard.getCardType();
+
 
 		
 		jdbcTemplate.update(sql_creditCard, new Object[] {number,creditLimit,issuer});
-		jdbcTemplate.update(sql_card, new Object[] {number,name,cvv,exp_year,exp_month,cardType,username});		
+		jdbcTemplate.update(sql_card, new Object[] {number,name,cvv,exp_year,exp_month,cardType,username,type});		
 	}
 
 	@Override
@@ -99,6 +103,7 @@ public class CreditCardDaoImpl implements CreditCardDao {
 					creditCard.setExpiration_month(rs.getInt("expiration_month"));
 					creditCard.setCreditLimit(rs.getFloat("creditLimit"));
 					creditCard.setIssuer(rs.getString("issuer"));
+					creditCard.setCardType(rs.getString("card_type"));
 			        creditCardlist.add(creditCard);
 		      }
 		      return creditCardlist;
@@ -117,6 +122,7 @@ public class CreditCardDaoImpl implements CreditCardDao {
 			creditCard.setCvvNumber(rs.getInt("CVV"));
 			creditCard.setCreditLimit(rs.getFloat("creditLimit"));
 			creditCard.setIssuer(rs.getString("issuer"));
+			creditCard.setCardType(rs.getString("card_type"));
 			return creditCard;
 		}
 	}

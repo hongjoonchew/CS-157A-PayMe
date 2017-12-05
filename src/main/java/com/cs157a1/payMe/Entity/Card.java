@@ -13,6 +13,15 @@ public class Card {
 
 	public Card() {
 	}
+	
+	public Card(Card card ) {
+		this.cardNumber = card.cardNumber;
+		this.cardName = card.cardName;
+		this.cvvNumber = card.cvvNumber;
+		this.expiration_year = card.expiration_year;
+		this.expiration_month = card.expiration_month;
+		this.cardType = card.cardType;
+	}
 
 	public Card(long cardNumber, String cardName, int cvvNumber) {
 		super();

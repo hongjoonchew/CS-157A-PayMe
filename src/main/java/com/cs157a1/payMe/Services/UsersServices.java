@@ -23,6 +23,10 @@ public class UsersServices {
 	public User returnUserByUsername(String username) {
 		return userDao.returnUserByUsername(username);
 	}
+	
+	public 	String cardTypeByCardNumber(int cardNumber) {
+		return userDao.cardTypeByCardNumber(cardNumber);
+	}
 
 	public void addUserToDB(User User) {
 		 userDao.addUserToDB(User);

@@ -19,6 +19,7 @@ import org.springframework.stereotype.Repository;
 import com.cs157a1.payMe.Entity.Account;
 import com.cs157a1.payMe.Entity.Card;
 import com.cs157a1.payMe.Entity.Comment;
+import com.cs157a1.payMe.Entity.DebitCard;
 import com.cs157a1.payMe.Entity.Transactions;
 import com.cs157a1.payMe.Entity.User;
 import com.cs157a1.payMe.Model.MySqlDao.AccountsRowMapper;
@@ -31,6 +32,15 @@ public class UserDaoImpl implements UserDao {
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+	
+	@Override
+	public String cardTypeByCardNumber(int cardNumber){
+		final String sql = "select * from Card"
+		           + " where Card.number = ?";
+
+		Card card = jdbcTemplate.queryForObject(sql, new CardsRowMapper(), cardNumber);
+		return card.getCardType();
+	}
 
 	@Override
 	public List<User> returnAllInfo() {
@@ -292,6 +302,22 @@ public class UserDaoImpl implements UserDao {
 			user.setFirstName(rs.getString("first_name"));
 			user.setLastName(rs.getString("last_name"));
 			return user;
+		}
+	}
+	
+	private static class CardsRowMapper implements RowMapper<Card>{
+		  
+		@Override
+		public Card mapRow(ResultSet rs, int rowNum) throws SQLException {
+			DebitCard card = new DebitCard();
+			card.setCardNumber(rs.getLong("number"));
+			card.setExpiration_year(rs.getInt("expiration_year"));
+			card.setExpiration_month(rs.getInt("expiration_month"));
+			card.setCardName(rs.getString("name"));
+			card.setCvvNumber(rs.getInt("CVV"));
+			card.setBalance(rs.getFloat("balance"));
+			card.setCardType(rs.getString("card_type"));
+			return card;
 		}
 	}
 	
