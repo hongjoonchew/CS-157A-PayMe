@@ -98,12 +98,12 @@ public class CardController {
 		if(type == "Debit") {
 			DebitCard debit = (DebitCard) card;
 			debit.setBalance(1000);
-			debitCardServices.addDebitCardToDB(debit);
+			debitCardServices.addDebitCardToDB(debit,account.getUsername());
 		}
 		else if(type == "Credit") {
 			CreditCard credit = (CreditCard) card;
 			credit.setCreditLimit(1000);
-			creditCardServices.addcreditCardToDB(credit);
+			creditCardServices.addcreditCardToDB(credit,account.getUsername());
 		}
 		return "addCard";
 	}
