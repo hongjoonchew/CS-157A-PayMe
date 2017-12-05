@@ -15,16 +15,19 @@
             </nav>
             <!--Transactions template in construction-->
             <div class="right-container">
-                <h6>Request Form</h6>
-                <p th:if="${param.complete}">Request Sent</p>
-                <p th:unless="${error} == null" th:text="${error}">Error </p>
-                <p>Simply add as many usernames, just divide it with a ",".</p>
-                <form action = "#" th:action="@{/request}" th:object="${transferAccount}" method="post">
-                    <div><label>Username(s): <input type="text" id="transactionList" name="transactionList" th:value="${target?.username}"/></label></div>
-                    <div><label th:if="${#fields.hasErrors('transactionList')}" th:errors="*{transactionList}"></label></div>
-                    <div><label>Amount: $<input type="number" min="0.01" step="0.01" max="2500"  name="amount" th:field="*{amount}"/></label></div>
-                    <div><input type="submit" value="Request"/></div>
-                </form>                              
+                <div class = "right-container-button"><h6>History</h6><a th:href="@{/cards/addCard}"> Add Card</a></div>
+                <hr/>
+                <div class= "right-container-list">
+                <div th:if="${trans == null}">
+                    No activity at any moment.</div>
+                <table class = "table" th:each="tran : ${trans}" th:unless = "${tran == null}">
+                    <tr th:each="userTran: ${tran.userHasTransactions}" th:unless ="${userTran == null}">
+                        <td th:text="${userTran.sentUserName}" >Sender</td>
+                        <td>Sent</td>
+                        <td><a th:href="@{'/accounts/'+ ${userTran.receivedUserName}}" th:text="${userTran.receivedUserName}">Receiver</a></td>
+                        <td th:text="${tran.amount}">Amount</td>
+                    </tr>
+                </table></div>
             </div>
             </div>
         <div th:replace="fragments/footer :: footer" class="footer">Footer goes here</div>

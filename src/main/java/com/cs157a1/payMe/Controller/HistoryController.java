@@ -55,8 +55,8 @@ public class HistoryController {
 	
 	@RequestMapping(value = "/history", method = RequestMethod.GET)
 	public String getHistory(ModelMap map, @ModelAttribute("accounts") Account account, @ModelAttribute("history") List<Transactions> trans) {
-		trans.addAll(tranService.returnUsersRequest("Transfer", account.getUsername()));
-		map.addAllAttributes(trans);
+		trans.addAll(tranService.returnUsersRequest("TRANSFER", account.getUsername()));
+		map.addAttribute("trans",trans);
 		return "history";
 	}
 	

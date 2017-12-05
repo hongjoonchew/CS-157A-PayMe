@@ -136,9 +136,12 @@ public class TransactionController {
 	
 	
 	@RequestMapping(value="/request", method = RequestMethod.GET)
-	public String getRequestForm(@RequestParam(value="target", required =false)String target,@ModelAttribute("transferAccount")TransactionList request,@ModelAttribute("accounts")Account account, ModelMap model) {
+	public String getRequestForm(@RequestParam(value="target", required =false) String target,@ModelAttribute("transferAccount")TransactionList request,@ModelAttribute("accounts")Account account, ModelMap model) {
 		model.addAttribute("transferAccount",request);
-		model.addAttribute("target", target);
+		if(target != null) {
+			Account tar = accountService.returnAccountByUsername(target);
+			model.addAttribute("target", tar);
+		}
 		return "requestForm";
 	}
 	
@@ -149,7 +152,7 @@ public class TransactionController {
 		boolean hasErrors = false;
 		int amount = request.getAmount();
 		if(binding.hasErrors()) {
-			return "transfer";
+			return "requestForm";
 		}
 		else {
 			for (String username: usernames) {
@@ -161,7 +164,7 @@ public class TransactionController {
 			if (hasErrors) {
 				error = "do not exist.";
 				model.addAttribute("error", error);
-				return "transfer";
+				return "requestForm";
 			}
 		}
 		Transactions trans = new Transactions(TransType.REQUEST, amount);

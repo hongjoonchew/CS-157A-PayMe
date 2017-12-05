@@ -52,7 +52,7 @@ public class DebitCardDaoImpl implements DebitCardDao {
 		int exp_year= DebitCard.getExpiration_year();
 		int exp_month =DebitCard.getExpiration_month();
 		String type = DebitCard.getType();
-		String cardType = "debut";
+		String cardType = "Debit";
 		
 		jdbcTemplate.update(sql_debitCard, new Object[] {number,balance,type});
 		jdbcTemplate.update(sql_card, new Object[] {number,name,cvv,exp_year,exp_month,cardType});	
