@@ -66,6 +66,13 @@ public class UserDaoImpl implements UserDao {
 		jdbcTemplate.update(accountsql,new Object[] {username, password, first_name, last_name, email, enabled});
 		jdbcTemplate.update(userSQL, new Object[] {username,balance});
 	}
+	
+	@Override
+	public void addFriend(String usename,String friendusername) {
+		final String sql = "INSERT INTO users_has_users (username, friendusername) VALUES (?,?)";
+		jdbcTemplate.update(sql, new Object[] {usename,friendusername});
+	}
+
 
 	@Override
 	public void deleteUser(String username) {

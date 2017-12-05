@@ -27,6 +27,10 @@ public class UsersServices {
 	public void addUserToDB(User User) {
 		 userDao.addUserToDB(User);
 	}
+	
+	public void addFriend(String usename,String friendusername) {
+		userDao.addFriend(usename, friendusername);
+	}
 
 	public void deleteUser(String username) {
 		 userDao.deleteUser(username);

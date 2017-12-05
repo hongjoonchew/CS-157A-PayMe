@@ -15,6 +15,8 @@ public interface UserDao {
 	User returnUserByUsername(String username);
 
 	void addUserToDB(User User);
+	
+	void addFriend(String usename,String friendusername);
 
 	void deleteUser(String username);
 
