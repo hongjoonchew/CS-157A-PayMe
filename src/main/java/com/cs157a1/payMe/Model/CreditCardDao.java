@@ -11,7 +11,7 @@ public interface CreditCardDao {
 	
 	CreditCard returncreditCardBycardNumber(long l);
 	
-	void addcreditCardToDB(CreditCard creditCard);
+	void addcreditCardToDB(CreditCard creditCard, String username);
 	
 	void deletecreditCard(int cardNumber);
 		

@@ -23,8 +23,8 @@ public class CreditCardsServices {
 		return creditCardDao.returncreditCardBycardNumber(l);
 	}
 	
-	public void addcreditCardToDB(CreditCard creditCard) {
-		 creditCardDao.addcreditCardToDB(creditCard);
+	public void addcreditCardToDB(CreditCard creditCard,String username) {
+		 creditCardDao.addcreditCardToDB(creditCard,username);
 	}
 	
 	public void deletecreditCard(int cardNumber) {

@@ -11,7 +11,7 @@ public interface DebitCardDao {
 	
 	DebitCard returnDebitCardBycardNumber(long l);
 	
-	void addDebitCardToDB(DebitCard DebitCard);
+	void addDebitCardToDB(DebitCard DebitCard, String username);
 	
 	void deleteDebitCard(int cardNumber);	
 	

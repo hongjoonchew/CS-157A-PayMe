@@ -23,8 +23,8 @@ public class DebitCardsServices {
 		return debitCardDao.returnDebitCardBycardNumber(l);
 	}
 	
-	public void addDebitCardToDB(DebitCard DebitCard) {
-		 debitCardDao.addDebitCardToDB(DebitCard);
+	public void addDebitCardToDB(DebitCard DebitCard, String username) {
+		 debitCardDao.addDebitCardToDB(DebitCard,username);
 	}
 	
 	public void deleteDebitCard(int cardNumber) {

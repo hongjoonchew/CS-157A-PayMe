@@ -41,9 +41,9 @@ public class DebitCardDaoImpl implements DebitCardDao {
 	}
 
 	@Override
-	public void addDebitCardToDB(DebitCard DebitCard) {
+	public void addDebitCardToDB(DebitCard DebitCard, String username) {
 		final String sql_debitCard = "INSERT INTO debitCard (number, balance,type) VALUE (?,?,?)";
-		final String sql_card = "INSERT INTO Cards (number,name,CVV,expiration_year,expiration_month,card_type) VALUE (?,?,?,?,?,?)";
+		final String sql_card = "INSERT INTO Cards (number,name,CVV,expiration_year,expiration_month,card_type,username) VALUE (?,?,?,?,?,?,?)";
 		
 		long number = DebitCard.getCardNumber();
 		double balance = DebitCard.getBalance();
@@ -55,7 +55,7 @@ public class DebitCardDaoImpl implements DebitCardDao {
 		String cardType = "debut";
 		
 		jdbcTemplate.update(sql_debitCard, new Object[] {number,balance,type});
-		jdbcTemplate.update(sql_card, new Object[] {number,name,cvv,exp_year,exp_month,cardType});	
+		jdbcTemplate.update(sql_card, new Object[] {number,name,cvv,exp_year,exp_month,cardType,username});	
 	}
 
 	@Override
