@@ -62,18 +62,19 @@ public class CardController {
 	
 	@RequestMapping("/cards")
 	public String getCardList(@ModelAttribute("cards") Collection<Card> cards, ModelMap map, Principal principal) {
+		cards.addAll(userServices.returnCardBelongToUser(principal.getName()));
 		map.addAllAttributes(cards);
 		return "cards";
 	}
 	
 	@RequestMapping("/cards/{cardNumber}")
-	public String getCardPage(@PathVariable("{cardNumber}")String cardNumber, @ModelAttribute("card") Card card, ModelMap map) {
-		long longCard = Long.parseLong(cardNumber); 
-		if(creditCardServices.returncreditCardBycardNumber(longCard) == null) {
-			card = debitCardServices.returnDebitCardBycardNumber(longCard);
+	public String getCardPage(@PathVariable("cardNumber")String cardNumber, @ModelAttribute("card") Card card, ModelMap map) {
+		long longNum = Long.parseLong(cardNumber);
+		if(creditCardServices.returncreditCardBycardNumber(longNum) == null) {
+			card = debitCardServices.returnDebitCardBycardNumber(longNum);
 		}
 		else { 
-			card = creditCardServices.returncreditCardBycardNumber(longCard);
+			card = creditCardServices.returncreditCardBycardNumber(longNum);
 		}
 		map.addAttribute("card", card);
 		return "{cardNumber}";

@@ -34,7 +34,6 @@ public class DashboardController {
 		return account;
 	}
 	
-
 	
 	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
 	public String helloUser() {
@@ -44,7 +43,7 @@ public class DashboardController {
 	
 	@RequestMapping(value ="/friends", method = RequestMethod.GET)
 	public String showFriends(@ModelAttribute("accounts")Account account, ModelMap model) {
-		accountService.getFriendsByAccount(account.getUsername());
+		model.addAllAttributes(userServices.returnFriendsByUsername(account.getUsername()));
 		return "friends";
 	}
 	
@@ -68,8 +67,6 @@ public class DashboardController {
 	public String searchFriend(@ModelAttribute("accounts")Account account) {
 		return "friends?search";
 	}
-	
-	
 	
 	
 	
