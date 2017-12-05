@@ -120,7 +120,7 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public List<User> returnFriendsByUsernameColumnOne(String username) {
 		return jdbcTemplate.query("SELECT users_has_users.username, users_has_users.friendusername, first_name, last_name "
-				+ "FROM paymeModel.users_has_users INNER JOIN paymeModel.accounts ON accounts.username = users_has_users.friendusername "
+				+ "FROM users_has_users INNER JOIN accounts ON accounts.username = users_has_users.friendusername "
 				+ "AND users_has_users.username = ?", new UserFriendsExtractor(), username);
 	}
 	
