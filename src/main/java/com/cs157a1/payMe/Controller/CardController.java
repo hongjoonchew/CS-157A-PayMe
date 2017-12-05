@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.cs157a1.payMe.Entity.Account;
 import com.cs157a1.payMe.Entity.Card;
+import com.cs157a1.payMe.Entity.CreditCard;
+import com.cs157a1.payMe.Entity.DebitCard;
 import com.cs157a1.payMe.Entity.User;
 import com.cs157a1.payMe.Services.AccountServices;
 import com.cs157a1.payMe.Services.CreditCardsServices;
@@ -87,11 +89,22 @@ public class CardController {
 	}
 	
 	@RequestMapping(value="/cards/addCard", method = RequestMethod.POST)
-	public String sendCardForm(@Valid @ModelAttribute("card")Card card, BindingResult results) {
+	public String sendCardForm(@Valid @ModelAttribute("card")Card card, @ModelAttribute("accounts") Account account, BindingResult results) {
 		if(results.hasErrors()) {
 			return "addCard";
 		}
-		
+		String type = card.getCardType();
+		card.setUser(userServices.returnUserByUsername(account.getUsername()));
+		if(type == "Debit") {
+			DebitCard debit = (DebitCard) card;
+			debit.setBalance(1000);
+			debitCardServices.addDebitCardToDB(debit);
+		}
+		else if(type == "Credit") {
+			CreditCard credit = (CreditCard) card;
+			credit.setCreditLimit(1000);
+			creditCardServices.addcreditCardToDB(credit);
+		}
 		return "addCard";
 	}
 	

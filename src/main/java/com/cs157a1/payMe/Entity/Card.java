@@ -9,7 +9,6 @@ public class Card {
 	private int expiration_month;
 	private String cardType;
 
-
 	private User user;
 
 	public Card() {

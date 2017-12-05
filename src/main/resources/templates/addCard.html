@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <link  rel="stylesheet"  href="../static/css/bootstrap.min.css" th:href ="@{/css/bootstrap.min.css}" type="text/css"/>
+        <link  th:href="@{/css/index.css}" href="/static/css/index.css" rel="stylesheet" type="text/css"/>
+        <title>Dashboard</title>
+    </head>
+    <body>
+        <div class="container col-md-6 col-md-offset-3">
+            <div class = "dashboard">
+            
+            <nav th:include="fragments/sidebar :: sidebar" th:with= "account = ${account}" class="sidebar">
+            Sidebar   
+            </nav>
+            <!--Transactions template in construction-->
+            <div class="right-container">
+                <h6>Adding a Card</h6>
+                <p th:if="${param.complete}">Transfer complete</p>
+                <p th:unless="${error} == null" th:text="${error}">Error </p>
+                <p>Simply add as many usernames, just divide it with a ",".</p>
+                <form action = "#" th:action="@{/cards/addCard}" th:object="${card}" method="post">
+                    <div><label>Card Number: <input type="text" th:field="*{cardNumber}"/></label></div>
+                    <div><label th:if="${#fields.hasErrors('cardNumber')}" th:errors="*{cardNumber}"></label></div>
+                    <div><label>Card Name: <input type="text" th:field = "*{cardName}"/></label></div>
+                    <div><label th:if="${#fields.hasErrors('cardName')}" th:errors="*{cardName}"></label></div>
+                    <div><label>CVV: <input type="text" th:field = "*{cvvNumber}"/></label></div>
+                    <div><label th:if="${#fields.hasErrors('cvvNumber')}" th:errors="*{cvvNumber}"></label></div>
+                    <div><label>Expiration month: <input type="month" th:field = "*{expiration_month}"/></label></div>
+                    <div><label>Expiration year: <input type="text" th:field = "*{expiration_year}"/></label></div>
+                    <div><label>Card Type:<select th:field = "*{cardType}"><option th:value="Debit">Debit Card</option><option th:value="Credit">Credit Card</option>  </select></label></div>
+                    
+                    <div><input type="submit" value="Submit"/></div>
+                </form>                              
+            </div>
+            </div>
+        <div th:replace="fragments/footer :: footer" class="footer">Footer goes here</div>
+        </div>
+    </body>
+</html>
