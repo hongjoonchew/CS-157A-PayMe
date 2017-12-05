@@ -25,6 +25,8 @@ public interface UserDao {
 	double returnBalance(String username);
 
 	void updateUser(User User);
+	
+	String cardTypeByCardNumber(int cardNumber);
 
 	List<User> returnFriendsByUsernameColumnOne(String username);
 	
