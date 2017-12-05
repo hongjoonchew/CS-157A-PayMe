@@ -14,8 +14,16 @@
             Sidebar   
             </nav>
             <!--Transactions template in construction-->
-            <div th:replace="fragments/transactions :: transactions" class="transactions">
-                Transaction should go here
+            <div class="right-container">
+                <h6>Request Form</h6>
+                <p th:if="${param.complete}">Request Sent</p>
+                <p th:unless="${error} == null" th:text="${error}">Error </p>
+                <form action = "#" th:action="@{/request}" th:object="${transferAccount}" method="post">
+                    <div><label>Username(s): <input type="text" id="transactionList" name="transactionList" th:value="${target?.username}"/></label></div>
+                    <div><label th:if="${#fields.hasErrors('transactionList')}" th:errors="*{transactionList}"></label></div>
+                    <div><label>Amount: $<input type="number" min="0.01" step="0.01" max="2500"  name="amount" th:field="*{amount}"/></label></div>
+                    <div><input type="submit" value="Request"/></div>
+                </form>                              
             </div>
             </div>
         <div th:replace="fragments/footer :: footer" class="footer">Footer goes here</div>

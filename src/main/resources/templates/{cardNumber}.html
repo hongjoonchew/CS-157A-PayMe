@@ -14,8 +14,9 @@
             Sidebar   
             </nav>
             <!--Transactions template in construction-->
-            <div class="right-container card">
-            <h5 th:text="${card.cardNumber}">Card Name</h5>
+            <div class="right-container">
+            <div class = "right-container-button"><h6 th:text="${card.cardNumber}">Card Name</h6><a th:href="@{/friends/edit}"> Edit Card</a></div>
+                <hr/>
                 <h6 th:text="'Cardholder Name: ' + ${card.cardName}">Username</h6>
             </div>
             </div>

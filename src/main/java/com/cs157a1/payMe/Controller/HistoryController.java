@@ -27,9 +27,6 @@ import com.cs157a1.payMe.Services.UsersServices;
 public class HistoryController {
 	
 	@Autowired
-	private AccountServices accountService;
-	
-	@Autowired
 	private CommentsServices commentService;
 	
 	@Autowired
@@ -74,15 +71,16 @@ public class HistoryController {
 	}
 	
 	@RequestMapping(value = "/request/view", method = RequestMethod.GET)
-	public String getRequests(ModelMap map, @ModelAttribute("accounts") Account account, @ModelAttribute("history") List<Transactions> trans) {
-		trans.addAll(tranService.returnUsersTransfers("Requests", account.getUsername()));
+	public String getRequests( @ModelAttribute("accounts") Account account, @ModelAttribute("history") List<Transactions> trans, ModelMap map) {
+		trans.addAll(tranService.returnUsersRequest("REQUEST", account.getUsername()));
+		map.addAttribute("trans",trans);
 		return "view";
 	}
 	
 	//THIS NEEDS TO BE FIXED.
 	@RequestMapping(value = "/transactions/{id}/addComment", method = RequestMethod.GET)
 	public String getCommentForm() {
-		return null;
+		return "addComment";
 	}
 	
 }

@@ -15,17 +15,22 @@
             </nav>
             <!--Transactions template in construction-->
             <div class="right-container">
-                <div class = "right-container-button"><h6>Cards</h6><a th:href="@{/cards/addCard}"> Add Card</a></div>
-                <hr/>
+                <div class = "right-container-button"><h6>Request List</h6><a th:href="@{/request}"> Add Request</a></div>
+                <hr />
                 <div class= "right-container-list">
-                <div th:if="${cards == null}">
-                    Add some cards by clicking the link above!</div>
-                <div th:each="card : ${cards}" th:unless ="${card == null}"> 
-                    <div class = "right-container-entry"><a th:href="@{'/cards/' + ${card.cardNumber}}" th:text="${card.cardNumber}">Card Name</a></div>
-                    <hr/>
+                <div th:if="${trans == null}">
+                    Click the 'Add Request' button to send a request.</div>
+                <table class = "table" th:each="tran : ${trans}" th:unless = "${tran == null}">
+                    <tr th:each="userTran: ${tran.userHasTransactions}" th:unless ="${userTran == null}">
+                        <td th:text="${userTran.sentUserName}">Sender</td>
+                        <td>Requested From</td>
+                        <td th:text="${userTran.receivedUserName}">Receiver</td>
+                        <td th:text="${tran.amount}">Amount</td>
+                    </tr>
+                </table>
                 </div>
+                
                 </div>
-            </div>
             </div>
         <div th:replace="fragments/footer :: footer" class="footer">Footer goes here</div>
         </div>

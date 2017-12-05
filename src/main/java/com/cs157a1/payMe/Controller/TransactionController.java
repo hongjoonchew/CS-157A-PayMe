@@ -1,8 +1,6 @@
 package com.cs157a1.payMe.Controller;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Collection;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -51,6 +49,7 @@ public class TransactionController {
 		TransactionList list = new TransactionList();
 		return list;
 	}
+	
 	
 	public class TransactionList{
 		@NotNull
@@ -136,6 +135,40 @@ public class TransactionController {
 	}
 	
 	
+	@RequestMapping(value="/request", method = RequestMethod.GET)
+	public String getRequestForm(@RequestParam(value="target", required =false)String target,@ModelAttribute("transferAccount")TransactionList request,@ModelAttribute("accounts")Account account, ModelMap model) {
+		model.addAttribute("transferAccount",request);
+		model.addAttribute("target", target);
+		return "requestForm";
+	}
 	
+	@RequestMapping(value="/request", method = RequestMethod.POST)
+	public String sendRequestForm(@Valid @ModelAttribute("transferAccount")TransactionList request, @ModelAttribute("accounts") Account account, ModelMap model, BindingResult binding) {
+		String[] usernames = request.getTransactionList().split(",");
+		String error = "Account(s) with username ";
+		boolean hasErrors = false;
+		int amount = request.getAmount();
+		if(binding.hasErrors()) {
+			return "transfer";
+		}
+		else {
+			for (String username: usernames) {
+				if(userServices.returnUserByUsername(username) == null) {
+					error = error + username + ", ";
+					hasErrors = true;
+				}
+			}
+			if (hasErrors) {
+				error = "do not exist.";
+				model.addAttribute("error", error);
+				return "transfer";
+			}
+		}
+		Transactions trans = new Transactions(TransType.REQUEST, amount);
+		for(String username: usernames) {
+		transactionService.addTransactionsToDB(trans, account.getUsername(), username);
+		}
+		return "redirect:/request?complete";
+	}
 	
 }

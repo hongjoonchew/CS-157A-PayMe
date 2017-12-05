@@ -11,7 +11,7 @@
                 <p th:text="'$'+${session.accounts.balance}" th:unless="${session == null}">Balance here</p>
                 <ul><a th:href="@{/dashboard}">Home</a></ul>
                 <ul><a th:href="@{/request}">Send Request</a></ul>
-                <ul><a th:href="@{/request}">View Request</a></ul>
+                <ul><a th:href="@{/request/view}">View Request</a></ul>
                 <ul><a th:href="@{/transfer}">Transfer</a></ul>
                 <ul><a th:href="@{/cards}">Cards</a></ul>
                 <ul><a th:href="@{/history}">History</a></ul>
