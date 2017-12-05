@@ -134,11 +134,7 @@ public class TransactionController {
 		}
 	}
 	
-	@RequestMapping(value="/transfer/accept", method=RequestMethod.POST)
-	public String sendMoney() {
-		
-		return "redirect:/transfer";
-	}
+	
 	
 	
 	@RequestMapping(value="/request", method = RequestMethod.GET)

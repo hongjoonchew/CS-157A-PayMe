@@ -72,12 +72,8 @@ public class CardController {
 	@RequestMapping("/cards/{cardNumber}")
 	public String getCardPage(@PathVariable("cardNumber")String cardNumber, @ModelAttribute("card") Card card, ModelMap map) {
 		long longNum = Long.parseLong(cardNumber);
-		if(creditCardServices.returncreditCardBycardNumber(longNum) == null) {
-			card = debitCardServices.returnDebitCardBycardNumber(longNum);
-		}
-		else { 
-			card = creditCardServices.returncreditCardBycardNumber(longNum);
-		}
+		DebitCard debit = debitCardServices.returnDebitCardBycardNumber(longNum);
+		CreditCard credit = creditCardServices.returncreditCardBycardNumber(longNum);
 		map.addAttribute("card", card);
 		return "{cardNumber}";
 	}
@@ -95,17 +91,18 @@ public class CardController {
 		}
 		String type = card.getCardType();
 		card.setUser(userServices.returnUserByUsername(account.getUsername()));
-		if(type == "Debit") {
+		if(type.equals("Debit")) {
 			DebitCard debit = (DebitCard) card;
 			debit.setBalance(1000);
+			debit.setType("Visa");
 			debitCardServices.addDebitCardToDB(debit,account.getUsername());
 		}
-		else if(type == "Credit") {
+		else if(type.equals("Credit")) {
 			CreditCard credit = (CreditCard) card;
 			credit.setCreditLimit(1000);
 			creditCardServices.addcreditCardToDB(credit,account.getUsername());
 		}
-		return "addCard";
+		return "redirect:/addCard?complete";
 	}
 	
 }

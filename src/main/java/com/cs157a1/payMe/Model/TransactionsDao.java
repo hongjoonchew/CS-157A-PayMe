@@ -20,4 +20,5 @@ public interface TransactionsDao {
 	
 	void deleteTransactions(int transID);
 	
+	public void deleteUserHasTransactions(int transId, String receiver);
 }

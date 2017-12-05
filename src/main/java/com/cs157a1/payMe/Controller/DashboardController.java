@@ -62,11 +62,11 @@ public class DashboardController {
 	}
 	
 	@RequestMapping(value = "/friends/add", method = RequestMethod.POST)
-	public String addFriend(@ModelAttribute("accounts")Account account, @ModelAttribute("friend") User friend, ModelMap model) {
+	public String addFriend(Principal principal, @ModelAttribute("friend") User friend, ModelMap model) {
 		if(userServices.returnFriendsByUsername(friend.getUsername()) == null) {
 			return "redirect:/friends/add?error";
 		}
-		userServices.addFriend(account.getUsername(), friend.getUsername());
+		userServices.addFriend(principal.getName(), friend.getUsername());
 		return "redirect:/friends/add?complete";
 		
 	}

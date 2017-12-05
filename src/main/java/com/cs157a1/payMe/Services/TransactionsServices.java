@@ -40,5 +40,9 @@ public class TransactionsServices {
 	public void deleteTransactions(int transID) {
 		 transactionsDao.deleteTransactions(transID);
 	}
+	
+	public void deleteUserHasTransactions(int transId, String receiver) {
+		transactionsDao.deleteUserHasTransactions(transId, receiver);
+	}
 
 }

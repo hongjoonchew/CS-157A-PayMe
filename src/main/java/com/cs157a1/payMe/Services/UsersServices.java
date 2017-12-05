@@ -70,4 +70,6 @@ public class UsersServices {
 	public List<Card> returnCardBelongToUser(String username) {
 		return userDao.returnCardBelongToUser(username);
 	}
+	
+	
 }

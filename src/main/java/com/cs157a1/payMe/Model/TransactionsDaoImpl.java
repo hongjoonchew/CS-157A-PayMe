@@ -44,7 +44,7 @@ public class TransactionsDaoImpl implements TransactionsDao {
 		final String sql = "SELECT * FROM Transactions"
                 + " JOIN users_has_Transactions on Transactions.transID = users_has_Transactions.transId" 
 			      + " JOIN Users on users_has_Transactions.sender_username = Users.username" 
-                + " where Transactions.type= ? and Users.username= ?";
+                + " where Transactions.type= ? and Users.username= ? ORDER BY Transactions.transID asc";
 		return jdbcTemplate.query(sql, new TransactionsResultSetExtractor(), type,username);
 	}
 	
@@ -55,7 +55,7 @@ public class TransactionsDaoImpl implements TransactionsDao {
 		final String sql = "SELECT * FROM Transactions"
                   + " JOIN users_has_Transactions on Transactions.transID = users_has_Transactions.transId" 
 			      + " JOIN Users on users_has_Transactions.receiver_username = Users.username" 
-                  + " where Transactions.type= ? and Users.username= ?";
+                  + " where Transactions.type= ? and Users.username= ? ORDER BY Transactions.transID asc";
 		return jdbcTemplate.query(sql, new TransactionsResultSetExtractor(), type,username);
 	}
 	
@@ -86,6 +86,11 @@ public class TransactionsDaoImpl implements TransactionsDao {
 		jdbcTemplate.update(sql,transID);
 	}
 	
+	@Override
+	public void deleteUserHasTransactions(int transID, String receiver) {
+		final String sql = "DELETE FROM users_has_transactions WHERE transID = ? AND receiver_username = ?";
+		jdbcTemplate.update(sql,transID, receiver);
+	}
 	
 	public class TransactionsResultSetExtractor implements ResultSetExtractor<List<Transactions>> {
 
