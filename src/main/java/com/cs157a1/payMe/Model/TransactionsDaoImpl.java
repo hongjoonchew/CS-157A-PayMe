@@ -44,7 +44,7 @@ public class TransactionsDaoImpl implements TransactionsDao {
 		final String sql = "SELECT * FROM Transactions"
                 + " JOIN users_has_Transactions on Transactions.transID = users_has_Transactions.transId" 
 			      + " JOIN Users on users_has_Transactions.sender_username = Users.username" 
-                + " where Transactions.type= ? and Users.username= ?";
+                + " where Transactions.type= ? and Users.username= ? ORDER BY Transactions.transID asc";
 		return jdbcTemplate.query(sql, new TransactionsResultSetExtractor(), type,username);
 	}
 	
@@ -55,7 +55,7 @@ public class TransactionsDaoImpl implements TransactionsDao {
 		final String sql = "SELECT * FROM Transactions"
                   + " JOIN users_has_Transactions on Transactions.transID = users_has_Transactions.transId" 
 			      + " JOIN Users on users_has_Transactions.receiver_username = Users.username" 
-                  + " where Transactions.type= ? and Users.username= ?";
+                  + " where Transactions.type= ? and Users.username= ? ORDER BY Transactions.transID asc";
 		return jdbcTemplate.query(sql, new TransactionsResultSetExtractor(), type,username);
 	}
 	
