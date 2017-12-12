@@ -75,4 +75,13 @@ public class User extends Account {
 	public void setBalance(double balance) {
 		this.balance = balance;
 	}
+	
+	public int hashCode() {
+		return super.getUsername().hashCode();
+	}
+	
+	public boolean equals(Object o) {
+		User user = (User) o;
+		return user.getUsername().equals(super.getUsername());
+	}
 }

@@ -1,6 +1,8 @@
 package com.cs157a1.payMe.Controller;
 
 import java.security.Principal;
+import java.util.HashSet;
+import java.util.TreeSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -48,7 +50,9 @@ public class DashboardController {
 	
 	@RequestMapping(value ="/friends", method = RequestMethod.GET)
 	public String showFriends(@ModelAttribute("accounts")Account account, ModelMap model) {
-		model.addAttribute("friends", userServices.returnFriendsByUsername(account.getUsername()));
+		HashSet<User> friends = new HashSet<>();
+		friends.addAll(userServices.returnFriendsByUsername(account.getUsername()));
+		model.addAttribute("friends", friends); 
 		return "friends";
 	}
 	
