@@ -131,7 +131,6 @@ public class HistoryController {
 	@RequestMapping(value = "/transactions/{id}", method = RequestMethod.GET)
 	public String getTransWithId(ModelMap map, @PathVariable(value ="id", required = true) int id, Transactions trans, @ModelAttribute("comments") List<Comment> comments) {
 		trans = tranService.returnTransactionsBytransID(id);
-		System.out.println(trans);
 		comments  = commentService.returnAllCommentsFromTransactions(id);
 		map.addAllAttributes(comments);
 		map.addAttribute("trans", trans);

@@ -20,6 +20,7 @@
                 <div class="" th:each="tran: ${trans.userHasTransactions}">
                 <h6 th:text="'Sender: ' + ${tran.sentUserName}">Username</h6>
                 <h6 th:text="'Receiver: ' + ${tran.receivedUserName}"></h6>
+                <h6 th:text="'Amount: $' + ${trans.amount}">Amount</h6>
                 </div>
             </div>
             </div>

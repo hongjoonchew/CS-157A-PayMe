@@ -32,7 +32,7 @@ public class TransactionsDaoImpl implements TransactionsDao {
 
 	@Override
 	public Transactions returnTransactionsBytransID(int transID) {
-		final String sql = "select * from Transactions where transId = ?";
+		final String sql = "SELECT * from Transactions NATURAL JOIN users_has_Transactions WHERE transId = ?";
 		return jdbcTemplate.queryForObject(sql, new TransactionsRowMapper(), transID);
 		
 	}
@@ -127,7 +127,13 @@ public class TransactionsDaoImpl implements TransactionsDao {
 		public Transactions mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Transactions transactions = new Transactions();
 	    	    transactions.setTransID(rs.getInt("transID"));
-	    	    transactions.setType(TransType.valueOf(rs.getString("type")));
+	    	    transactions.setType(TransType.valueOf(rs.getString("type")));	
+	    	    UserHasTransactions uht = new UserHasTransactions();
+	    	    uht.setSentUserName(rs.getString("sender_username"));
+	    	    uht.setReceivedUserName(rs.getString("receiver_username"));
+	    	    List<UserHasTransactions> userHasTransactions = new ArrayList<>();
+	    	    userHasTransactions.add(uht);
+	    	    transactions.setUserHasTransactions(userHasTransactions);
 	    	    transactions.setAmount(rs.getDouble("amount"));
 			return transactions;
 		}
