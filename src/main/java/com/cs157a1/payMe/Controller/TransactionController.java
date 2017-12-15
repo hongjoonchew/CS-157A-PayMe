@@ -1,7 +1,9 @@
 package com.cs157a1.payMe.Controller;
 
 import java.security.Principal;
+import java.sql.SQLException;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,6 +26,7 @@ import com.cs157a1.payMe.Entity.User;
 import com.cs157a1.payMe.Services.AccountServices;
 import com.cs157a1.payMe.Services.TransactionsServices;
 import com.cs157a1.payMe.Services.UsersServices;
+import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 
 @Controller
 @SessionAttributes("accounts")
@@ -176,4 +180,9 @@ public class TransactionController {
 		return "redirect:/request?complete";
 	}
 	
+	@ExceptionHandler(MySQLIntegrityConstraintViolationException.class)
+	public String duplicateError(HttpServletRequest req, Exception ex) {
+		req.getRequestURL();
+		return null;
+	 }	
 }
