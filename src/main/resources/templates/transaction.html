@@ -22,11 +22,12 @@
                 <h6 th:text="'Receiver: ' + ${tran.receivedUserName}"></h6>
                 <h6 th:text="'Amount: $' + ${trans.amount}">Amount</h6>
                 </div>
-                
-                <table class="comments" >
+                <hr/>
+                <h6>Comments</h6>
+                <table class="table" >
                     <tr th:each="comment: ${comments}">
                         <td><a th:href="@{'/accounts/'+ ${comment.user.username}}" th:text="${comment.user.username}">Sender</a></td>
-                        <td><p th:text="${comment.description}">Comment</p></td>
+                        <td><span th:text="${comment.description}">Comment</span></td>
                     </tr>
                 </table>
             </div>

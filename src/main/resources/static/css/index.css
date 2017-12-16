@@ -127,7 +127,16 @@ body {
 /*COMMENTS*/
 .comments{
     text-align:left;
-    height: 120px;
     overflow:scroll;
     margin-left:15px;
+}
+
+.comments tr{
+    border-bottom:solid;
+    border-width:1px;
+    display:inherit;
+}
+.comments td {
+    padding-right: 1em;
+    display:inherit;
 }
