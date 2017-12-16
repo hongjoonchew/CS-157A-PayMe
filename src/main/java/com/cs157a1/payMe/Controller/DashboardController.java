@@ -7,6 +7,7 @@ import java.util.TreeSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,17 +58,17 @@ public class DashboardController {
 	}
 	
 	@RequestMapping(value="/friends/add", method=RequestMethod.GET)
-	public String addFriendForm(@RequestParam(value="username", required =false) String username, @ModelAttribute("friend") User friend, ModelMap model) {
-		if(username != null) {
+	public String addFriendForm(@RequestParam(value="username",defaultValue ="", required =false) String username, @ModelAttribute("friend") User friend, ModelMap model) {
+		if(username !=null) {
 		friend.setUsername(username);
 		}
 		model.addAttribute("friendAccount", friend);
-		return "add";
+		return "addFriend";
 	}
 	
 	@RequestMapping(value = "/friends/add", method = RequestMethod.POST)
 	public String addFriend(Principal principal, @ModelAttribute("friend") User friend, ModelMap model) {
-		if(userServices.returnFriendsByUsername(friend.getUsername()) == null) {
+		if(userServices.returnFriendsByUsername(friend.getUsername()).equals(null)) {
 			return "redirect:/friends/add?error";
 		}
 		userServices.addFriend(principal.getName(), friend.getUsername());
