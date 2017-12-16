@@ -15,13 +15,20 @@
             </nav>
             <!--Transactions template in construction-->
             <div class="right-container">
-            <div class = "right-container-button"><h6>Transaction</h6><a th:href="@{'/transaction/' + ${trans.transID} + '/addComment'}"> Add Comment</a></div>
+            <div class = "right-container-button"><h6>Transaction</h6><a th:href="@{'/transactions/' + ${trans.transID} + '/addComment'}"> Add Comment</a></div>
                 <hr/>
                 <div class="" th:each="tran: ${trans.userHasTransactions}">
                 <h6 th:text="'Sender: ' + ${tran.sentUserName}">Username</h6>
                 <h6 th:text="'Receiver: ' + ${tran.receivedUserName}"></h6>
                 <h6 th:text="'Amount: $' + ${trans.amount}">Amount</h6>
                 </div>
+                
+                <table class="comments" >
+                    <tr th:each="comment: ${comments}">
+                        <td><a th:href="@{'/accounts/'+ ${comment.user.username}}" th:text="${comment.user.username}">Sender</a></td>
+                        <td><p th:text="${comment.description}">Comment</p></td>
+                    </tr>
+                </table>
             </div>
             </div>
         <div th:replace="fragments/footer :: footer" class="footer">Footer goes here</div>

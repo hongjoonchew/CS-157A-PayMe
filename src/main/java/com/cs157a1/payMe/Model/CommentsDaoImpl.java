@@ -41,16 +41,15 @@ public class CommentsDaoImpl implements CommentsDao {
 
 	@Override
 	public void addCommentToDB(Comment Comment) {
-		final String sql = "INSERT INTO Transactions(commentId,description,Transactions_transId,users_username) VALUES (?,?,?,?)";
+		final String sql = "INSERT INTO Comments(description,Transactions_transId,users_username) VALUES (?,?,?)";
 		
-		int id = Comment.getCommentId();
 		String description = Comment.getDescription();
 		Transactions transaction = Comment.getTransactions();
 		int transactionId = transaction.getTransID();
 		User user = Comment.getUser();
 		String username = user.getUsername();
 		
-		jdbcTemplate.update(sql, new Object[] {id,description,transactionId,username});			
+		jdbcTemplate.update(sql, new Object[] {description,transactionId,username});			
 	}
 
 	@Override
@@ -83,7 +82,9 @@ public class CommentsDaoImpl implements CommentsDao {
 		    	  Comment comment = new Comment();
 			  comment.setCommentId(rs.getInt("commentId"));
 			  comment.setDescription(rs.getString("description"));
-			  
+			  User user = new User();
+			  user.setUsername(rs.getString("users_username"));
+			  comment.setUser(user);
 			  commentlist.add(comment);
 		      }
 		      return commentlist;

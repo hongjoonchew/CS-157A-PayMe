@@ -15,14 +15,16 @@
             </nav>
             <!--Transactions template in construction-->
             <div class="right-container">
-                <h6>Adding a Card</h6>
-                <p th:if="${param.complete}">Transfer complete</p>
-                <p th:unless="${error} == null" th:text="${error}">Error </p>
-                <p>Simply add as many usernames, just divide it with a ",".</p>
-                <form action = "#" th:action="@{/transactions/}" th:object="${comment}" method="post">
-                    <div><label>Card Number: <input type="text" th:field="*{cardNumber}"/></label></div>
-                    <div><label th:if="${#fields.hasErrors('cardNumber')}" th:errors="*{cardNumber}"></label></div>
-                    <div><input type="submit" value="Add Card"/></div>
+                <h6>Post Comment</h6>
+                 <div class="" th:each="tran: ${trans.userHasTransactions}">
+                    <h6 th:text="'Sender: ' + ${tran.sentUserName}">Username</h6>
+                    <h6 th:text="'Receiver: ' + ${tran.receivedUserName}"></h6>
+                    <h6 th:text="'Amount: $' + ${trans.amount}">Amount</h6>
+                </div>
+                <form action = "#" th:action="@{/transactions/} + ${trans.transID}+ @{/addComment}" th:object="${comment}" method="post">
+                    <div ><label>Comment: <input type="text" id="description" name="description" placeholder="Write what you think!"/></label></div>
+                    <div><label th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description Missing</label></div>
+                    <div><input type="submit" value="Post Comment"/></div>
                 </form>                              
             </div>
             </div>

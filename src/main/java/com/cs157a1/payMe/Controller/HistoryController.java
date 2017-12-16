@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +19,6 @@ import com.cs157a1.payMe.Entity.Comment;
 import com.cs157a1.payMe.Entity.TransType;
 import com.cs157a1.payMe.Entity.Transactions;
 import com.cs157a1.payMe.Entity.User;
-import com.cs157a1.payMe.Services.AccountServices;
 import com.cs157a1.payMe.Services.CommentsServices;
 import com.cs157a1.payMe.Services.TransactionsServices;
 import com.cs157a1.payMe.Services.UsersServices;
@@ -43,7 +43,7 @@ public class HistoryController {
 	}
 	
 	@ModelAttribute("history")
-	public List<Transactions> getTransactions(){
+	public List<Transactions> getTransactionsList(){
 		List<Transactions> trans = new ArrayList<>();
 		return trans;
 	}
@@ -58,6 +58,12 @@ public class HistoryController {
 	public Comment getComment() {
 		Comment comment = new Comment();
 		return comment;
+	}
+	
+	@ModelAttribute("transaction")
+	public Transactions getTransactions() {
+		Transactions trans = new Transactions();
+		return trans;
 	}
 	
 	public class AcceptSubmission {
@@ -132,7 +138,7 @@ public class HistoryController {
 	public String getTransWithId(ModelMap map, @PathVariable(value ="id", required = true) int id, Transactions trans, @ModelAttribute("comments") List<Comment> comments) {
 		trans = tranService.returnTransactionsBytransID(id);
 		comments  = commentService.returnAllCommentsFromTransactions(id);
-		map.addAllAttributes(comments);
+		map.addAttribute("comments",comments);
 		map.addAttribute("trans", trans);
 		return "transaction";
 	}
@@ -148,10 +154,28 @@ public class HistoryController {
 	
 	//THIS NEEDS TO BE FIXED.
 	@RequestMapping(value = "/transactions/{id}/addComment", method = RequestMethod.GET)
-	public String getCommentForm(@PathVariable(value="id", required = true)int id, ModelMap model, @ModelAttribute("comment") Comment comment) {
-		model.addAttribute("id",id);
+	public String getCommentForm(@PathVariable(value="id", required = true)int id, ModelMap model, @ModelAttribute("transaction")Transactions trans, @ModelAttribute("comment") Comment comment) {
+		trans = tranService.returnTransactionsBytransID(id);
+		model.addAttribute("trans", trans);
 		model.addAttribute("comment", comment);
 		return "addComment";
+	}
+	
+	@RequestMapping(value = "/transactions/{id}/addComment", method = RequestMethod.POST)
+	public String sendCommentForm(@PathVariable(value="id", required = true)int id, @ModelAttribute("comment") Comment comment, @ModelAttribute("accounts")Account account, BindingResult result) {
+		if(result.hasErrors()) {
+			return "addComment";
+		}
+		else {
+		Transactions trans = tranService.returnTransactionsBytransID(id);
+		System.out.println(comment.getDescription());
+		comment.setTransactions(trans);
+		System.out.println(comment.getTransactions().getTransID());
+		comment.setUser((User)account);
+		System.out.println(comment.getUser().getUsername());
+		commentService.addCommentToDB(comment);
+		return "redirect:/transactions/" + id;
+		}
 	}
 	
 }

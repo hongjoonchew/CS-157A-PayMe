@@ -123,3 +123,11 @@ body {
 .right-container-entry{
     
 }
+
+/*COMMENTS*/
+.comments{
+    text-align:left;
+    height: 120px;
+    overflow:scroll;
+    margin-left:15px;
+}
