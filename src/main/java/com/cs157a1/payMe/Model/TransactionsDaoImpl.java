@@ -26,8 +26,8 @@ public class TransactionsDaoImpl implements TransactionsDao {
 	
 	@Override
 	public List<Transactions> returnAllInfo() {
-		return jdbcTemplate.query("select *" + 
-				" from Transactions", new TransactionsResultSetExtractor());
+		return jdbcTemplate.query("SELECT * FROM Transactions "
+				+ "NATURAL JOIN users_has_Transactions", new TransactionsResultSetExtractor());
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public class TransactionsDaoImpl implements TransactionsDao {
 		
 		final String sqlTransaction = "SELECT * FROM Transactions " 
 		+ "order by transid  desc limit 1";
-		Transactions t = jdbcTemplate.queryForObject(sqlTransaction, new TransactionsRowMapper());
+		Transactions t = jdbcTemplate.queryForObject(sqlTransaction, new TransactionsRowMapper2());
 		addToUserHasTransactions(t.getTransID(),sender,receiver);
 	}
 	
@@ -83,7 +83,12 @@ public class TransactionsDaoImpl implements TransactionsDao {
 	@Override
 	public void deleteTransactions(int transID) {
 		final String sql = "DELETE FROM Transactions WHERE transId = ?";
+		final String sql2 = "DELETE FROM users_has_transactions WHERE transId = ?";
+		final String sql3 = "DELETE FROM Comments WHERE Transactions_transId = ?";
+		jdbcTemplate.update(sql3,transID);
+		jdbcTemplate.update(sql2,transID);
 		jdbcTemplate.update(sql,transID);
+	
 	}
 	
 	@Override
@@ -139,5 +144,16 @@ public class TransactionsDaoImpl implements TransactionsDao {
 		}
 	}
 
+	private static class TransactionsRowMapper2 implements RowMapper<Transactions>{
+		  
+		@Override
+		public Transactions mapRow(ResultSet rs, int rowNum) throws SQLException {
+			Transactions transactions = new Transactions();
+	    	    transactions.setTransID(rs.getInt("transID"));
+	    	    transactions.setType(TransType.valueOf(rs.getString("type")));
+	    	    transactions.setAmount(rs.getDouble("amount"));
+			return transactions;
+		}
+	}
 
 }

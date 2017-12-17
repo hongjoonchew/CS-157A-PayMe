@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <link  rel="stylesheet"  href="../static/css/bootstrap.min.css" th:href ="@{/css/bootstrap.min.css}" type="text/css"/>
+        <link  th:href="@{/css/index.css}" href="/static/css/index.css" rel="stylesheet" type="text/css"/>
+        <title>Admin Dashboard</title>
+    </head>
+    <body>
+        <div class="container col-md-6 col-md-offset-3">
+            <div class = "">
+            <h1> Transactions</h1>
+            <form th:action="@{/logout}" method = "post"> <input type="submit" value = "Sign Out"/></form>
+            <div class= "admin-dashboard">
+            <table class = "table ">
+                <tr th:each="tran : ${trans}" >
+                <td><span th:text="${tran.transID}"></span></td>
+                <td><span th:text="${tran.type}"></span></td>
+                <td><span th:text="${tran.amount}"></span></td>
+                <td><form th:action="@{/admin/transactions/delete}" method = "post" >
+                    <input type="hidden" id="id" name="id" th:value="${tran.transID}"/>
+                    <input type="submit" value = "Delete"/>
+                    </form>
+                    </td>
+                </tr>
+            </table>
+                </div>
+            </div>
+        <div th:replace="fragments/footer :: footer" class="footer">Footer goes here</div>
+        </div>
+    </body>
+</html>

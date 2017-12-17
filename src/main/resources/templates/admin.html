@@ -11,7 +11,14 @@
             <div class = "">
             <h1> Welcome to the Admin Page</h1>
             <h3> By using this you can look at the links below and see the SQL code in action and see the process!</h3>
-                
+            <li class = "list-group">
+                <ul><a th:href="@{/admin/transactions}" th:text = "Transactions"></a></ul>
+                <ul><a th:href="@{/admin/users}" th:text = "Users"></a></ul>
+                <ul><a th:href="@{/admin/cards}" th:text = "Cards"></a></ul>
+                <ul><a th:href="@{/admin/comments}" th:text = "Comments"></a></ul>
+                <ul><a th:href="@{/admin/requests}" th:text = "Requests"></a></ul>
+                <ul><form th:action="@{/logout}" method = "post"> <input type="submit" value = "Sign Out"/></form></ul>
+            </li>
             </div>
         <div th:replace="fragments/footer :: footer" class="footer">Footer goes here</div>
         </div>

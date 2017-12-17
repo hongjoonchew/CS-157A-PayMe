@@ -140,3 +140,9 @@ body {
     padding-right: 1em;
     display:inherit;
 }
+
+/*ADMIN DASHBOARD*/
+.admin-dashboard{
+    overflow:scroll;
+    height:300px;
+}
