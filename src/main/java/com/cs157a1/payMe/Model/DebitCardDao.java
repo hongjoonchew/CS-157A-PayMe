@@ -13,7 +13,7 @@ public interface DebitCardDao {
 	
 	void addDebitCardToDB(DebitCard DebitCard, String username);
 	
-	void deleteDebitCard(int cardNumber);	
+	void deleteDebitCard(long cardNumber);	
 	
 	void updateDebitCard(DebitCard DebitCard);
 }

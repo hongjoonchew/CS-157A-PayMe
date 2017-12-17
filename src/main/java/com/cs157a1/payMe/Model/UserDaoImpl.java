@@ -44,8 +44,8 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public List<User> returnAllInfo() {
-		 return jdbcTemplate.query("SELECT users.username, users.password, users.email, users.balance, accounts.first_name, accounts.last_name"
-		 		 + "FROM users JOIN accounts on users.username=accounts.username" , new UserResultSetExtractor());
+		 return jdbcTemplate.query("SELECT accounts.username, accounts.password, accounts.email, "
+		 		+ "users.balance, accounts.first_name, accounts.last_name FROM users NATURAL JOIN accounts" , new UserResultSetExtractor());
 	}
 	
 	

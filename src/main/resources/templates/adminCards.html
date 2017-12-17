@@ -14,13 +14,16 @@
             <form th:action="@{/logout}" method = "post"> <input type="submit" value = "Sign Out"/></form>
             <div class= "admin-dashboard">
             <table class = "table ">
-                <tr th:each="tran : ${trans}" >
-                <td><span th:text="${tran.transID}"></span></td>
-                    <td><div th:switch="${tran.type}"><span th:case="${T(com.cs157a1.payMe.Entity.TransType).REQUEST}" th:text="requests"></span>
-                        <span th:case="${T(com.cs157a1.payMe.Entity.TransType).TRANSFER}" th:text="transfers"></span></div></td>
-                <td><span th:text="${tran.amount}"></span></td>
-                <td><form th:action="@{/admin/transactions/delete}" method = "post" >
-                    <input type="hidden" id="id" name="id" th:value="${tran.transID}"/>
+                <tr th:each="card : ${cards}" >
+                <td><span th:text="${card.cardNumber}"></span></td>
+                <td><span th:text="${card.cardName}"></span></td>
+                <td><span th:text="${card.cardType}"></span></td>
+                <td><span th:text="${card.cvvNumber}"></span></td>
+                <td><span th:text="${card.expiration_year}"></span></td>
+                <td><span th:text="${card.expiration_month}"></span></td>
+                <td><form th:action="@{/admin/cards/delete}" method = "post" >
+                    <input type="hidden" id="cardType" name="cardType" th:value="${card.cardType}"/>
+                    <input type="hidden" id="cardNumber" name="cardNumber" th:value="${card.cardNumber}"/>
                     <input type="submit" value = "Delete"/>
                     </form>
                     </td>

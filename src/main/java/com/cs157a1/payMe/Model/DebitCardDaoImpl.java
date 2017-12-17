@@ -25,7 +25,7 @@ public class DebitCardDaoImpl implements DebitCardDao {
 	
 	@Override
 	public List<DebitCard> returnAllInfo() {
-		final String sql = "select debitCard.number, debitCard.balance, debitCard.type, Cards.name, Cards.CVV, Cards.expiration_year, Cards.expiration_month "
+		final String sql = "select * "
 	            + "from debitCard " 
 				+ "JOIN Cards on debitCard.number=Cards.number";
 		return jdbcTemplate.query(sql, new DebitCardResultSetExtractor());
@@ -61,7 +61,7 @@ public class DebitCardDaoImpl implements DebitCardDao {
 	}
 
 	@Override
-	public void deleteDebitCard(int cardNumber) {
+	public void deleteDebitCard(long cardNumber) {
 		final String sql_debitCard = "DELETE FROM debitCard WHERE number = ?";
 		final String sql_Card = "DELETE FROM Cards WHERE number = ?";
 		

@@ -27,7 +27,7 @@ public class DebitCardsServices {
 		 debitCardDao.addDebitCardToDB(DebitCard,username);
 	}
 	
-	public void deleteDebitCard(int cardNumber) {
+	public void deleteDebitCard(long cardNumber) {
 		 debitCardDao.deleteDebitCard(cardNumber);
 	}
 	

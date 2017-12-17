@@ -13,7 +13,7 @@ public interface CreditCardDao {
 	
 	void addcreditCardToDB(CreditCard creditCard, String username);
 	
-	void deletecreditCard(int cardNumber);
+	void deletecreditCard(long cardNumber);
 		
 	void updatecreditCard(CreditCard creditCard);
 

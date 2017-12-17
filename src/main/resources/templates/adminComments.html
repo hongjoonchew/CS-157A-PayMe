@@ -9,18 +9,17 @@
     <body>
         <div class="container col-md-6 col-md-offset-3">
             <div class = "">
-            <h1> Transactions</h1>
+            <h1>Comments</h1>
             <span><a th:href="@{/admin}"> Admin Homepage</a></span>
             <form th:action="@{/logout}" method = "post"> <input type="submit" value = "Sign Out"/></form>
             <div class= "admin-dashboard">
             <table class = "table ">
-                <tr th:each="tran : ${trans}" >
-                <td><span th:text="${tran.transID}"></span></td>
-                    <td><div th:switch="${tran.type}"><span th:case="${T(com.cs157a1.payMe.Entity.TransType).REQUEST}" th:text="requests"></span>
-                        <span th:case="${T(com.cs157a1.payMe.Entity.TransType).TRANSFER}" th:text="transfers"></span></div></td>
-                <td><span th:text="${tran.amount}"></span></td>
-                <td><form th:action="@{/admin/transactions/delete}" method = "post" >
-                    <input type="hidden" id="id" name="id" th:value="${tran.transID}"/>
+                <tr th:each="comment : ${comments}" >
+                <td><span th:text="${comment.commentId}"></span></td>
+                <td><span th:text="${comment.user.username}"></span></td>
+                <td><span th:text="${comment.description}"></span></td>
+                <td><form th:action="@{/admin/comments/delete}" method = "post" >
+                    <input type="hidden" id="commentId" name="commentId" th:value="${comment.commentId}"/>
                     <input type="submit" value = "Delete"/>
                     </form>
                     </td>

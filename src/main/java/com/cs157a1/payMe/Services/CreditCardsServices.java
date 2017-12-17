@@ -27,7 +27,7 @@ public class CreditCardsServices {
 		 creditCardDao.addcreditCardToDB(creditCard,username);
 	}
 	
-	public void deletecreditCard(int cardNumber) {
+	public void deletecreditCard(long cardNumber) {
 		 creditCardDao.deletecreditCard(cardNumber);
 	}
 		

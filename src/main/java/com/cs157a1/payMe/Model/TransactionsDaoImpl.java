@@ -109,6 +109,7 @@ public class TransactionsDaoImpl implements TransactionsDao {
 		            	     transaction = new Transactions();
 		   		    	     transaction.setTransID(rs.getInt("transID"));
 				    	     transaction.setAmount(rs.getDouble("amount"));
+				    	     transaction.setType(TransType.valueOf(rs.getString("type")));
 				    	     transactionmap.put(rs.getInt("transID"), transaction);
 		             }
 

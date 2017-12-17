@@ -23,7 +23,7 @@ public class CreditCardDaoImpl implements CreditCardDao {
 
 	@Override
 	public List<CreditCard> returnAllInfo() {
-		final String sql = "select creditCard.number, creditCard.creditLimit, creditCard.issuer, Cards.name, Cards.CVV, Cards.expiration_year, Cards.expiration_month from creditCard"
+		final String sql = "select * from creditCard"
 		           + " JOIN Cards on creditCard.number=Cards.number";
 		return jdbcTemplate.query(sql, new CreditCardResultSetExtractor());
 	}
@@ -61,7 +61,7 @@ public class CreditCardDaoImpl implements CreditCardDao {
 	}
 
 	@Override
-	public void deletecreditCard(int cardNumber) {
+	public void deletecreditCard(long cardNumber) {
 		final String sql_creditCard = "DELETE FROM creditCard WHERE number = ?";
 		final String sql_Card = "DELETE FROM Cards WHERE number = ?";
 		
