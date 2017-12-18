@@ -43,21 +43,19 @@ public class DebitCardDaoImpl implements DebitCardDao {
 	@Override
 	public void addDebitCardToDB(DebitCard DebitCard, String username) {
 		final String sql_debitCard = "INSERT INTO debitCard (number, balance,type) VALUE (?,?,?)";
-		final String sql_card = "INSERT INTO Cards (number,name,CVV,expiration_year,expiration_month,card_type,username,card_type) VALUE (?,?,?,?,?,?,?,?)";
+		final String sql_card = "INSERT INTO Cards (number,name,CVV,expiration_year,expiration_month,username,card_type) VALUE (?,?,?,?,?,?,?)";
 		
 		long number = DebitCard.getCardNumber();
 		double balance = DebitCard.getBalance();
 		String name = DebitCard.getCardName();
-		int cvv = DebitCard.getCvvNumber();
-		int exp_year= 4;
-		int exp_month = 5;		
-		//int exp_year= DebitCard.getExpiration_year();
-		//int exp_month =DebitCard.getExpiration_month();
+		int cvv = DebitCard.getCvvNumber();		
+		int exp_year= DebitCard.getExpiration_year();
+		int exp_month =DebitCard.getExpiration_month();
 		String type = DebitCard.getCardType();
 		String cardType = "Debit";
 		
+		jdbcTemplate.update(sql_card, new Object[] {number,name,cvv,exp_year,exp_month,username,type});
 		jdbcTemplate.update(sql_debitCard, new Object[] {number,balance,type});
-		jdbcTemplate.update(sql_card, new Object[] {number,name,cvv,exp_year,exp_month,cardType,username,type});	
 	}
 
 	@Override

@@ -92,14 +92,12 @@ public class CardController {
 		String type = card.getCardType();
 		card.setUser(userServices.returnUserByUsername(account.getUsername()));
 		if(type.equals("Debit")) {
-			DebitCard debit = (DebitCard) card;
-			debit.setBalance(1000);
+			DebitCard debit = new DebitCard(card,1000);
 			debit.setType("Visa");
 			debitCardServices.addDebitCardToDB(debit,account.getUsername());
 		}
 		else if(type.equals("Credit")) {
-			CreditCard credit = (CreditCard) card;
-			credit.setCreditLimit(1000);
+			CreditCard credit = new CreditCard(card,1000);
 			creditCardServices.addcreditCardToDB(credit,account.getUsername());
 		}
 		return "redirect:/addCard?complete";

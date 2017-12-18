@@ -81,12 +81,8 @@ public class CreditCardDaoImpl implements CreditCardDao {
 		float creditLimit = creditCard.getCreditLimit();
 		int exp_year= creditCard.getExpiration_year();
 		int exp_month =creditCard.getExpiration_month();
-		String issuer = creditCard.getIssuer();
-
-
-		
-		jdbcTemplate.update(sql_creditCard, new Object[] {creditLimit, issuer, number});
-		jdbcTemplate.update(sql_Card, new Object[] {name, cvv, number,exp_year,exp_month});	
+		jdbcTemplate.update(sql_Card, new Object[] {name, cvv, number,exp_year,exp_month});
+		jdbcTemplate.update(sql_creditCard, new Object[] {creditLimit, number});
 	}
 	
 	public class CreditCardResultSetExtractor implements ResultSetExtractor<List<CreditCard>> {
@@ -102,7 +98,6 @@ public class CreditCardDaoImpl implements CreditCardDao {
 					creditCard.setExpiration_year(rs.getInt("expiration_year"));
 					creditCard.setExpiration_month(rs.getInt("expiration_month"));
 					creditCard.setCreditLimit(rs.getFloat("creditLimit"));
-					creditCard.setIssuer(rs.getString("issuer"));
 					creditCard.setCardType(rs.getString("card_type"));
 			        creditCardlist.add(creditCard);
 		      }
@@ -121,7 +116,6 @@ public class CreditCardDaoImpl implements CreditCardDao {
 			creditCard.setExpiration_month(rs.getInt("expiration_month"));
 			creditCard.setCvvNumber(rs.getInt("CVV"));
 			creditCard.setCreditLimit(rs.getFloat("creditLimit"));
-			creditCard.setIssuer(rs.getString("issuer"));
 			creditCard.setCardType(rs.getString("card_type"));
 			return creditCard;
 		}
