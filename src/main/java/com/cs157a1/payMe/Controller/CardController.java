@@ -73,8 +73,8 @@ public class CardController {
 	public String getCardPage(@PathVariable("cardNumber")String cardNumber, @ModelAttribute("card") Card card, ModelMap map) {
 		long longNum = Long.parseLong(cardNumber);
 		DebitCard debit = debitCardServices.returnDebitCardBycardNumber(longNum);
-		CreditCard credit = creditCardServices.returncreditCardBycardNumber(longNum);
-		map.addAttribute("card", card);
+		System.out.println(debit.getCardNumber());
+		map.addAttribute("card", debit);
 		return "{cardNumber}";
 	}
 	
