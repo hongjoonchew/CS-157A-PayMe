@@ -88,9 +88,16 @@ public class UserDaoImpl implements UserDao {
 	public void deleteUser(String username) {
 		final String sql = "DELETE FROM Users WHERE username = ?";
 		final String sql_account = "DELETE FROM Accounts WHERE username = ?";
+		final String sql_cards = "DELETE FROM Cards WHERE username = ?";
+		final String sql_comments = "DELETE FROM Comment WHERE users_username = ?";
+		final String sql_uhtransactions = "DELETE FROM users_has_Transactions WHERE receiver_username = ?  OR sender_username = ?";
 		
-		jdbcTemplate.update(sql_account,username);			
+		
+		jdbcTemplate.update(sql_cards,username);
+		jdbcTemplate.update(sql_comments,username);
+		jdbcTemplate.update(sql_uhtransactions,username,username);
 		jdbcTemplate.update(sql,username);
+		jdbcTemplate.update(sql_account,username);			
 	}
 
 	@Override
