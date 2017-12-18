@@ -117,7 +117,6 @@ public class DebitCardDaoImpl implements DebitCardDao {
 			debitCard.setCardName(rs.getString("name"));
 			debitCard.setCvvNumber(rs.getInt("CVV"));
 			debitCard.setBalance(rs.getFloat("balance"));
-			debitCard.setCardType(rs.getString("card_type"));
 			return debitCard;
 		}
 	}

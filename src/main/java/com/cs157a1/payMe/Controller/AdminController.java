@@ -53,7 +53,6 @@ public class AdminController {
 	@RequestMapping("/transactions")
 	public String transactions(ModelMap map) {
 		List<Transactions> trans = tranService.returnAllInfo();
-		System.out.print(trans.get(0).getType());
 		map.addAttribute("trans",trans);
 		return "adminTransaction";
 	}
