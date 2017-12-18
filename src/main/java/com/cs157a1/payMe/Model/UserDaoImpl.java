@@ -92,7 +92,6 @@ public class UserDaoImpl implements UserDao {
 		final String sql_comments = "DELETE FROM Comment WHERE users_username = ?";
 		final String sql_uhtransactions = "DELETE FROM users_has_Transactions WHERE receiver_username = ?  OR sender_username = ?";
 		
-		
 		jdbcTemplate.update(sql_cards,username);
 		jdbcTemplate.update(sql_comments,username);
 		jdbcTemplate.update(sql_uhtransactions,username,username);
